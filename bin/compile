@@ -70,6 +70,7 @@ PATH=${build_pack_dir}:$PATH
 
 rm -rf ${elixir_root}
 echo "Extracting: ${cache_dir}/${elixir_tar}"
+ls ${cache_dir}/${elixir_tar}
 tar zxf ${cache_dir}/${elixir_tar}
 mv "elixir-${elixir_version}" ${elixir_root}
 
