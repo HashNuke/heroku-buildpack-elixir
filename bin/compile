@@ -82,6 +82,10 @@ cd ${elixir_root}
 # Extract the zip file using jar cmd. OH WHATTAY HACK.
 jar xf ${cache_dir}/${elixir_zip}
 
+# Everything in the bin dir should be executable
+chmod +x bin/*
+
+# Jump back
 cd -
 
 ### Use only if building from source
