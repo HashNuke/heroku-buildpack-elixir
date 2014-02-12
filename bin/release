@@ -3,7 +3,7 @@
 cat << EOF
 ---
 addons:
-  - heroku-postgresql:dev
+  heroku-postgresql:hobby-dev
 default_process_types:
   web: mix server -p \$PORT
 config_vars:
