@@ -34,20 +34,22 @@ echo "Elixir version $elixir_version"
 
   # To not add too much stuff to the cache dir
   rm -rf ${cache_dir}/*
-)
 
-echo "Fetching Erlang source..."
-curl -sO ${erlang_source_url} ${erlang_tar} || exit 1
+  echo "Fetching Erlang source..."
+  curl -sO ${erlang_source_url} ${erlang_tar} || exit 1
+)
 
 echo "Unpacking Erlang ${erlang_version}"
 tar zxf ${cache_dir}/${erlang_tar} -C ${erlang_root} --strip-components=2
 
 echo "Installing Erlang..."
 ln -s ${erlang_root} /app/erlang
-${erlang_root}/Install -minimal /app/otp
+${erlang_root}/Install -minimal /app/erlang
+PATH=/app/erlang/bin:$PATH
+
 
 echo "Installing Rebar from buildpack"
-cp ${build_pack_dir}/rebar $build_dir/
+cp ${build_pack_dir}/rebar ${build_dir}/
 
 PATH=${build_pack_dir}:$PATH
 
