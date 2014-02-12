@@ -16,6 +16,7 @@ then
 else
   echo "WARNING: .language_versions wasn't found"
   echo "Setting default language versions"
+  ls $build_pack_dir
   source ${build_pack_dir}/.language_versions
 fi
 
