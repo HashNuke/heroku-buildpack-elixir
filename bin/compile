@@ -76,7 +76,7 @@ mv "elixir-${elixir_version}" ${elixir_root}
 (
   set -e
 
-  echo "Building Elixir ${elixir_version}"
+  echo "-----> Building Elixir ${elixir_version}"
   cd ${elixir_root}
   make > /dev/null
 )
@@ -85,7 +85,7 @@ ln -s ${elixir_root} /app/elixir
 PATH=/app/elixir/bin:$PATH
 
 echo `pwd`
-cd /app
+cd ${build_dir}
 echo `pwd`
 
 echo "-----> Fetching app dependencies"
