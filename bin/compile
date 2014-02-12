@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-echo $1
-echo $2
-
 build_pack_dir=$(cd $(dirname $(dirname $0)); pwd)
+mkdir -p "$1" "$2"
 build_dir=$1
 cache_dir=$2
 erlang_root="${build_dir}/erlang"
@@ -41,11 +39,9 @@ ls ${cache_dir}
   # To not add too much stuff to the cache dir
   rm -rf ${cache_dir}/*
 
-  ls ${cache_dir}
   cd ${cache_dir}
   echo "Fetching Erlang source..."
   curl -ksO ${erlang_source_url} -o ${erlang_tar} || exit 1
-  ls .
 )
 
 ls ${cache_dir}/
