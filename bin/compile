@@ -44,8 +44,6 @@ echo "Elixir version $elixir_version"
   curl -ksO ${erlang_source_url} -o ${erlang_tar} || exit 1
 )
 
-ls ${cache_dir}/
-
 echo "Unpacking Erlang ${erlang_version}"
 tar zxf ${cache_dir}/${erlang_tar} -C ${erlang_root} --strip-components=2
 
@@ -68,7 +66,7 @@ PATH=${build_pack_dir}:$PATH
 
   cd ${cache_dir}
   echo "Fetching Elixir ${elixir_version}"
-  curl -LsO ${elixir_source_url} -o $elixir_tar || exit 1
+  curl -LksO ${elixir_source_url} -o $elixir_tar || exit 1
   tar zxf ${cache_dir}/${elixir_tar} -C ${elixir_root} --strip-components=2
 )
 
