@@ -7,7 +7,6 @@ erlang_root="${build_dir}/erlang"
 elixir_root="${build_dir}/elixir"
 mkdir -p $1 $2
 mkdir -p ${erlang_root}
-mkdir -p ${elixir_root}
 
 language_versions_file="${build_dir}/.language_versions"
 
@@ -69,7 +68,9 @@ PATH=${build_pack_dir}:$PATH
   curl -LksO ${elixir_source_url} || exit 1
 )
 
-tar zxf ${cache_dir}/${elixir_tar} -C ${elixir_root} --strip-components=2
+rm -rf ${elixir_root}
+tar zxf ${cache_dir}/${elixir_tar} --strip-components=2
+mv "elixir-${elixir_version}" ${elixir_root}
 
 echo "Listing cache dir"
 ls $cache_dir
