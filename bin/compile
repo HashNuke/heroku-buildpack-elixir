@@ -64,13 +64,17 @@ PATH=${build_pack_dir}:$PATH
   # test -f ${cache_dir}/${elixir_tar} && exit
 
   cd ${cache_dir}
-  echo "Fetching Elixir ${elixir_version}"
+  echo "Fetching Elixir ${elixir_version} from ${elixir_source_url}"
   curl -LksO ${elixir_source_url} || exit 1
 )
 
+echo $?
+
 rm -rf ${elixir_root}
 echo "Extracting: ${cache_dir}/${elixir_tar}"
+echo "LSing tar"
 ls ${cache_dir}/${elixir_tar}
+echo "End of LSing tar"
 tar zxf ${cache_dir}/${elixir_tar}
 mv "elixir-${elixir_version}" ${elixir_root}
 
