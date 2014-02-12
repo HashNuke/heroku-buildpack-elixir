@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
 build_pack_dir=$(cd $(dirname $(dirname $0)); pwd)
-mkdir -p "$1" "$2"
 build_dir=$1
 cache_dir=$2
 erlang_root="${build_dir}/erlang"
 elixir_root="${build_dir}/elixir"
+mkdir -p $1 $2
+mkdir -p ${erlang_root}
+mkdir -p ${elixir_root}
 
 language_versions_file="${build_dir}/.language_versions"
 
