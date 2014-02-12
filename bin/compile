@@ -60,8 +60,8 @@ PATH=${build_pack_dir}:$PATH
 (
   set -e
 
-  # If already cached tarball, means already built. So exit
-  test -f ${cache_dir}/${elixir_tar} && exit
+  # If already cached tarball, means already fetched.
+  # test -f ${cache_dir}/${elixir_tar} && exit
 
   cd ${cache_dir}
   echo "Fetching Elixir ${elixir_version}"
@@ -69,6 +69,7 @@ PATH=${build_pack_dir}:$PATH
 )
 
 rm -rf ${elixir_root}
+echo "Extracting: ${cache_dir}/${elixir_tar}"
 tar zxf ${cache_dir}/${elixir_tar}
 mv "elixir-${elixir_version}" ${elixir_root}
 
