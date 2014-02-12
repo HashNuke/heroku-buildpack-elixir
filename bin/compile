@@ -31,7 +31,7 @@ echo "Elixir version $elixir_version"
 (
   set -e
 
-  test -f ${cache_dir}/${erlang_tar} && exit
+  # test -f ${cache_dir}/${erlang_tar} && exit
 
   # To not add too much stuff to the cache dir
   rm -rf ${cache_dir}/*
