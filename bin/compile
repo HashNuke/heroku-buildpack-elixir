@@ -38,7 +38,10 @@ echo "Elixir version $elixir_version"
 
   echo "Fetching Erlang source..."
   curl -ksO ${erlang_source_url} -o ${cache_dir}/${erlang_tar} || exit 1
+  ls ${cache_dir}/
 )
+
+ls ${cache_dir}/
 
 echo "Unpacking Erlang ${erlang_version}"
 tar zxf ${cache_dir}/${erlang_tar} -C ${erlang_root} --strip-components=2
