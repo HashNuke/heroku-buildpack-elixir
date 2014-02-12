@@ -16,19 +16,19 @@ if [ -f $language_versions_file ];
 then
   source $language_versions_file
 else
-  echo "WARNING: .language_versions wasn't found"
-  echo "Setting default language versions"
+  echo "       WARNING: .language_versions wasn't found"
+  echo "       Setting default language versions"
   echo ${build_pack_dir}/.language_versions
   source ${build_pack_dir}/.language_versions
 fi
+
+echo "Erlang version $erlang_version"
+echo "Elixir version $elixir_version"
 
 erlang_tar="OTP_${erlang_version}.tgz"
 erlang_source_url="https://s3.amazonaws.com/heroku-buildpack-erlang/${erlang_tar}"
 elixir_tar="v${elixir_version}.tar.gz"
 elixir_source_url="https://github.com/elixir-lang/elixir/archive/${elixir_tar}"
-
-echo "Erlang version $erlang_version"
-echo "Elixir version $elixir_version"
 
 (
   set -e
@@ -39,20 +39,20 @@ echo "Elixir version $elixir_version"
   rm -rf ${cache_dir}/*
 
   cd ${cache_dir}
-  echo "Fetching Erlang source..."
+  echo "-----> Fetching Erlang source..."
   curl -ksO ${erlang_source_url} -o ${erlang_tar} || exit 1
 )
 
 echo "Unpacking Erlang ${erlang_version}"
 tar zxf ${cache_dir}/${erlang_tar} -C ${erlang_root} --strip-components=2
 
-echo "Installing Erlang..."
+echo "-----> Installing Erlang ${erlang_version}"
 ln -s ${erlang_root} /app/erlang
 ${erlang_root}/Install -minimal /app/erlang
 PATH=/app/erlang/bin:$PATH
 
 
-echo "Installing Rebar from buildpack"
+echo "-----> Installing Rebar from buildpack"
 cp ${build_pack_dir}/rebar ${build_dir}/
 
 PATH=${build_pack_dir}:$PATH
@@ -64,12 +64,12 @@ PATH=${build_pack_dir}:$PATH
   # test -f ${cache_dir}/${elixir_tar} && exit
 
   cd ${cache_dir}
-  echo "Fetching Elixir ${elixir_version} from ${elixir_source_url}"
+  echo "-----> Fetching Elixir ${elixir_version} from ${elixir_source_url}"
   curl -LksO ${elixir_source_url} || exit 1
 )
 
 rm -rf ${elixir_root}
-echo "Extracting: ${cache_dir}/${elixir_tar}"
+echo "-----> Extracting: ${cache_dir}/${elixir_tar}"
 tar zxf ${cache_dir}/${elixir_tar}
 mv "elixir-${elixir_version}" ${elixir_root}
 
@@ -84,10 +84,15 @@ mv "elixir-${elixir_version}" ${elixir_root}
 ln -s ${elixir_root} /app/elixir
 PATH=/app/elixir/bin:$PATH
 
-echo "Fetching dependencies"
+echo `pwd`
+cd /app
+echo `pwd`
+
+echo "-----> Fetching app dependencies"
 MIX_ENV=prod mix deps.get
 
-echo "Compiling the app"
+echo "-----> Compiling the app"
 MIX_ENV=prod mix compile
 
+echo "-----> Creating .profile.d with env vars"
 mkdir ${build_dir}/.profile.d
