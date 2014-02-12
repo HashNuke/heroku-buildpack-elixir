@@ -22,8 +22,7 @@ else
   source ${build_pack_dir}/.language_versions
 fi
 
-echo "Erlang version $erlang_version"
-echo "Elixir version $elixir_version"
+echo "-----> Will use Erlang ${erlang_version} and Elixir ${elixir_version}"
 
 erlang_tar="OTP_${erlang_version}.tgz"
 erlang_source_url="https://s3.amazonaws.com/heroku-buildpack-erlang/${erlang_tar}"
@@ -39,11 +38,11 @@ elixir_source_url="https://github.com/elixir-lang/elixir/archive/${elixir_tar}"
   rm -rf ${cache_dir}/*
 
   cd ${cache_dir}
-  echo "-----> Fetching Erlang source..."
+  echo "-----> Fetching Erlang ${erlang_version}"
   curl -ksO ${erlang_source_url} -o ${erlang_tar} || exit 1
 )
 
-echo "Unpacking Erlang ${erlang_version}"
+echo "-----> Unpacking Erlang ${erlang_version}"
 tar zxf ${cache_dir}/${erlang_tar} -C ${erlang_root} --strip-components=2
 
 echo "-----> Installing Erlang ${erlang_version}"
