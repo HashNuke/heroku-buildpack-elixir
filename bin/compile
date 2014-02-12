@@ -69,7 +69,7 @@ PATH=${build_pack_dir}:$PATH
 )
 
 rm -rf ${elixir_root}
-tar zxf ${cache_dir}/${elixir_tar} --strip-components=2
+tar zxf ${cache_dir}/${elixir_tar}
 mv "elixir-${elixir_version}" ${elixir_root}
 
 echo "Listing cache dir"
