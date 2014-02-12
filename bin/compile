@@ -61,7 +61,7 @@ PATH=${build_pack_dir}:$PATH
   set -e
 
   # If already cached tarball, means already fetched.
-  # test -f ${cache_dir}/${elixir_tar} && exit
+  test -f ${cache_dir}/${elixir_tar} && exit
 
   cd ${cache_dir}
   echo "-----> Fetching Elixir ${elixir_version} from ${elixir_source_url}"
@@ -88,7 +88,11 @@ echo `pwd`
 cd ${build_dir}
 echo `pwd`
 
-echo "-----> Fetching app dependencies"
+# Unset this var so that if the parent dir is a git repo, it isn't detected
+# And all git operations are performed on the respective repos
+unset GIT_DIR
+
+echo "-----> Fetching app dependencies with Mix"
 MIX_ENV=prod mix deps.get
 
 echo "-----> Compiling the app"
