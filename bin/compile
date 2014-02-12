@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 build_pack_dir=$(cd $(dirname $(dirname $0)); pwd)
 build_dir=$1
@@ -16,7 +16,7 @@ then
 else
   echo "WARNING: .language_versions wasn't found"
   echo "Setting default language versions"
-  ls $build_pack_dir
+  echo ${build_pack_dir}/.language_versions
   source ${build_pack_dir}/.language_versions
 fi
 
@@ -85,4 +85,3 @@ echo "Compiling the app"
 MIX_ENV=prod mix compile
 
 mkdir ${build_dir}/.profile.d
-
