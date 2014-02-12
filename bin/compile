@@ -37,7 +37,7 @@ echo "Elixir version $elixir_version"
   rm -rf ${cache_dir}/*
 
   echo "Fetching Erlang source..."
-  curl -ksO ${erlang_source_url} -o ${erlang_tar} || exit 1
+  curl -ksO ${erlang_source_url} -o ${cache_dir}/${erlang_tar} || exit 1
 )
 
 echo "Unpacking Erlang ${erlang_version}"
