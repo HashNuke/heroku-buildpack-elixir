@@ -23,20 +23,18 @@ else
   source ${build_pack_dir}/.language_versions
 fi
 
-erlang_tar="otp_src_${erlang_version}.tar.gz"
-erlang_source_url="https://packages.erlang-solutions.com/erlang/esl-erlang-src/${erlang_tar}"
+erlang_tar="OTP_${erlang_version}.tgz"
+erlang_source_url="https://s3.amazonaws.com/heroku-buildpack-erlang/${erlang_tar}"
 elixir_tar="v${elixir_version}.tar.gz"
 elixir_source_url="https://github.com/elixir-lang/elixir/tarball/${elixir_tar}"
 
 echo "Erlang version $erlang_version"
 echo "Elixir version $elixir_version"
 
-ls ${cache_dir}
-
 (
   set -e
 
-  # test -f ${cache_dir}/${erlang_tar} && exit
+  test -f ${cache_dir}/${erlang_tar} && exit
 
   # To not add too much stuff to the cache dir
   rm -rf ${cache_dir}/*
