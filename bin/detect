@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+mix_file_url="$1/mix.exs"
+
+if [ -f $mix_file_url ];
+then
+  echo "elixir"
+  exit 0
+else
+  exit 1
+fi
