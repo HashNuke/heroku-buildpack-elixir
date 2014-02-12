@@ -66,10 +66,16 @@ PATH=${build_pack_dir}:$PATH
 
   cd ${cache_dir}
   echo "Fetching Elixir ${elixir_version}"
-  curl -LksO ${elixir_source_url} -o $elixir_tar || exit 1
-  tar zxf ${cache_dir}/${elixir_tar} -C ${elixir_root} --strip-components=2
+  curl -LksO ${elixir_source_url} || exit 1
 )
 
+tar zxf ${cache_dir}/${elixir_tar} -C ${elixir_root} --strip-components=2
+
+echo "Listing cache dir"
+ls $cache_dir
+
+echo "Listing elixir root"
+ls ${elixir_root}
 
 (
   set -e
