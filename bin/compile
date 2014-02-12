@@ -1,0 +1,85 @@
+#!/bin/sh
+
+build_pack_dir=$(cd $(dirname $(dirname $0)); pwd)
+build_dir=$1
+cache_dir=$2
+erlang_root="${build_dir}/erlang"
+elixir_root="${build_dir}/elixir"
+
+language_versions_file="${build_dir}/.language_versions"
+
+source $language_versions_file
+
+if [ -f $language_versions_file ];
+then
+  source $language_versions_file
+else
+  echo "WARNING: .language_versions wasn't found"
+  echo "Setting default language versions"
+  source ${build_pack_dir}/.language_versions
+fi
+
+erlang_tar="otp_src_${erlang_version}.tar.gz"
+erlang_source_url="https://packages.erlang-solutions.com/erlang/esl-erlang-src/${erlang_tar}"
+elixir_tar="v${elixir_version}.tar.gz"
+elixir_source_url="https://github.com/elixir-lang/elixir/tarball/${elixir_tar}"
+
+echo "Erlang version $erlang_version"
+echo "Elixir version $elixir_version"
+
+(
+  set -e
+
+  test -f ${cache_dir}/${erlang_tar} && exit
+
+  # To not add too much stuff to the cache dir
+  rm -rf ${cache_dir}/*
+)
+
+echo "Fetching Erlang source..."
+curl -sO ${erlang_source_url} ${erlang_tar} || exit 1
+
+echo "Unpacking Erlang ${erlang_version}"
+tar zxf ${cache_dir}/${erlang_tar} -C ${erlang_root} --strip-components=2
+
+echo "Installing Erlang..."
+ln -s ${erlang_root} /app/erlang
+${erlang_root}/Install -minimal /app/otp
+
+echo "Installing Rebar from buildpack"
+cp ${build_pack_dir}/rebar $build_dir/
+
+PATH=${build_pack_dir}:$PATH
+
+(
+  set -e
+
+  # If already cached tarball, means already built. So exit
+  test -f ${cache_dir}/${elixir_tar} && exit
+
+  cd ${cache_dir}
+  echo "Fetching Elixir ${elixir_version}"
+  curl -LsO ${elixir_source_url} -o $elixir_tar || exit 1
+  tar zxf ${cache_dir}/${elixir_tar} -C ${elixir_root} --strip-components=2
+)
+
+
+(
+  set -e
+
+  echo "Building Elixir ${elixir_version}"
+  cd ${elixir_root}
+  make > /dev/null
+)
+
+ln -s ${elixir_root} /app/elixir
+PATH=/app/elixir/bin:$PATH
+
+echo "Fetching dependencies"
+MIX_ENV=prod mix deps.get
+
+echo "Compiling the app"
+MIX_ENV=prod mix compile
+
+mkdir ${build_dir}/.profile.d
+

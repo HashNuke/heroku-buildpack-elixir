@@ -1,0 +1,8 @@
+#!/bin/sh
+
+cat << EOF
+---
+config_vars:
+  PATH: /app/erlang/bin:/app/elixir/bin:bin:/usr/bin:/bin
+  MIX_ENV: prod
+EOF
