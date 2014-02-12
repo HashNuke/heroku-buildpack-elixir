@@ -27,7 +27,8 @@ echo "-----> Will use Erlang ${erlang_version} and Elixir ${elixir_version}"
 erlang_tar="OTP_${erlang_version}.tgz"
 erlang_source_url="https://s3.amazonaws.com/heroku-buildpack-erlang/${erlang_tar}"
 elixir_tar="v${elixir_version}.tar.gz"
-elixir_source_url="https://github.com/elixir-lang/elixir/archive/${elixir_tar}"
+elixir_zip="v${elixir_version}.zip"
+elixir_source_url="https://github.com/elixir-lang/elixir/releases/download/v${elixir_version}/${elixir_zip}"
 
 (
   set -e
@@ -60,7 +61,7 @@ PATH=${build_pack_dir}:$PATH
   set -e
 
   # If already cached tarball, means already fetched.
-  test -f ${cache_dir}/${elixir_tar} && exit
+  test -f ${cache_dir}/${elixir_zip} && exit
 
   cd ${cache_dir}
   echo "-----> Fetching Elixir ${elixir_version} from ${elixir_source_url}"
@@ -68,24 +69,32 @@ PATH=${build_pack_dir}:$PATH
 )
 
 rm -rf ${elixir_root}
-echo "-----> Extracting: ${cache_dir}/${elixir_tar}"
-tar zxf ${cache_dir}/${elixir_tar}
-mv "elixir-${elixir_version}" ${elixir_root}
+echo "-----> Extracting: ${cache_dir}/${elixir_zip}"
 
-(
-  set -e
+### Use tar only if master
+# tar zxf ${cache_dir}/${elixir_tar}
+# mv "elixir-${elixir_version}" ${elixir_root}
 
-  echo "-----> Building Elixir ${elixir_version}"
-  cd ${elixir_root}
-  make > /dev/null
-)
+
+mkdir ${elixir_root}
+cd ${elixir_root}
+
+# Extract the zip file using jar cmd. OH WHATTAY HACK.
+jar xf ${cache_dir}/${elixir_zip}
+
+cd -
+
+### Use only if building from source
+# (
+#   set -e
+# 
+#   echo "-----> Building Elixir ${elixir_version}"
+#   cd ${elixir_root}
+#   make > /dev/null
+# )
 
 ln -s ${elixir_root} /app/elixir
 PATH=/app/elixir/bin:$PATH
-
-echo `pwd`
-cd ${build_dir}
-echo `pwd`
 
 # Unset this var so that if the parent dir is a git repo, it isn't detected
 # And all git operations are performed on the respective repos
