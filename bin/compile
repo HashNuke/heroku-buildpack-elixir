@@ -27,7 +27,7 @@ echo "-----> Will use Erlang ${erlang_version} and Elixir ${elixir_version}"
 erlang_tar="OTP_${erlang_version}.tgz"
 erlang_source_url="https://s3.amazonaws.com/heroku-buildpack-erlang/${erlang_tar}"
 elixir_tar="v${elixir_version}.tar.gz"
-elixir_zip="v${elixir_version}.zip"
+elixir_zip="Precompiled.zip"
 elixir_source_url="https://github.com/elixir-lang/elixir/releases/download/v${elixir_version}/${elixir_zip}"
 
 (
