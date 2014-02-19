@@ -6,8 +6,4 @@ addons:
   heroku-postgresql:hobby-dev
 default_process_types:
   web: mix server -p \$PORT
-config_vars:
-  PLATFORM: heroku
-  PATH: /app/erlang/bin:/app/elixir/bin:bin:/usr/bin:/bin
-  MIX_ENV: prod
 EOF
