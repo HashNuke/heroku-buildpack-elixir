@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cat << EOF
+cat <<EOF
 ---
 addons:
   heroku-postgresql:hobby-dev
