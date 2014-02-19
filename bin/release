@@ -4,6 +4,10 @@ cat << EOF
 ---
 addons:
   heroku-postgresql:hobby-dev
+config_vars:
+  MIX_ENV: prod
+  PLATFORM: heroku
+  PATH: $PATH:/app/erlang/bin:/app/elixir/bin
 default_process_types:
   web: mix server -p \$PORT
 EOF
