@@ -19,7 +19,7 @@ Has support for using prebuilt Elixir binaries. Borrows heavily from Gosha Arini
 
 * Create a `.language_versions` file in your app's root dir.
 
-* Refer to the default `[.language_versions](https://github.com/HashNuke/heroku-elixir-buildpack/blob/master/.language_versions)` that comes with this repository for syntax. It is just a bash file.
+* Refer to the default [`.language_versions`](https://github.com/HashNuke/heroku-elixir-buildpack/blob/master/.language_versions) that comes with this repository for syntax. It is just a bash file.
 
 
 #### Procfile
