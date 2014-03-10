@@ -10,9 +10,15 @@ mkdir -p ${erlang_root}
 
 language_versions_file="${build_dir}/.language_versions"
 
+echo "ls build dir"
 ls $build_dir
+echo "ls /app"
+ls /app
+echo "PWD"
 echo `pwd`
+echo "|| ERLANG ROOT"
 ls $erlang_root
+echo "ERLANG ROOT ||"
 
 source $language_versions_file
 
