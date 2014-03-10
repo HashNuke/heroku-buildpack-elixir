@@ -10,6 +10,10 @@ mkdir -p ${erlang_root}
 
 language_versions_file="${build_dir}/.language_versions"
 
+ls $build_dir
+echo `pwd`
+ls $erlang_root
+
 source $language_versions_file
 
 if [ -f $language_versions_file ];
