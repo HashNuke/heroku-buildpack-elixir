@@ -15,6 +15,17 @@ function try_run() {
 }
 
 
+# Will exit if the file is present
+#
+# Usage:
+#
+#     exit_if_present path/to/file
+#
+function exit_if_file_present() {
+  test -f $1 && exit
+}
+
+
 function ensure_build_and_cache_dirs() {
   mkdir -p $build_path $cache_path
 }
@@ -82,7 +93,19 @@ function infer_versions() {
   output_line "Rebar ${rebar_version[0]} ${rebar_version[1]}"
 }
 
+
 function add_erlang() {
+  local erlang_tar_file="OTP_${erlang_version}.tgz"
+  local erlang_package_url="https://s3.amazonaws.com/heroku-buildpack-erlang/${erlang_tar_file}"
+
+  exit_if_file_present ${cache_dir}/${erlang_tar_file}
+
+  # Delete previously downloaded OTP tar files
+  rm -rf ${cache_dir}/OTP_*.tgz
+
+  cd ${cache_dir}
+  output_section "Fetching Erlang ${erlang_version}"
+  curl -ksO ${erlang_package_url} -o ${erlang_tar_file} || exit 1
 }
 
 
