@@ -1,2 +1,3 @@
-elixir_version="0.12.4"
-erlang_version="R16B02"
+erlang_version="R16B03-1"
+elixir_version=0.12.5
+rebar_version=(tag 2.2.0)
