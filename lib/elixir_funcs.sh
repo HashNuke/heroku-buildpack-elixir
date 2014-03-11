@@ -23,6 +23,7 @@ function download_elixir() {
   else
     output_section "Downloading precompiled binary from Github"
     exit_if_file_exists ${cache_path}/${download_filename}
+    elixir_changed=true
     clean_elixir_downloads
 
     local elixir_download_url="https://github.com/elixir-lang/elixir/releases/download/v${elixir_version}/Precompiled.zip"

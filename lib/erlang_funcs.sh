@@ -6,7 +6,7 @@ function erlang_tarball() {
 function download_erlang() {
   local erlang_package_url="https://s3.amazonaws.com/heroku-buildpack-erlang/$(erlang_tarball)"
 
-  exit_if_file_present ${cache_path}/$(erlang_tarball)
+  exit_if_file_exists ${cache_path}/$(erlang_tarball)
 
   # Set this so that rebar and elixir will be force-rebuilt
   erlang_changed=true

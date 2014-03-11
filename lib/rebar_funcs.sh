@@ -4,7 +4,7 @@ function rebar_tarball() {
 
 
 function download_rebar() {
-  exit_if_file_present ${cache_path}/$(rebar_tarball)
+  exit_if_file_exists ${cache_path}/$(rebar_tarball)
   rebar_changed=true
 
   rm -rf ${cache_path}/rebar-*.tar.gz
