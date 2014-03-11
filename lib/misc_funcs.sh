@@ -76,7 +76,9 @@ function get_version() {
 function github_download() {
   # We don't use the -J option because curl on Heroku is really old.
   # So we pass a filename ourselves.
-  curl -k -s -L "https://github.com/$1/$2/archive/$3.tar.gz" -o "${cache_dir}/$2-$3.tar.gz" || exit 1
+  echo "https://github.com/$1/$2/archive/$3.tar.gz"
+  echo "${cache_path}/$2-$3.tar.gz"
+  curl -k -s -L "https://github.com/$1/$2/archive/$3.tar.gz" -o "${cache_path}/$2-$3.tar.gz" || exit 1
 }
 
 
