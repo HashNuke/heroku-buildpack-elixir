@@ -1,33 +1,42 @@
-## Heroku Elixir Buildpack
+# Heroku Elixir Buildpack
 
-[ This readme is also a TODO. More docs coming. After I get some sleep. ]
+Heroku buildpack for Elixir applications.
 
-Has support for using prebuilt Elixir binaries. Borrows heavily from Gosha Arinich's [work](https://github.com/goshakkk/heroku-buildpack-elixir).
+#### Features
 
-Version support:
+* Easy version configuration
+* Use **prebuilt Elixir binaries** or build Elixir from source
+* Allows configuring Erlang and Rebar versions
 
-* Erlang - Prebuilt packages
-* Elixir - Prebuilt binaries, building from a branch, tag or a commit
+
+__Version support:__
+
+* Erlang - Prebuilt packages from Heroku Erlang buildpack
+* Elixir - Prebuilt binaries or building from a branch, tag or a commit
 * Rebar - Always built from source. You can specify tag, branch or commit.
 
 
-#### To create a Heroku app with this buildpack
+## Usage
 
-    heroku create --buildpack "https://github.com/HashNuke/heroku-elixir-buildpack.git"
+#### Create a Heroku app with this buildpack
 
+```
+heroku create --buildpack "https://github.com/HashNuke/heroku-elixir-buildpack.git"
+```
 
-#### To set the buildpack of an existing Heroku app
+#### Set the buildpack of an existing Heroku app
 
-    heroku config:add BUILDPACK_URL="https://github.com/HashNuke/heroku-elixir-buildpack.git"
+```
+heroku config:add BUILDPACK_URL="https://github.com/HashNuke/heroku-elixir-buildpack.git"
+```
 
-
-#### Setting Elixir, Erlang and Rebar versions
+## Setting Elixir, Erlang and Rebar versions
 
 Create a `.language_versions` file in your app's root dir.
 
 If you don't specify any tool's version, then the default version from the buildpack's `[.language_versions](https://github.com/HashNuke/heroku-elixir-buildpack/blob/master/.language_versions)` file will be used for it.
 
-Here are valid examples:
+__Here are valid examples:__
 
 * Use prebuilt Elixir binary (available only for released versions)
 
@@ -64,3 +73,8 @@ rebar_version=(tag 2.2.0)
 #### Procfile
 
 You can add your own Procfile. If you don't add one, the default procfile will run `mix server -p $PORT`.
+
+
+## Credits
+
+&copy; Akash Manohar under The MIT License. Feel free to do whatever you want with it.
