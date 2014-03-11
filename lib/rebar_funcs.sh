@@ -10,7 +10,9 @@ function download_rebar() {
 
   rm -rf ${cache_path}/rebar-*.tar.gz
   cd ${cache_path}
+  echo "Actually starting to download..."
   github_download "rebar" "rebar" ${rebar_version[1]}
+  echo "Downloaded"
   cd - > /dev/null
 }
 
