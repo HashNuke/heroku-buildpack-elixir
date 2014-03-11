@@ -1,6 +1,7 @@
 function app_dependencies() {
   # ln -s ${elixir_path} /app/.platform_tools/elixir
   PATH=$elixir_path/bin:$PATH
+  local git_dir_value=$GIT_DIR
 
   # Enter build dir to perform app-related actions
   cd $build_path
@@ -11,12 +12,17 @@ function app_dependencies() {
 
   output_section "Fetching app dependencies with Mix"
   MIX_ENV=prod mix deps.get || exit 1
+
+  export GIT_DIR=$git_dir_value
+  cd -
 }
 
 
 function compile_app() {
+  cd $build_path
   output_section "Compiling the app"
   MIX_ENV=prod mix compile || exit 1
+  cd -
 }
 
 

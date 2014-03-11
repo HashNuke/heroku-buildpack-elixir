@@ -10,16 +10,56 @@ function download_elixir() {
     exit 1
   fi
 
+  local download_filename=$(elixir_download_file)
+
   if [ $git_version = true ];
   then
     output_section "Downloading source from Github"
+    exit_if_file_exists ${cache_path}/${download_filename}
+    clean_elixir_downloads
+
     github_download "elixir-lang/elixir", ${elixir_version[1]}
-    
   else
     output_section "Downloading precompiled binary from Github"
-    local download_filename="elixir-${elixir_version}-precompiled.zip"
     exit_if_file_exists ${cache_path}/${download_filename}
+    clean_elixir_downloads
+
     local elixir_download_url="https://github.com/elixir-lang/elixir/releases/download/v${elixir_version}/Precompiled.zip"
     curl -JksL $elixir_download_url -o $download_filename || exit 1
   fi
+}
+
+
+function install_elixir() {
+  mkdir $elixir_path
+
+  # If git version
+  if [ ${#elixir_version[@]} -eq 2 ];
+  then
+    output_section "Unpacking Elixir ${elixir_version[0]} ${elixir_version[1]}"
+    rm -rf ${elixir_path}
+    tar zxf $(elixir_download_file) -C ${elixir_path} --strip-components=1
+    cd $elixir_path
+    make
+    cd -
+  else
+    output_section "Unpacking Elixir ${elixir_version[0]}"
+    rm -rf ${elixir_path}
+    tar zxf $(elixir_download_file) -C ${elixir_path}
+  fi
+}
+
+
+function elixir_download_file() {
+  if [ ${#elixir_version[@]} -eq 2 ];
+  then
+    echo "elixir-${elixir_version[1]}.tar.gz"
+  else
+    echo "elixir-${elixir_version}-precompiled.zip"
+  fi
+}
+
+
+function clean_elixir_downloads() {
+  rm ${cache_path}/elixir*.tar.gz ${cache_path}/elixir*.zip
 }

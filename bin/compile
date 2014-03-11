@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# TODO set these vars to do other stuff
-# elixir_changed
-# erlang_changed
+# If this var is set to true later on,
+# then elixir and rebar will be rebuilt
+erlang_changed=false
 
 build_pack_path=$(cd . && pwd)
 build_path=$(cd $1 && pwd)
@@ -10,13 +10,8 @@ cache_path=$(cd $2 && pwd)
 platform_tools_path="${build_path}/.platform_tools"
 
 erlang_path="${platform_tools_path}/erlang"
-erlang_tarball="OTP_${erlang_version}.tgz"
-
 elixir_path="${platform_tools_path}/elixir"
 rebar_path="${platform_tools_path}/rebar"
-# platform_tools_symlink_path="/app/.platform_tools"
-
-echo ${build_pack_dir}
 
 source ${build_pack_dir}/lib/misc_funcs.sh
 source ${build_pack_dir}/lib/erlang_funcs.sh
@@ -24,7 +19,6 @@ source ${build_pack_dir}/lib/elixir_funcs.sh
 source ${build_pack_dir}/lib/rebar_funcs.sh
 source ${build_pack_dir}/lib/app_funcs.sh
 
-#TODO add rebar to path before building Elixir
 
 commands_to_run=(
   ensure_build_and_cache_dirs
@@ -37,9 +31,7 @@ commands_to_run=(
   build_rebar
   install_rebar
 
-
   download_elixir
-  build_elixir
   install_elixir
 
   app_dependencies
@@ -49,47 +41,5 @@ commands_to_run=(
 
 for command in "${commands_to_run[@]}"
 do
-  echo $command
+  eval $command
 done
-
-# PATH=${build_pack_dir}:$PATH
-# 
-# (
-#   set -e
-# 
-#   # If already cached tarball, means already fetched.
-#   test -f ${cache_dir}/${elixir_zip} && exit
-# 
-#   cd ${cache_dir}
-#   echo "-----> Fetching Elixir ${elixir_version} from ${elixir_source_url}"
-#   curl -LksO ${elixir_source_url} || exit 1
-# )
-# 
-# rm -rf ${elixir_root}
-# echo "-----> Extracting: ${cache_dir}/${elixir_zip}"
-# 
-# ### Use tar only if master
-# # tar zxf ${cache_dir}/${elixir_tar}
-# # mv "elixir-${elixir_version}" ${elixir_root}
-# 
-# 
-# mkdir ${elixir_root}
-# cd ${elixir_root}
-# 
-# # Extract the zip file using jar cmd. OH WHATTAY HACK.
-# jar xf ${cache_dir}/${elixir_zip}
-# 
-# # Everything in the bin dir should be executable
-# chmod +x bin/*
-# 
-# # Jump back
-# cd -
-# 
-# ### Use only if building from source
-# # (
-# #   set -e
-# # 
-# #   echo "-----> Building Elixir ${elixir_version}"
-# #   cd ${elixir_root}
-# #   make > /dev/null
-# # )
