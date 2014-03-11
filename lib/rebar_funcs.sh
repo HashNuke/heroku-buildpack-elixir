@@ -21,6 +21,7 @@ function build_rebar() {
 
     tar zxf $(rebar_tarball) -C ${rebar_build_path} --strip-components=1
     cd $rebar_build_path
+    chmod +x bootstrap
     ./bootstrap
     cd - > /dev/null
   fi;
