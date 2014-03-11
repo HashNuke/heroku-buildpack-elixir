@@ -79,7 +79,7 @@ function github_download() {
 
 
 function infer_versions() {
-  output_section "Erlang, Elixir and Rebar versions"
+  output_section "Checking Erlang, Elixir and Rebar versions"
 
   local custom_language_versions_file="${build_path}/.language_versions"
 
@@ -95,7 +95,7 @@ function infer_versions() {
   fi
 
   output_line "Will use the following versions:"
-  output_line "Erlang ${erlang_version}"
-  output_line "Elixir ${elixir_version[0]} ${elixir_version[1]}"
-  output_line "Rebar ${rebar_version[0]} ${rebar_version[1]}"
+  output_line "* Erlang ${erlang_version}"
+  output_line "* Elixir ${elixir_version[0]} ${elixir_version[1]}"
+  output_line "* Rebar ${rebar_version[0]} ${rebar_version[1]}"
 }

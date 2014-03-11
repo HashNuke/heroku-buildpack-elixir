@@ -49,7 +49,7 @@ function build_elixir() {
     tar zxf $(elixir_download_file) -C ${elixir_build_path} --strip-components=1
     cd $elixir_build_path
     make
-    cd -
+    cd - > /dev/null
   else
     output_section "Unpacking Elixir ${elixir_version[0]}"
     rm -rf ${elixir_build_path}

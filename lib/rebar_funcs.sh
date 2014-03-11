@@ -16,7 +16,7 @@ function download_rebar() {
   rm $rebar_build_path
   cd ${cache_path}
   github_download "rebar/rebar", ${rebar_version[1]}
-  cd -
+  cd - > /dev/null
 }
 
 function build_rebar() {
@@ -25,7 +25,7 @@ function build_rebar() {
     tar zxf $(rebar_download_file) -C ${rebar_build_path} --strip-components=1
     cd $rebar_build_path
     ./bootstrap
-    cd -
+    cd - > /dev/null
   fi;
 }
 
@@ -33,7 +33,7 @@ function install_rebar() {
   cd $rebar_build_path
   output_section "Copying rebar"
   cp rebar $platform_tools_path/
-  cd -
+  cd - > /dev/null
   PATH=$platform_tools_path/bin:$PATH
 }
 
