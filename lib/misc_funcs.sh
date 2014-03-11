@@ -71,10 +71,12 @@ function get_version() {
 #
 # Usage:
 #
-#     github_download "elixir-lang/elixir" "master"
+#     github_download "elixir-lang" "elixir" "master"
 #
 function github_download() {
-  curl -k -s -O -J -L "https://github.com/$1/archive/$2.tar.gz" || exit 1
+  # We don't use the -J option because curl on Heroku is really old.
+  # So we pass a filename ourselves.
+  curl -k -s -L "https://github.com/$1/$2/archive/$3.tar.gz" -o "$2-$3.tar.gz" || exit 1
 }
 
 

@@ -10,7 +10,7 @@ function download_rebar() {
   rm -rf ${cache_path}/rebar-*.tar.gz
   rm -rf $rebar_build_path
   cd ${cache_path}
-  github_download "rebar/rebar", ${rebar_version[1]}
+  github_download "rebar" "rebar" ${rebar_version[1]}
   cd - > /dev/null
 }
 

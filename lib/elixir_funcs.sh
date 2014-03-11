@@ -19,14 +19,14 @@ function download_elixir() {
     elixir_changed=true
     clean_elixir_downloads
 
-    github_download "elixir-lang/elixir", ${elixir_version[1]}
+    github_download "elixir-lang" "elixir" ${elixir_version[1]}
   else
     output_section "Downloading precompiled binary from Github"
     exit_if_file_exists ${cache_path}/${download_filename}
     clean_elixir_downloads
 
     local elixir_download_url="https://github.com/elixir-lang/elixir/releases/download/v${elixir_version}/Precompiled.zip"
-    curl -JksL $elixir_download_url -o $download_filename || exit 1
+    curl -ksL $elixir_download_url -o $download_filename || exit 1
   fi
 }
 
