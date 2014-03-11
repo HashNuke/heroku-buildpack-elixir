@@ -35,12 +35,19 @@ function build_erlang() {
   mkdir ${erlang_build_path}
   tar zxf ${cache_path}/$(erlang_tarball) -C ${erlang_build_path} --strip-components=2
 
-  output_section "Installing Erlang ${erlang_version}"
+  output_section "Building Erlang ${erlang_version}"
   ${erlang_build_path}/Install -minimal ${erlang_build_path}
 }
 
 
 function install_erlang() {
+  output_section "Installing Erlang ${erlang_version}"
+  echo "LIST BUILD"
+  ls $erlang_build_path
+
+  echo "LIST TARGET"
+  ls $erlang_path
+
   cp -R $erlang_build_path $erlang_path
   PATH=${erlang_path}/bin:$PATH
 }
