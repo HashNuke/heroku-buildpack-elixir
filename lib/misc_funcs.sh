@@ -26,7 +26,7 @@ function exit_if_file_present() {
 }
 
 
-function ensure_build_and_cache_dirs() {
+function ensure_build_and_cache_paths() {
   mkdir -p $build_path $cache_path
 }
 
@@ -71,10 +71,21 @@ function get_version() {
 }
 
 
+# Download archive of branch, tag or commit of a project from Github
+#
+# Usage:
+#
+#     github_download "elixir-lang/elixir" "master"
+#
+function github_download() {
+  curl -JksOL "https://github.com/$1/archive/$2.tar.gz" || exit 1
+}
+
+
 function infer_versions() {
   output_section "Erlang, Elixir and Rebar versions"
 
-  local custom_language_versions_file="${build_dir}/.language_versions"
+  local custom_language_versions_file="${build_path}/.language_versions"
 
   # Source for default versions file from buildpack first
   source "${build_pack_path}/.language_versions"
@@ -91,51 +102,4 @@ function infer_versions() {
   output_line "Erlang ${erlang_version}"
   output_line "Elixir ${elixir_version[0]} ${elixir_version[1]}"
   output_line "Rebar ${rebar_version[0]} ${rebar_version[1]}"
-}
-
-
-function add_erlang() {
-  local erlang_tar_file="OTP_${erlang_version}.tgz"
-  local erlang_package_url="https://s3.amazonaws.com/heroku-buildpack-erlang/${erlang_tar_file}"
-
-  exit_if_file_present ${cache_dir}/${erlang_tar_file}
-
-  # Delete previously downloaded OTP tar files
-  rm -rf ${cache_dir}/OTP_*.tgz
-
-  cd ${cache_dir}
-  output_section "Fetching Erlang ${erlang_version}"
-  curl -ksO ${erlang_package_url} -o ${erlang_tar_file} || exit 1
-}
-
-
-function add_elixir() {
-}
-
-
-function download_erlang() {
-}
-
-
-function download_elixir() {
-}
-
-
-function download_rebar() {
-}
-
-
-function build_erlang() {
-}
-
-
-function build_rebar() {
-}
-
-
-function build_elixir() {
-}
-
-
-function build_app_dependencies() {
 }
