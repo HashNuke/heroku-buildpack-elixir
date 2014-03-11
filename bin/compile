@@ -7,6 +7,10 @@ rebar_changed=false
 elixir_changed=false
 
 build_pack_path=$(cd $(dirname $(dirname $0)); pwd)
+
+# Ensure dirs are present
+mkdir -p $1 $2
+
 build_path=$(cd $1 && pwd)
 cache_path=$(cd $2 && pwd)
 platform_tools_path="${build_path}/.platform_tools"
@@ -28,7 +32,6 @@ source ${build_pack_path}/lib/app_funcs.sh
 
 
 commands_to_run=(
-  ensure_build_and_cache_dirs
   infer_versions
 
   download_erlang

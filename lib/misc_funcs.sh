@@ -26,10 +26,6 @@ function exit_if_file_present() {
 }
 
 
-function ensure_build_and_cache_paths() {
-  mkdir -p $build_path $cache_path
-}
-
 # Outputs log line
 #
 # Usage:
