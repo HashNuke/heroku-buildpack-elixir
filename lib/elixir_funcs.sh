@@ -47,6 +47,8 @@ function build_elixir() {
     rm -rf ${elixir_build_path}
     mkdir $elixir_build_path
 
+    ls $cache_path/$(elixir_download_file)
+
     tar zxf $cache_path/$(elixir_download_file) -C ${elixir_build_path} --strip-components=1
     cd $elixir_build_path
     make
@@ -68,9 +70,9 @@ function install_elixir() {
 function elixir_download_file() {
   if [ ${#elixir_version[@]} -eq 2 ];
   then
-    echo "elixir-${elixir_version[1]}.tar.gz"
+    echo elixir-${elixir_version[1]}.tar.gz
   else
-    echo "elixir-${elixir_version}-precompiled.zip"
+    echo elixir-${elixir_version}-precompiled.zip
   fi
 }
 
