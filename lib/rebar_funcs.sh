@@ -10,9 +10,7 @@ function download_rebar() {
 
   rm -rf ${cache_path}/rebar-*.tar.gz
   cd ${cache_path}
-  echo "Actually starting to download..."
   github_download "rebar" "rebar" ${rebar_version[1]}
-  echo "Downloaded"
   cd - > /dev/null
 }
 
@@ -24,7 +22,7 @@ function build_rebar() {
     mkdir $rebar_build_path
 
     output_section "Unpacking rebar ${rebar_version[0]} ${rebar_version[1]}"
-    tar zxf $(rebar_tarball) -C ${rebar_build_path} --strip-components=1
+    tar zxf $cache_path/$(rebar_tarball) -C ${rebar_build_path} --strip-components=1
 
     output_section "Building rebar ${rebar_version[0]} ${rebar_version[1]}"
     cd $rebar_build_path
@@ -38,7 +36,7 @@ function build_rebar() {
 function install_rebar() {
   output_section "Copying rebar"
   cd $rebar_build_path
-  cp rebar $platform_tools_path/
+  cp rebar $platform_tools_path
   cd - > /dev/null
   PATH=$platform_tools_path/bin:$PATH
 }
