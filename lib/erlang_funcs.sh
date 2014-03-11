@@ -42,13 +42,12 @@ function build_erlang() {
 
 function install_erlang() {
   output_section "Installing Erlang ${erlang_version}"
-  echo "LIST BUILD"
-  ls $erlang_build_path
-
   echo "LIST TARGET"
   ls $erlang_path
 
   cp -R $erlang_build_path $platform_tools_path
+  echo "LIST PLATFORM TOOLS"
+  ls $platform_tools_path
   echo "LIST TARGET AGAIN"
   ls $erlang_path
   PATH=${erlang_path}/bin:$PATH
