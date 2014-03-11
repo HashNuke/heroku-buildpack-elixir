@@ -48,6 +48,8 @@ function install_erlang() {
   echo "LIST TARGET"
   ls $erlang_path
 
-  cp -R $erlang_build_path $erlang_path
+  cp -R $erlang_build_path $platform_tools_path
+  echo "LIST TARGET AGAIN"
+  ls $erlang_path
   PATH=${erlang_path}/bin:$PATH
 }
