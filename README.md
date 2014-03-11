@@ -11,8 +11,8 @@ Heroku buildpack for Elixir applications.
 
 __Version support:__
 
-* Erlang - Prebuilt packages from Heroku Erlang buildpack
-* Elixir - Prebuilt binaries or building from a branch, tag or a commit
+* Erlang - Prebuilt packages
+* Elixir - Prebuilt binaries or build from a branch, tag or a commit
 * Rebar - Always built from source. You can specify tag, branch or commit.
 
 
