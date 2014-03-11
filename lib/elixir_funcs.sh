@@ -55,6 +55,9 @@ function build_elixir() {
     make
     cd - > /dev/null
   else
+    ls $cache_path
+    ls $cache_path/$(elixir_download_file)
+
     output_section "Unpacking Elixir ${elixir_version[0]}"
     rm -rf ${elixir_build_path}
     tar zxf $cache_path/$(elixir_download_file) -C ${elixir_build_path}
