@@ -6,7 +6,7 @@ erlang_changed=false
 rebar_changed=false
 elixir_changed=false
 
-build_pack_path=$(cd . && pwd)
+build_pack_path=$(cd $(dirname $(dirname $0)); pwd)
 build_path=$(cd $1 && pwd)
 cache_path=$(cd $2 && pwd)
 platform_tools_path="${build_path}/.platform_tools"
