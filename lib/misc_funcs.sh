@@ -74,7 +74,7 @@ function get_version() {
 #     github_download "elixir-lang/elixir" "master"
 #
 function github_download() {
-  curl -k -s -JOL "https://github.com/$1/archive/$2.tar.gz" || exit 1
+  curl -k -s -O -J -L "https://github.com/$1/archive/$2.tar.gz" || exit 1
 }
 
 

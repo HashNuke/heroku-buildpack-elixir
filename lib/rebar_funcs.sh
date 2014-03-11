@@ -1,9 +1,4 @@
 function rebar_tarball() {
-  echo "$(rebar_version_path).tar.gz"
-}
-
-
-function rebar_download_file() {
   echo "rebar-${rebar_version[1]}".tar.gz
 }
 
@@ -22,7 +17,7 @@ function download_rebar() {
 function build_rebar() {
   if [ $rebar_changed = true ] || [ $erlang_changed = true ];
   then
-    tar zxf $(rebar_download_file) -C ${rebar_build_path} --strip-components=1
+    tar zxf $(rebar_tarball) -C ${rebar_build_path} --strip-components=1
     cd $rebar_build_path
     ./bootstrap
     cd - > /dev/null
