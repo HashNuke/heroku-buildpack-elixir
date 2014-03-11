@@ -19,7 +19,6 @@ erlang_path="${platform_tools_path}/erlang"
 elixir_path="${platform_tools_path}/elixir"
 rebar_path="${platform_tools_path}/rebar"
 
-erlang_source_path="${cache_path}/erlang_source"
 erlang_build_path="${cache_path}/erlang"
 elixir_build_path="${cache_path}/elixir"
 rebar_build_path="${cache_path}/rebar"
