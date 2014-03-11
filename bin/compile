@@ -1,117 +1,95 @@
 #!/usr/bin/env bash
 
-build_pack_dir=$(cd $(dirname $(dirname $0)); pwd)
-build_dir=$1
-cache_dir=$2
-erlang_root="${build_dir}/erlang"
-elixir_root="${build_dir}/elixir"
-mkdir -p $1 $2
-mkdir -p ${erlang_root}
+# TODO set these vars to do other stuff
+# elixir_changed
+# erlang_changed
 
-language_versions_file="${build_dir}/.language_versions"
+build_pack_path=$(cd . && pwd)
+build_path=$(cd $1 && pwd)
+cache_path=$(cd $2 && pwd)
+platform_tools_path="${build_path}/.platform_tools"
 
-source $language_versions_file
+erlang_path="${platform_tools_path}/erlang"
+erlang_tarball="OTP_${erlang_version}.tgz"
 
-if [ -f $language_versions_file ];
-then
-  source $language_versions_file
-else
-  echo "       WARNING: .language_versions wasn't found"
-  echo "       Setting default language versions"
-  echo ${build_pack_dir}/.language_versions
-  source ${build_pack_dir}/.language_versions
-fi
+elixir_path="${platform_tools_path}/elixir"
+rebar_path="${platform_tools_path}/rebar"
+# platform_tools_symlink_path="/app/.platform_tools"
 
-echo "-----> Will use Erlang ${erlang_version} and Elixir ${elixir_version}"
+echo ${build_pack_dir}
 
-erlang_tar="OTP_${erlang_version}.tgz"
-erlang_source_url="https://s3.amazonaws.com/heroku-buildpack-erlang/${erlang_tar}"
-elixir_tar="v${elixir_version}.tar.gz"
-elixir_zip="Precompiled.zip"
-elixir_source_url="https://github.com/elixir-lang/elixir/releases/download/v${elixir_version}/${elixir_zip}"
+source ${build_pack_dir}/lib/misc_funcs.sh
+source ${build_pack_dir}/lib/erlang_funcs.sh
+source ${build_pack_dir}/lib/elixir_funcs.sh
+source ${build_pack_dir}/lib/rebar_funcs.sh
+source ${build_pack_dir}/lib/app_funcs.sh
 
-(
-  set -e
+#TODO add rebar to path before building Elixir
 
-  test -f ${cache_dir}/${erlang_tar} && exit
+commands_to_run=(
+  ensure_build_and_cache_dirs
+  infer_versions
 
-  # To not add too much stuff to the cache dir
-  rm -rf ${cache_dir}/*
+  download_erlang
+  install_erlang
 
-  cd ${cache_dir}
-  echo "-----> Fetching Erlang ${erlang_version}"
-  curl -ksO ${erlang_source_url} -o ${erlang_tar} || exit 1
+  download_rebar
+  build_rebar
+  install_rebar
+
+
+  download_elixir
+  build_elixir
+  install_elixir
+
+  app_dependencies
+  compile_app
+  write_profile_d_script
 )
 
-echo "-----> Unpacking Erlang ${erlang_version}"
-tar zxf ${cache_dir}/${erlang_tar} -C ${erlang_root} --strip-components=2
+for command in "${commands_to_run[@]}"
+do
+  echo $command
+done
 
-echo "-----> Installing Erlang ${erlang_version}"
-ln -s ${erlang_root} /app/erlang
-${erlang_root}/Install -minimal /app/erlang
-PATH=/app/erlang/bin:$PATH
-
-
-echo "-----> Installing Rebar from buildpack"
-cp ${build_pack_dir}/rebar ${build_dir}/
-
-PATH=${build_pack_dir}:$PATH
-
-(
-  set -e
-
-  # If already cached tarball, means already fetched.
-  test -f ${cache_dir}/${elixir_zip} && exit
-
-  cd ${cache_dir}
-  echo "-----> Fetching Elixir ${elixir_version} from ${elixir_source_url}"
-  curl -LksO ${elixir_source_url} || exit 1
-)
-
-rm -rf ${elixir_root}
-echo "-----> Extracting: ${cache_dir}/${elixir_zip}"
-
-### Use tar only if master
-# tar zxf ${cache_dir}/${elixir_tar}
-# mv "elixir-${elixir_version}" ${elixir_root}
-
-
-mkdir ${elixir_root}
-cd ${elixir_root}
-
-# Extract the zip file using jar cmd. OH WHATTAY HACK.
-jar xf ${cache_dir}/${elixir_zip}
-
-# Everything in the bin dir should be executable
-chmod +x bin/*
-
-# Jump back
-cd -
-
-### Use only if building from source
+# PATH=${build_pack_dir}:$PATH
+# 
 # (
 #   set -e
 # 
-#   echo "-----> Building Elixir ${elixir_version}"
-#   cd ${elixir_root}
-#   make > /dev/null
+#   # If already cached tarball, means already fetched.
+#   test -f ${cache_dir}/${elixir_zip} && exit
+# 
+#   cd ${cache_dir}
+#   echo "-----> Fetching Elixir ${elixir_version} from ${elixir_source_url}"
+#   curl -LksO ${elixir_source_url} || exit 1
 # )
-
-ln -s ${elixir_root} /app/elixir
-PATH=/app/elixir/bin:$PATH
-
-# Enter build dir to perform app-related actions
-cd ${build_dir}
-
-# Unset this var so that if the parent dir is a git repo, it isn't detected
-# And all git operations are performed on the respective repos
-unset GIT_DIR
-
-echo "-----> Fetching app dependencies with Mix"
-MIX_ENV=prod mix deps.get
-
-echo "-----> Compiling the app"
-MIX_ENV=prod mix compile
-
-echo "-----> Creating .profile.d with env vars"
-mkdir ${build_dir}/.profile.d
+# 
+# rm -rf ${elixir_root}
+# echo "-----> Extracting: ${cache_dir}/${elixir_zip}"
+# 
+# ### Use tar only if master
+# # tar zxf ${cache_dir}/${elixir_tar}
+# # mv "elixir-${elixir_version}" ${elixir_root}
+# 
+# 
+# mkdir ${elixir_root}
+# cd ${elixir_root}
+# 
+# # Extract the zip file using jar cmd. OH WHATTAY HACK.
+# jar xf ${cache_dir}/${elixir_zip}
+# 
+# # Everything in the bin dir should be executable
+# chmod +x bin/*
+# 
+# # Jump back
+# cd -
+# 
+# ### Use only if building from source
+# # (
+# #   set -e
+# # 
+# #   echo "-----> Building Elixir ${elixir_version}"
+# #   cd ${elixir_root}
+# #   make > /dev/null
+# # )
