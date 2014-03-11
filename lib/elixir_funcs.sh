@@ -56,7 +56,7 @@ function build_elixir() {
   else
     output_section "Unpacking Elixir ${elixir_version[0]}"
     rm -rf ${elixir_build_path}
-    tar zxf $(elixir_download_file) -C ${elixir_build_path}
+    tar zxf $cache_path/$(elixir_download_file) -C ${elixir_build_path}
   fi
 }
 

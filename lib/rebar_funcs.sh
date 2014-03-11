@@ -16,6 +16,11 @@ function download_rebar() {
 
 
 function build_rebar() {
+  echo "REBAR CHANGED?"
+  echo $rebar_changed
+  echo "ERLANG CHANGED?"
+  echo $erlang_changed
+
   if [ $rebar_changed = true ] || [ $erlang_changed = true ];
   then
     rm -rf $rebar_build_path
