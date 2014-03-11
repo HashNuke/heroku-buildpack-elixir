@@ -31,4 +31,3 @@ function install_rebar() {
   cd - > /dev/null
   PATH=$platform_tools_path/bin:$PATH
 }
-
