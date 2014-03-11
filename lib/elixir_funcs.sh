@@ -16,6 +16,7 @@ function download_elixir() {
   then
     output_section "Downloading source from Github"
     exit_if_file_exists ${cache_path}/${download_filename}
+    elixir_changed=true
     clean_elixir_downloads
 
     github_download "elixir-lang/elixir", ${elixir_version[1]}
@@ -30,23 +31,36 @@ function download_elixir() {
 }
 
 
-function install_elixir() {
-  mkdir $elixir_path
+function build_elixir() {
+  if [ $erlang_changed != true ] && [ $elixir_changed != true];
+  then
+    exit 0
+  fi
+
 
   # If git version
   if [ ${#elixir_version[@]} -eq 2 ];
   then
     output_section "Unpacking Elixir ${elixir_version[0]} ${elixir_version[1]}"
-    rm -rf ${elixir_path}
-    tar zxf $(elixir_download_file) -C ${elixir_path} --strip-components=1
-    cd $elixir_path
+
+    rm -rf ${elixir_build_path}
+    mkdir $elixir_build_path
+
+    tar zxf $(elixir_download_file) -C ${elixir_build_path} --strip-components=1
+    cd $elixir_build_path
     make
     cd -
   else
     output_section "Unpacking Elixir ${elixir_version[0]}"
-    rm -rf ${elixir_path}
-    tar zxf $(elixir_download_file) -C ${elixir_path}
+    rm -rf ${elixir_build_path}
+    tar zxf $(elixir_download_file) -C ${elixir_build_path}
   fi
+}
+
+
+function install_elixir() {
+  output_section "Installing Elixir"
+  cp -R $elixir_build_path $elixir_path
 }
 
 

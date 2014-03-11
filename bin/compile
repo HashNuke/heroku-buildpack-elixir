@@ -3,6 +3,8 @@
 # If this var is set to true later on,
 # then elixir and rebar will be rebuilt
 erlang_changed=false
+rebar_changed=false
+elixir_changed=false
 
 build_pack_path=$(cd . && pwd)
 build_path=$(cd $1 && pwd)
@@ -13,11 +15,16 @@ erlang_path="${platform_tools_path}/erlang"
 elixir_path="${platform_tools_path}/elixir"
 rebar_path="${platform_tools_path}/rebar"
 
-source ${build_pack_dir}/lib/misc_funcs.sh
-source ${build_pack_dir}/lib/erlang_funcs.sh
-source ${build_pack_dir}/lib/elixir_funcs.sh
-source ${build_pack_dir}/lib/rebar_funcs.sh
-source ${build_pack_dir}/lib/app_funcs.sh
+erlang_source_path="${cache_path}/erlang_source"
+erlang_build_path="${cache_path}/erlang"
+elixir_build_path="${cache_path}/elixir"
+rebar_build_path="${cache_path}/rebar"
+
+source ${build_pack_path}/lib/misc_funcs.sh
+source ${build_pack_path}/lib/erlang_funcs.sh
+source ${build_pack_path}/lib/elixir_funcs.sh
+source ${build_pack_path}/lib/rebar_funcs.sh
+source ${build_pack_path}/lib/app_funcs.sh
 
 
 commands_to_run=(
@@ -25,6 +32,7 @@ commands_to_run=(
   infer_versions
 
   download_erlang
+  build_erlang
   install_erlang
 
   download_rebar
@@ -32,6 +40,7 @@ commands_to_run=(
   install_rebar
 
   download_elixir
+  build_elixir
   install_elixir
 
   app_dependencies

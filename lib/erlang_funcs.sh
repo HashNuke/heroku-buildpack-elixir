@@ -8,6 +8,9 @@ function download_erlang() {
 
   exit_if_file_present ${cache_path}/$(erlang_tarball)
 
+  # Set this so that rebar and elixir will be force-rebuilt
+  erlang_changed=true
+
   # Delete previously downloaded OTP tar files
   rm -rf ${cache_path}/OTP_*.tgz
 
@@ -18,17 +21,26 @@ function download_erlang() {
 }
 
 
-function install_erlang() {
+function build_erlang() {
+  if [ $erlang_changed != true ];
+  then
+    exit 0
+  fi
+
   output_section "Unpacking Erlang ${erlang_version}"
 
   # Because we want to remove any previous erlang install
-  rm -rf ${erlang_path}
+  rm -rf ${erlang_source_path} ${erlang_build_path}
 
-  mkdir ${erlang_path}
-  tar zxf ${cache_path}/${erlang_tarball} -C ${erlang_path} --strip-components=2
+  mkdir ${erlang_source_path}
+  tar zxf ${cache_path}/${erlang_tarball} -C ${erlang_source_path} --strip-components=2
 
   output_section "Installing Erlang ${erlang_version}"
-  # ln -s ${erlang_path} /app/erlang
-  ${erlang_path}/Install -minimal ${erlang_path}
+  ${erlang_path}/Install -minimal ${erlang_build_path}
+}
+
+
+function install_erlang() {
+  cp -R $erlang_build_path $erlang_path
   PATH=${erlang_path}/bin:$PATH
 }
