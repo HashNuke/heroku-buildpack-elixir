@@ -16,7 +16,6 @@ cache_path=$(cd $2 && pwd)
 platform_tools_path="${build_path}/.platform_tools"
 
 mkdir $platform_tools_path
-(cd $platform_tools_path && pwd)
 
 erlang_path="${platform_tools_path}/erlang"
 elixir_path="${platform_tools_path}/elixir"
