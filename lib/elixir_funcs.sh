@@ -47,6 +47,7 @@ function build_elixir() {
     rm -rf ${elixir_build_path}
     mkdir $elixir_build_path
 
+    ls $cache_path
     ls $cache_path/$(elixir_download_file)
 
     tar zxf $cache_path/$(elixir_download_file) -C ${elixir_build_path} --strip-components=1
