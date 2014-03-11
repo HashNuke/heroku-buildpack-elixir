@@ -4,12 +4,13 @@ Heroku buildpack for Elixir applications.
 
 ### Features
 
-* Easy version configuration
+* Easy version configuration with `.tool_versions` file
 * Use **prebuilt Elixir binaries** or build Elixir from source
 * Allows configuring Erlang and Rebar versions
+* If your application doesn't have a Procfile, default task `mix server -p $PORT` will be run.
 
 
-__Version support:__
+#### Version support info
 
 * Erlang - Prebuilt packages
 * Elixir - Prebuilt binaries or build from a branch, tag or a commit
@@ -29,6 +30,7 @@ heroku create --buildpack "https://github.com/HashNuke/heroku-elixir-buildpack.g
 ```
 heroku config:add BUILDPACK_URL="https://github.com/HashNuke/heroku-elixir-buildpack.git"
 ```
+
 
 ## Setting Elixir, Erlang and Rebar versions
 
@@ -69,10 +71,6 @@ erlang_version="R16B03-1"
 elixir_version=(commit b07fbcf8b73e)
 rebar_version=(tag 2.2.0)
 ```
-
-#### Procfile
-
-You can add your own Procfile. If you don't add one, the default procfile will run `mix server -p $PORT`.
 
 
 ## Credits
