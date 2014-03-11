@@ -27,7 +27,7 @@ function download_elixir() {
     clean_elixir_downloads
 
     local elixir_download_url="https://github.com/elixir-lang/elixir/releases/download/v${elixir_version}/Precompiled.zip"
-    curl -ksL $elixir_download_url -o $download_filename || exit 1
+    curl -ksL $elixir_download_url -o $cache_path/$download_filename || exit 1
   fi
 }
 
