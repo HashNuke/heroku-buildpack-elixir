@@ -2,7 +2,7 @@
 
 Heroku buildpack for Elixir applications.
 
-#### Features
+### Features
 
 * Easy version configuration
 * Use **prebuilt Elixir binaries** or build Elixir from source
