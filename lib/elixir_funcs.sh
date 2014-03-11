@@ -50,7 +50,6 @@ function build_elixir() {
     make
     cd - > /dev/null
   else
-    rm -rf ${elixir_build_path}
     tar zxf $cache_path/$(elixir_download_file) -C ${elixir_build_path}
   fi
 }
