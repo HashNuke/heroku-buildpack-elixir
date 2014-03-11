@@ -33,13 +33,10 @@ function build_erlang() {
   rm -rf ${erlang_source_path} ${erlang_build_path}
 
   mkdir ${erlang_source_path}
-  echo ${cache_path}/$(erlang_tarball)
-  ls ${erlang_source_path}
-  echo "END OF SOURCE CHECK"
   tar zxf ${cache_path}/$(erlang_tarball) -C ${erlang_source_path} --strip-components=2
 
   output_section "Installing Erlang ${erlang_version}"
-  ${erlang_path}/Install -minimal ${erlang_build_path}
+  ${erlang_source_path}/Install -minimal ${erlang_build_path}
 }
 
 

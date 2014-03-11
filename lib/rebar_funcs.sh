@@ -12,8 +12,8 @@ function download_rebar() {
   exit_if_file_present ${cache_path}/$(rebar_tarball)
   rebar_changed=true
 
-  rm ${cache_path}/rebar-*.tar.gz
-  rm $rebar_build_path
+  rm -rf ${cache_path}/rebar-*.tar.gz
+  rm -rf $rebar_build_path
   cd ${cache_path}
   github_download "rebar/rebar", ${rebar_version[1]}
   cd - > /dev/null
