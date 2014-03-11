@@ -76,5 +76,5 @@ function elixir_download_file() {
 
 
 function clean_elixir_downloads() {
-  rm ${cache_path}/elixir*.tar.gz ${cache_path}/elixir*.zip
+  rm -rf ${cache_path}/elixir*.tar.gz ${cache_path}/elixir*.zip
 }

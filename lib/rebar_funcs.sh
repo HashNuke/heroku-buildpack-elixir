@@ -8,7 +8,6 @@ function download_rebar() {
   rebar_changed=true
 
   rm -rf ${cache_path}/rebar-*.tar.gz
-  rm -rf $rebar_build_path
   cd ${cache_path}
   github_download "rebar" "rebar" ${rebar_version[1]}
   cd - > /dev/null
@@ -17,6 +16,9 @@ function download_rebar() {
 function build_rebar() {
   if [ $rebar_changed = true ] || [ $erlang_changed = true ];
   then
+    rm -rf $rebar_build_path
+    mkdir $rebar_build_path
+
     tar zxf $(rebar_tarball) -C ${rebar_build_path} --strip-components=1
     cd $rebar_build_path
     ./bootstrap
