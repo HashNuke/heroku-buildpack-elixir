@@ -36,7 +36,7 @@ function download_elixir() {
 
 
 function build_elixir() {
-  if [ $erlang_changed != true ] && [ $elixir_changed != true ]; then
+  if [ $erlang_changed = true ] || [ $elixir_changed = true ]; then
     output_section "Unpacking Elixir ${elixir_version[0]} ${elixir_version[1]}"
     rm -rf $(elixir_build_path)
     mkdir $(elixir_build_path)
@@ -45,6 +45,7 @@ function build_elixir() {
     if [ ${#elixir_version[@]} -eq 2 ]; then
       tar zxf $cache_path/$(elixir_download_file) -C $(elixir_build_path) --strip-components=1
       cd $(elixir_build_path)
+      output_section "Building Elixir from source"
       make
       cd - > /dev/null
     else
