@@ -1,7 +1,7 @@
 function restore_backups_if_needed() {
-  if [ $erlang_changed != true ] && \\
-     [ $elixir_changed != true ] && \\
-     [ $rebar_changed != true ]  && \\
+  if [ $erlang_changed != true ] && \
+     [ $elixir_changed != true ] && \
+     [ $rebar_changed != true ]  && \
      [ $always_build_deps != true ];
   then
 
