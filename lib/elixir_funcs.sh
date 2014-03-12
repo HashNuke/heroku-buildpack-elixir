@@ -28,7 +28,7 @@ function download_elixir() {
       curl -ksL $download_url -o $cache_path/$download_filename || exit 1
     fi
   else
-    output_section "[skip] Elixir package ${elixir_version[0]} ${elixir_version[1]} already downloaded"
+    output_section "[skip] Already downloaded Elixir ${elixir_version[0]} ${elixir_version[1]} already downloaded"
   fi
 }
 

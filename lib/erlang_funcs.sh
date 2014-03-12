@@ -20,7 +20,7 @@ function download_erlang() {
     curl -ksO ${erlang_package_url} -o $(erlang_tarball) || exit 1
     cd - > /dev/null
   else
-    output_section "[skip] Erlang package ${erlang_version[0]} ${erlang_version[1]} already downloaded"
+    output_section "[skip] Already downloaded Erlang ${erlang_version[0]} ${erlang_version[1]} already downloaded"
   fi
 }
 

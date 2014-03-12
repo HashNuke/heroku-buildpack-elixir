@@ -13,7 +13,7 @@ function download_rebar() {
     github_download "rebar" "rebar" ${rebar_version[1]}
     cd - > /dev/null
   else
-    output_section "[skip] Rebar package ${rebar_version[0]} ${rebar_version[1]} already downloaded"
+    output_section "[skip] Already downloaded Rebar ${rebar_version[0]} ${rebar_version[1]}"
   fi
 }
 
