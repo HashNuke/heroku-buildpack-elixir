@@ -4,10 +4,13 @@ Heroku buildpack for Elixir applications.
 
 ### Features
 
-* Easy version configuration with `.tool_versions` file
-* Use **prebuilt Elixir binaries** or build Elixir from source
+* Easy configuration with `elixir_buildpack.config` file
+* Use **prebuilt Elixir binaries** or build from source
+* Mix dependency caching
+* Adds the free Heroku Postgres *database upon app creation*
+* `DATABASE_URL` is made available at compile time
 * Allows configuring Erlang and Rebar versions
-* If your application doesn't have a Procfile, default task `mix server -p $PORT` will be run.
+* If your app doesn't have a Procfile, default web task `mix server -p $PORT` will be run.
 
 
 #### Version support info
@@ -30,7 +33,6 @@ heroku create --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.g
 ```
 heroku config:add BUILDPACK_URL="https://github.com/HashNuke/heroku-buildpack-elixir.git"
 ```
-
 
 ## Configuration
 
@@ -78,7 +80,7 @@ elixir_version=(commit b07fbcf8b73e)
 
 ## Other notes
 
-* Add your own `Procfile` to your application, else the default task `web: mix server -p \$PORT` will be used.
+* Add your own `Procfile` to your application, else the default web task `mix server -p $PORT` will be used.
 
 * If you create an application with this buildpack, then a free database addon`heroku-postgresql:hobby-dev` is also added. The database credentials are available from the env var `DATABASE_URL`.
 
