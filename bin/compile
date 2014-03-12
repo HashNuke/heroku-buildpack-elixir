@@ -37,8 +37,10 @@ commands_to_run=(
   build_elixir
   install_elixir
 
+  restore_backups_if_needed
   app_dependencies
   compile_app
+  backup_deps_and_build_if_needed
   write_profile_d_script
 )
 

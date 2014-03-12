@@ -1,3 +1,21 @@
+function restore_backups_if_needed() {
+  if [ $erlang_changed != true ] && \\
+     [ $elixir_changed != true ] && \\
+     [ $rebar_changed != true ]  && \\
+     [ $always_build_deps != true ];
+  then
+
+    if [ -d $(deps_backup_path) ]; then
+      cp -R $(deps_backup_path) ${build_path}/deps
+    fi
+
+    if [ -d $(build_backup_path) ]; then
+      cp -R $(build_backup_path) ${build_path}/_build
+    fi
+
+  fi
+}
+
 function app_dependencies() {
   local git_dir_value=$GIT_DIR
 
@@ -16,6 +34,17 @@ function app_dependencies() {
 
   export GIT_DIR=$git_dir_value
   cd -
+}
+
+
+function backup_deps_and_build_if_needed() {
+  if [ $always_build_deps != true ]; then
+    # Delete the previous backups
+    rm -rf $(deps_backup_path) $(build_backup_path)
+
+    cp -R ${build_path}/deps $(deps_backup_path)
+    cp -R ${build_path}/_build $(build_backup_path)
+  fi
 }
 
 

@@ -25,3 +25,11 @@ function elixir_build_path() {
 function rebar_build_path() {
   echo "${cache_path}/rebar"
 }
+
+function deps_backup_path() {
+  echo $cache_path/deps_backup
+}
+
+function build_backup_path() {
+  echo $cache_path/build_backup
+}
