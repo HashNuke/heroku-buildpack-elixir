@@ -10,8 +10,11 @@ function app_dependencies() {
   # And all git operations are performed on the respective repos
   unset GIT_DIR
 
-  output_section "Fetching app dependencies with Mix"
+  output_section "Fetching app dependencies with mix"
   MIX_ENV=prod mix deps.get || exit 1
+
+  output_section "Compiling app dependencies"
+  MIX_ENV=prod mix deps.compile || exit 1
 
   export GIT_DIR=$git_dir_value
   cd -
