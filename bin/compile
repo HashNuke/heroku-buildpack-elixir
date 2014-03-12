@@ -11,6 +11,9 @@ build_pack_path=$(cd $(dirname $(dirname $0)); pwd)
 # Ensure dirs are present
 mkdir -p $1 $2
 
+echo "CACHE DIR contents"
+ls $2
+
 build_path=$(cd $1 && pwd)
 cache_path=$(cd $2 && pwd)
 platform_tools_path="${build_path}/.platform_tools"
