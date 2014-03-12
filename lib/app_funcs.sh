@@ -39,7 +39,5 @@ function write_profile_d_script() {
   mkdir $build_path/.profile.d
 
   local export_line="export PATH=\$HOME/.platform_tools:\$HOME/.platform_tools/erlang/bin:\$HOME/.platform_tools/elixir/bin:\$PATH"
-  echo "Export statement:"
-  echo $export_line
   echo $export_line >> $build_path/.profile.d/elixir_buildpack_paths.sh
 }
