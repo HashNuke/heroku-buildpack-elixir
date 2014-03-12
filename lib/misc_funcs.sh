@@ -51,20 +51,20 @@ function github_download() {
 }
 
 
-function infer_versions() {
+function load_config() {
   output_section "Checking Erlang, Elixir and Rebar versions"
 
-  local custom_language_versions_file="${build_path}/.language_versions"
+  local custom_config_file="${build_path}/elixir_buildpack.config"
 
   # Source for default versions file from buildpack first
-  source "${build_pack_path}/.language_versions"
+  source "${build_pack_path}/elixir_buildpack.config"
 
-  if [ -f $custom_language_versions_file ];
+  if [ -f $custom_config_file ];
   then
-    source $custom_language_versions_file
+    source $custom_config_file
   else
-    output_line "WARNING: .language_versions wasn't found"
-    output_line "Using default language versions from Elixir buildpack"
+    output_line "WARNING: elixir_buildpack.config wasn't found in the app"
+    output_line "Using default config from Elixir buildpack"
   fi
 
   output_line "Will use the following versions:"

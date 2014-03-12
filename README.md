@@ -34,9 +34,9 @@ heroku config:add BUILDPACK_URL="https://github.com/HashNuke/heroku-elixir-build
 
 ## Setting Elixir, Erlang and Rebar versions
 
-Create a `.language_versions` file in your app's root dir.
+Create a `elixir_buildpack.config` file in your app's root dir.
 
-If you don't specify any tool's version, then the default version from the buildpack's [`.language_versions`](https://github.com/HashNuke/heroku-elixir-buildpack/blob/master/.language_versions) file will be used for it.
+If you don't specify any tool's version, then the default version from the buildpack's [`elixir_buildpack.config`](https://github.com/HashNuke/heroku-elixir-buildpack/blob/master/elixir_buildpack.config) file will be used for it.
 
 __Here are valid examples:__
 

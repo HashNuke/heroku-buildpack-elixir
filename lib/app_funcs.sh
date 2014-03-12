@@ -1,6 +1,4 @@
 function app_dependencies() {
-  # ln -s ${elixir_path} /app/.platform_tools/elixir
-  PATH=$elixir_path/bin:$PATH
   local git_dir_value=$GIT_DIR
 
   # Enter build dir to perform app-related actions

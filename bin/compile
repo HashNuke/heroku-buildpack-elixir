@@ -33,7 +33,7 @@ source ${build_pack_path}/lib/app_funcs.sh
 
 
 commands_to_run=(
-  infer_versions
+  load_config
 
   download_erlang
   install_erlang
