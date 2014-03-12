@@ -48,5 +48,5 @@ function install_rebar() {
   cp rebar $platform_tools_path
   chmod +x $platform_tools_path/rebar
   cd - > /dev/null
-  PATH=$platform_tools_path/bin:$PATH
+  PATH=$platform_tools_path:$PATH
 }
