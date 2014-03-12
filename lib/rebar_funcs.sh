@@ -24,14 +24,14 @@ function build_rebar() {
 
   if [ $rebar_changed = true ] || [ $erlang_changed = true ];
   then
-    rm -rf $rebar_build_path
-    mkdir $rebar_build_path
+    rm -rf $(rebar_build_path)
+    mkdir $(rebar_build_path)
 
     output_section "Unpacking rebar ${rebar_version[0]} ${rebar_version[1]}"
-    tar zxf $cache_path/$(rebar_tarball) -C ${rebar_build_path} --strip-components=1
+    tar zxf $cache_path/$(rebar_tarball) -C $(rebar_build_path) --strip-components=1
 
     output_section "Building rebar ${rebar_version[0]} ${rebar_version[1]}"
-    cd $rebar_build_path
+    cd $(rebar_build_path)
     chmod +x bootstrap
     ./bootstrap
     cd - > /dev/null
@@ -41,9 +41,9 @@ function build_rebar() {
 
 function install_rebar() {
   output_section "Copying rebar"
-  cd $rebar_build_path
-  cp rebar $platform_tools_path
-  chmod +x $platform_tools_path/rebar
+  cd $(rebar_build_path)
+  cp rebar $(platform_tools_path)
+  chmod +x $(platform_tools_path)/rebar
   cd - > /dev/null
-  PATH=$platform_tools_path:$PATH
+  PATH=$(platform_tools_path):$PATH
 }

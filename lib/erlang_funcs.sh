@@ -28,14 +28,14 @@ function download_erlang() {
 function install_erlang() {
   output_section "Installing Erlang ${erlang_version}"
 
-  rm -rf ${erlang_build_path}
-  mkdir -p ${erlang_build_path}
-  tar zxf ${cache_path}/$(erlang_tarball) -C ${erlang_build_path} --strip-components=2
+  rm -rf $(erlang_build_path)
+  mkdir -p $(erlang_build_path)
+  tar zxf ${cache_path}/$(erlang_tarball) -C $(erlang_build_path) --strip-components=2
 
   mkdir -p /app/.platform_tools
-  ln -s ${erlang_build_path} /app/.platform_tools/erlang
-  ${erlang_build_path}/Install -minimal /app/.platform_tools/erlang
+  ln -s $(erlang_build_path) /app/.platform_tools/erlang
+  $(erlang_build_path)/Install -minimal /app/.platform_tools/erlang
 
-  cp -R $erlang_build_path $erlang_path
-  PATH=${erlang_path}/bin:$PATH
+  cp -R $(erlang_build_path) $(erlang_path)
+  PATH=$(erlang_path)/bin:$PATH
 }

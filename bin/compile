@@ -14,23 +14,14 @@ mkdir -p $1 $2
 build_path=$(cd $1 && pwd)
 cache_path=$(cd $2 && pwd)
 
-platform_tools_path="${build_path}/.platform_tools"
-mkdir $platform_tools_path
-
-erlang_path="${platform_tools_path}/erlang"
-elixir_path="${platform_tools_path}/elixir"
-rebar_path="${platform_tools_path}/rebar"
-
-erlang_build_path="${cache_path}/erlang"
-elixir_build_path="${cache_path}/elixir"
-rebar_build_path="${cache_path}/rebar"
-
+source ${build_pack_path}/lib/path_funcs.sh
 source ${build_pack_path}/lib/misc_funcs.sh
 source ${build_pack_path}/lib/erlang_funcs.sh
 source ${build_pack_path}/lib/elixir_funcs.sh
 source ${build_pack_path}/lib/rebar_funcs.sh
 source ${build_pack_path}/lib/app_funcs.sh
 
+mkdir $(platform_tools_path)
 
 commands_to_run=(
   load_config

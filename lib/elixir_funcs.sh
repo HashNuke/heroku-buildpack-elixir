@@ -36,19 +36,19 @@ function download_elixir() {
 function build_elixir() {
   if [ $erlang_changed != true ] && [ $elixir_changed != true ]; then
     output_section "Unpacking Elixir ${elixir_version[0]} ${elixir_version[1]}"
-    rm -rf ${elixir_build_path}
-    mkdir $elixir_build_path
+    rm -rf $(elixir_build_path)
+    mkdir $(elixir_build_path)
 
     # If git version (git version specification has 2 array elements)
     if [ ${#elixir_version[@]} -eq 2 ]; then
-      tar zxf $cache_path/$(elixir_download_file) -C ${elixir_build_path} --strip-components=1
-      cd $elixir_build_path
+      tar zxf $cache_path/$(elixir_download_file) -C $(elixir_build_path) --strip-components=1
+      cd $(elixir_build_path)
       make
       cd - > /dev/null
     else
       ls $cache_path
       echo "Untar cmd"
-      cd ${elixir_build_path}
+      cd $(elixir_build_path)
       jar xf $cache_path/$(elixir_download_file)
       cd - > /dev/null
     fi
@@ -61,9 +61,9 @@ function build_elixir() {
 function install_elixir() {
   output_section "Installing Elixir ${elixir_version[0]} ${elixir_version[1]}"
 
-  cp -R $elixir_build_path $elixir_path
-  chmod +x $elixir_path/bin/*
-  PATH=${elixir_path}/bin:$PATH
+  cp -R $(elixir_build_path) $(elixir_path)
+  chmod +x $(elixir_path)/bin/*
+  PATH=$(elixir_path)/bin:$PATH
 }
 
 
