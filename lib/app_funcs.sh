@@ -38,7 +38,7 @@ function write_profile_d_script() {
   output_section "Creating .profile.d with env vars"
   mkdir $build_path/.profile.d
 
-  local export_line="export PATH=$platform_tools_path:$erlang_path/bin:${elixir_path}/bin:\$PATH"
+  local export_line="export PATH=\$HOME:\$HOME/erlang/bin:\$HOME/elixir/bin:\$PATH"
   echo "Export statement:"
   echo $export_line
   echo $export_line >> $build_path/.profile.d/elixir_buildpack_paths.sh
