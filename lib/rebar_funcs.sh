@@ -4,9 +4,6 @@ function rebar_tarball() {
 
 
 function download_rebar() {
-  ls ${cache_path}
-  ls ${cache_path}/$(rebar_tarball)
-
   exit_if_file_exists ${cache_path}/$(rebar_tarball)
   rebar_changed=true
 
@@ -20,10 +17,8 @@ function download_rebar() {
 
 
 function build_rebar() {
-  echo "REBAR CHANGED?"
-  echo $rebar_changed
-  echo "ERLANG CHANGED?"
-  echo $erlang_changed
+  echo "REBAR CHANGED? $rebar_changed"
+  echo "ERLANG CHANGED? $erlang_changed"
 
   if [ $rebar_changed = true ] || [ $erlang_changed = true ];
   then

@@ -35,5 +35,5 @@ function install_erlang() {
   ln -s ${erlang_build_path} $absolute_erlang_path
   ${erlang_build_path}/Install -minimal $absolute_erlang_path
 
-  PATH=${erlang_path}/bin:$PATH
+  PATH=${erlang_build_path}/bin:$PATH
 }

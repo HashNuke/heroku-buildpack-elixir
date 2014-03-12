@@ -49,11 +49,6 @@ function output_section() {
 }
 
 
-function ensure_erlang_path() {
-  mkdir -p $erlang_path
-}
-
-
 # Gets the version, mentioned in the config for the tool
 #
 # Usage:
