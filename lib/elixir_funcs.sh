@@ -13,18 +13,15 @@ function download_elixir() {
   local download_filename=$(elixir_download_file)
 
   if [ ! -f ${cache_path}/${download_filename} ]; then
-    if [ $git_version = true ];
-    then
+    elixir_changed=true
+
+    if [ $git_version = true ]; then
       output_section "Downloading source from Github"
-      exit_if_file_exists ${cache_path}/${download_filename}
-      elixir_changed=true
       clean_elixir_downloads
 
       github_download "elixir-lang" "elixir" ${elixir_version[1]}
     else
       output_section "Downloading precompiled binary from Github"
-      exit_if_file_exists ${cache_path}/${download_filename}
-      elixir_changed=true
       clean_elixir_downloads
 
       local download_url="https://github.com/elixir-lang/elixir/releases/download/v${elixir_version}/Precompiled.zip"
@@ -37,7 +34,7 @@ function download_elixir() {
 
 
 function build_elixir() {
-  if [ $erlang_changed != true ] && [ $elixir_changed != true]; then
+  if [ $erlang_changed != true ] && [ $elixir_changed != true ]; then
     output_section "Unpacking Elixir ${elixir_version[0]} ${elixir_version[1]}"
     rm -rf ${elixir_build_path}
     mkdir $elixir_build_path
