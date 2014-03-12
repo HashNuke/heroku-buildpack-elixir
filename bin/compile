@@ -39,7 +39,6 @@ commands_to_run=(
   infer_versions
 
   download_erlang
-  build_erlang
   install_erlang
 
   download_rebar

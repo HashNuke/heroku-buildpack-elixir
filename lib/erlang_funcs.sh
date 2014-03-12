@@ -21,28 +21,26 @@ function download_erlang() {
 }
 
 
-function build_erlang() {
-  if [ $erlang_changed != true ];
-  then
-    echo "[Skip] Erlang build already available"
-    exit 0
-  fi
-
-  output_section "Unpacking Erlang ${erlang_version}"
-
-  # Because we want to remove any previous erlang install
-  rm -rf ${erlang_build_path}
-
-  mkdir ${erlang_build_path}
-  tar zxf ${cache_path}/$(erlang_tarball) -C ${erlang_build_path} --strip-components=2
-
-  output_section "Building Erlang ${erlang_version}"
-  ${erlang_build_path}/Install -minimal ${erlang_build_path}
-}
-
-
 function install_erlang() {
   output_section "Installing Erlang ${erlang_version}"
-  cp -R $erlang_build_path $erlang_path
+
+  if [ $erlang_changed != true ];
+  then
+    # Just copy the previous backup
+    cp -R $erlang_build_path $erlang_path
+  else
+    # Because we want to remove any previous erlang install backups
+    rm -rf ${erlang_build_path}
+
+    mkdir ${erlang_path}
+    tar zxf ${cache_path}/$(erlang_tarball) -C ${erlang_path} --strip-components=2
+
+    # First install in actual path, because there are internal references to binaries
+    ${erlang_path}/Install -minimal ${erlang_path}
+
+    # Then backup up to the build path for later copying
+    cp -R $erlang_path $erlang_build_path
+  fi
+
   PATH=${erlang_path}/bin:$PATH
 }
