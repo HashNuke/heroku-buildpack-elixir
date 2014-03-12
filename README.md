@@ -76,6 +76,13 @@ elixir_version=(commit b07fbcf8b73e)
 ```
 
 
+## Other notes
+
+* Add your own `Procfile` to your application, else the default task `web: mix server -p \$PORT` will be used.
+
+* If you create an application with this buildpack, then a free database addon`heroku-postgresql:hobby-dev` is also added. The database credentials are available from the env var `DATABASE_URL`.
+
+
 ## Credits
 
 &copy; Akash Manohar under The MIT License. Feel free to do whatever you want with it.
