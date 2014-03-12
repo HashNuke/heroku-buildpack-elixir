@@ -72,3 +72,15 @@ function load_config() {
   output_line "* Elixir ${elixir_version[0]} ${elixir_version[1]}"
   output_line "* Rebar ${rebar_version[0]} ${rebar_version[1]}"
 }
+
+
+# Make the DATABASE_URL available at slug compile time.
+# Useful for compiled languages like Erlang and Elixir
+function export_database_url() {
+  if [ -d $env_path ] && [ -f $env_path/DATABASE_URL ]; then
+    export DATABASE_URL=$(cat $env_path/DATABASE_URL)
+  fi
+
+  echo "DATABASE URL"
+  echo $DATABASE_URL
+}
