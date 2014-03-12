@@ -6,11 +6,11 @@ function erlang_path() {
   echo "$(platform_tools_path)/erlang"
 }
 
-function elixir_path()
+function elixir_path() {
   echo "$(platform_tools_path)/elixir"
 }
 
-function rebar_path(){
+function rebar_path() {
   echo "$(platform_tools_path)/rebar"
 }
 
