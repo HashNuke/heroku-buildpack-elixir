@@ -25,11 +25,12 @@ function install_erlang() {
   output_section "Installing Erlang ${erlang_version}"
   local $absolute_erlang_path=/app/.platform_tools/erlang
 
-  mkdir -p ${erlang_path}
-  tar zxf ${cache_path}/$(erlang_tarball) -C ${erlang_path} --strip-components=2
+  rm -rf ${erlang_build_path}
+  mkdir -p ${erlang_build_path}
+  tar zxf ${cache_path}/$(erlang_tarball) -C ${erlang_build_path} --strip-components=2
 
-  ln -s ${erlang_path} $absolute_erlang_path
-  ${erlang_path}/Install -minimal $absolute_erlang_path
+  ln -s ${erlang_build_path} $absolute_erlang_path
+  ${erlang_build_path}/Install -minimal $absolute_erlang_path
 
   PATH=${erlang_path}/bin:$PATH
 }
