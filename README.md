@@ -32,14 +32,14 @@ heroku config:add BUILDPACK_URL="https://github.com/HashNuke/heroku-buildpack-el
 ```
 
 
-## Setting Elixir, Erlang and Rebar versions
+## Configuration
 
 Create a `elixir_buildpack.config` file in your app's root dir. The file's syntax is bash.
 
-If you don't specify any tool's version, then the default version from the buildpack's [`elixir_buildpack.config`](https://github.com/HashNuke/heroku-buildpack-elixir/blob/master/elixir_buildpack.config) file will be used for it.
+If you don't specify a config option, then the default option from the buildpack's [`elixir_buildpack.config`](https://github.com/HashNuke/heroku-buildpack-elixir/blob/master/elixir_buildpack.config) file will be used.
+
 
 __Here's a full config file with all available options:__
-
 
 ```
 # Erlang version
@@ -57,19 +57,19 @@ always_build_deps=false
 
 #### Some other ways of specifying Elixir version
 
-* **Build Elixir from a branch.** If you specify a branch, that particular Elixir branch will be re-downloaded and built from source every time you deploy.
+* _Build Elixir from a branch._ If you specify a branch, that particular Elixir branch will be re-downloaded and built from source every time you deploy.
 
 ```
 elixir_version=(branch master)
 ```
 
-* **Build Elixir from a tag**
+* _Build Elixir from a tag_
 
 ```
 elixir_version=(tag v0.12.5)
 ```
 
-* **Build Elixir from a particular commit**
+* _Build Elixir from a particular commit_
 
 ```
 elixir_version=(commit b07fbcf8b73e)
