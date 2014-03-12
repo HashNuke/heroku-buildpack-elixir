@@ -23,24 +23,13 @@ function download_erlang() {
 
 function install_erlang() {
   output_section "Installing Erlang ${erlang_version}"
+  local $absolute_erlang_path=/app/.platform_tools/erlang
 
-  if [ $erlang_changed != true ];
-  then
-    # Just copy the previous backup
-    cp -R $erlang_build_path $erlang_path
-  else
-    # Because we want to remove any previous erlang install backups
-    rm -rf ${erlang_build_path}
+  mkdir -p ${erlang_path}
+  tar zxf ${cache_path}/$(erlang_tarball) -C ${erlang_path} --strip-components=2
 
-    mkdir ${erlang_path}
-    tar zxf ${cache_path}/$(erlang_tarball) -C ${erlang_path} --strip-components=2
-
-    # First install in actual path, because there are internal references to binaries
-    ${erlang_path}/Install -minimal ${erlang_path}
-
-    # Then backup up to the build path for later copying
-    cp -R $erlang_path $erlang_build_path
-  fi
+  ln -s ${erlang_path} $absolute_erlang_path
+  ${erlang_path}/Install -minimal $absolute_erlang_path
 
   PATH=${erlang_path}/bin:$PATH
 }
