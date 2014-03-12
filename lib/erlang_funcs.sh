@@ -6,20 +6,22 @@ function erlang_tarball() {
 function download_erlang() {
   local erlang_package_url="https://s3.amazonaws.com/heroku-buildpack-erlang/$(erlang_tarball)"
 
-  output_line "Checking if Erlang has already been downloaded..."
-  exit_if_file_exists ${cache_path}/$(erlang_tarball)
-  output_line "Downloading Erlang package"
+  if [ ! -f ${cache_path}/$(erlang_tarball) ]; then
+    output_line "Downloading Erlang package"
 
-  # Set this so that rebar and elixir will be force-rebuilt
-  erlang_changed=true
+    # Set this so that rebar and elixir will be force-rebuilt
+    erlang_changed=true
 
-  # Delete previously downloaded OTP tarballs
-  rm -rf ${cache_path}/OTP_*.tgz
+    # Delete previously downloaded OTP tarballs
+    rm -rf ${cache_path}/OTP_*.tgz
 
-  cd ${cache_path}
-  output_section "Fetching Erlang ${erlang_version}"
-  curl -ksO ${erlang_package_url} -o $(erlang_tarball) || exit 1
-  cd - > /dev/null
+    cd ${cache_path}
+    output_section "Fetching Erlang ${erlang_version}"
+    curl -ksO ${erlang_package_url} -o $(erlang_tarball) || exit 1
+    cd - > /dev/null
+  else
+    output_section "[skip] Erlang package ${erlang_version[0]} ${erlang_version[1]} already downloaded"
+  fi
 }
 
 

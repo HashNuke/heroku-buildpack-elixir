@@ -15,17 +15,6 @@ function try_run() {
 }
 
 
-# Will exit if the file is present
-#
-# Usage:
-#
-#     exit_if_present path/to/file
-#
-function exit_if_file_exists() {
-  test -f $1 && exit 0
-}
-
-
 # Outputs log line
 #
 # Usage:
@@ -46,19 +35,6 @@ function output_line() {
 function output_section() {
   local indentation="----->"
   echo "${indentation} $1"
-}
-
-
-# Gets the version, mentioned in the config for the tool
-#
-# Usage:
-#
-#     get_version "elixir"
-#     get_version "erlang"
-#
-function get_version() {
-  local version_var_name="$1_version"
-  echo ${!version_var_name}
 }
 
 

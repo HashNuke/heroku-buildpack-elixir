@@ -12,55 +12,58 @@ function download_elixir() {
 
   local download_filename=$(elixir_download_file)
 
-  if [ $git_version = true ];
-  then
-    output_section "Downloading source from Github"
-    exit_if_file_exists ${cache_path}/${download_filename}
-    elixir_changed=true
-    clean_elixir_downloads
+  if [ ! -f ${cache_path}/${download_filename} ]; then
+    if [ $git_version = true ];
+    then
+      output_section "Downloading source from Github"
+      exit_if_file_exists ${cache_path}/${download_filename}
+      elixir_changed=true
+      clean_elixir_downloads
 
-    github_download "elixir-lang" "elixir" ${elixir_version[1]}
+      github_download "elixir-lang" "elixir" ${elixir_version[1]}
+    else
+      output_section "Downloading precompiled binary from Github"
+      exit_if_file_exists ${cache_path}/${download_filename}
+      elixir_changed=true
+      clean_elixir_downloads
+
+      local download_url="https://github.com/elixir-lang/elixir/releases/download/v${elixir_version}/Precompiled.zip"
+      curl -ksL $download_url -o $cache_path/$download_filename || exit 1
+    fi
   else
-    output_section "Downloading precompiled binary from Github"
-    exit_if_file_exists ${cache_path}/${download_filename}
-    elixir_changed=true
-    clean_elixir_downloads
-
-    local elixir_download_url="https://github.com/elixir-lang/elixir/releases/download/v${elixir_version}/Precompiled.zip"
-    curl -ksL $elixir_download_url -o $cache_path/$download_filename || exit 1
+    output_section "[skip] Elixir package ${elixir_version[0]} ${elixir_version[1]} already downloaded"
   fi
 }
 
 
 function build_elixir() {
-  if [ $erlang_changed != true ] && [ $elixir_changed != true];
-  then
-    exit 0
-  fi
+  if [ $erlang_changed != true ] && [ $elixir_changed != true]; then
+    output_section "Unpacking Elixir ${elixir_version[0]} ${elixir_version[1]}"
+    rm -rf ${elixir_build_path}
+    mkdir $elixir_build_path
 
-  output_section "Unpacking Elixir ${elixir_version[0]} ${elixir_version[1]}"
-  rm -rf ${elixir_build_path}
-  mkdir $elixir_build_path
-
-  # If git version (git version specification has 2 array elements)
-  if [ ${#elixir_version[@]} -eq 2 ];
-  then
-    tar zxf $cache_path/$(elixir_download_file) -C ${elixir_build_path} --strip-components=1
-    cd $elixir_build_path
-    make
-    cd - > /dev/null
+    # If git version (git version specification has 2 array elements)
+    if [ ${#elixir_version[@]} -eq 2 ]; then
+      tar zxf $cache_path/$(elixir_download_file) -C ${elixir_build_path} --strip-components=1
+      cd $elixir_build_path
+      make
+      cd - > /dev/null
+    else
+      ls $cache_path
+      echo "Untar cmd"
+      cd ${elixir_build_path}
+      jar xf $cache_path/$(elixir_download_file)
+      cd - > /dev/null
+    fi
   else
-    ls $cache_path
-    echo "Untar cmd"
-    cd ${elixir_build_path}
-    jar xf $cache_path/$(elixir_download_file)
-    cd - > /dev/null
+    output_section "[skip] Already unpacked and built Elixir"
   fi
 }
 
 
 function install_elixir() {
-  output_section "Installing Elixir"
+  output_section "Installing Elixir ${elixir_version[0]} ${elixir_version[1]}"
+
   cp -R $elixir_build_path $elixir_path
   chmod +x $elixir_path/bin/*
   PATH=${elixir_path}/bin:$PATH

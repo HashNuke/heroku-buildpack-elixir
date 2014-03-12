@@ -4,15 +4,17 @@ function rebar_tarball() {
 
 
 function download_rebar() {
-  exit_if_file_exists ${cache_path}/$(rebar_tarball)
-  rebar_changed=true
+  if [ ! -f ${cache_path}/$(rebar_tarball) ]; then
+    rebar_changed=true
+    output_section "Downloading rebar ${rebar_version[0]} ${rebar_version[1]}"
 
-  output_section "Downloading rebar ${rebar_version[0]} ${rebar_version[1]}"
-
-  rm -rf ${cache_path}/rebar-*.tar.gz
-  cd ${cache_path}
-  github_download "rebar" "rebar" ${rebar_version[1]}
-  cd - > /dev/null
+    rm -rf ${cache_path}/rebar-*.tar.gz
+    cd ${cache_path}
+    github_download "rebar" "rebar" ${rebar_version[1]}
+    cd - > /dev/null
+  else
+    output_section "[skip] Rebar package ${rebar_version[0]} ${rebar_version[1]} already downloaded"
+  fi
 }
 
 
@@ -33,7 +35,7 @@ function build_rebar() {
     chmod +x bootstrap
     ./bootstrap
     cd - > /dev/null
-  fi;
+  fi
 }
 
 
