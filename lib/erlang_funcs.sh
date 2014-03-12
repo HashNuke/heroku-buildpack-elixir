@@ -24,6 +24,7 @@ function download_erlang() {
 function build_erlang() {
   if [ $erlang_changed != true ];
   then
+    echo "[Skip] Erlang build already available"
     exit 0
   fi
 
