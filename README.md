@@ -42,9 +42,16 @@ __Here's a full config file with all available options:__
 
 
 ```
+# Erlang version
 erlang_version=R16B03-1
+
+# Elixir version
 elixir_version=0.12.5
+
+# Rebar version
 rebar_version=(tag 2.2.0)
+
+# Do dependencies have to be built from scratch on every deploy?
 always_build_deps=false
 ```
 
