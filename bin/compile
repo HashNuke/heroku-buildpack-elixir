@@ -17,11 +17,6 @@ platform_tools_path="${build_path}/.platform_tools"
 
 mkdir $platform_tools_path
 
-# echo config vars
-ls $3
-echo "CONFIG VARS FILES:"
-cat $3/*
-
 erlang_path="${platform_tools_path}/erlang"
 elixir_path="${platform_tools_path}/elixir"
 rebar_path="${platform_tools_path}/rebar"
