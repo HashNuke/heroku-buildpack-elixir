@@ -80,7 +80,4 @@ function export_database_url() {
   if [ -d $env_path ] && [ -f $env_path/DATABASE_URL ]; then
     export DATABASE_URL=$(cat $env_path/DATABASE_URL)
   fi
-
-  echo "DATABASE URL"
-  echo $DATABASE_URL
 }
