@@ -12,7 +12,9 @@ function download_elixir() {
 
   local download_filename=$(elixir_download_file)
 
-  if [ ! -f ${cache_path}/${download_filename} ]; then
+  # If a previous download does not exist
+  # or if a branch is being used, then always re-download
+  if [ ! -f ${cache_path}/${download_filename} ] || [ ${elixir_version[0]} = "branch" ]; then
     elixir_changed=true
 
     if [ $git_version = true ]; then
