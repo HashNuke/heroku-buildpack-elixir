@@ -25,6 +25,7 @@ function download_erlang() {
 
 function install_erlang() {
   output_section "Installing Erlang ${erlang_version}"
+  mkdir -p /app/.platform_tools
   local absolute_erlang_path="/app/.platform_tools/erlang"
 
   rm -rf ${erlang_build_path}
