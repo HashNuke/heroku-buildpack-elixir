@@ -33,7 +33,7 @@ function app_dependencies() {
   MIX_ENV=prod mix deps.compile || exit 1
 
   export GIT_DIR=$git_dir_value
-  cd -
+  cd - > /dev/null
 }
 
 
