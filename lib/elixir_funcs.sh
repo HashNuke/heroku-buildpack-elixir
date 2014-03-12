@@ -52,8 +52,9 @@ function build_elixir() {
   else
     ls $cache_path
     echo "Untar cmd"
-    echo "tar zxf $cache_path/$(elixir_download_file) -C ${elixir_build_path}"
-    tar zxf $cache_path/$(elixir_download_file) -C ${elixir_build_path}
+    cd ${elixir_build_path}
+    jar xf $cache_path/$(elixir_download_file)
+    cd - > /dev/null
   fi
 }
 
