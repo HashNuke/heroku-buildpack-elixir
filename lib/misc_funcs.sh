@@ -22,7 +22,7 @@ function try_run() {
 #     exit_if_present path/to/file
 #
 function exit_if_file_exists() {
-  test -f $1 && exit
+  test -f $1 && exit 0
 }
 
 
