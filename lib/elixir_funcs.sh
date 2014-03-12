@@ -62,6 +62,7 @@ function build_elixir() {
 function install_elixir() {
   output_section "Installing Elixir"
   cp -R $elixir_build_path $elixir_path
+  chmod +x $elixir_path/*
   PATH=${elixir_path}/bin:$PATH
   echo $PATH
 }
