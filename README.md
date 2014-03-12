@@ -1,6 +1,4 @@
-# Heroku Elixir Buildpack
-
-Heroku buildpack for Elixir applications.
+# Heroku Buildpack for Elixir
 
 ### Features
 
