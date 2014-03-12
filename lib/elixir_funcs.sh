@@ -46,8 +46,6 @@ function build_elixir() {
       make
       cd - > /dev/null
     else
-      ls $cache_path
-      echo "Untar cmd"
       cd $(elixir_build_path)
       jar xf $cache_path/$(elixir_download_file)
       cd - > /dev/null

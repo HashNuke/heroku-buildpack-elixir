@@ -57,7 +57,7 @@ function compile_app() {
   MIX_ENV=prod mix compile || exit 1
 
   export GIT_DIR=$git_dir_value
-  cd -
+  cd - > /dev/null
 }
 
 
