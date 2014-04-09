@@ -34,6 +34,8 @@ function download_erlang() {
     output_section "Fetching Erlang ${erlang_version[0]} ${erlang_version[1]}"
     echo ${erlang_package_url}
     curl -ksO ${erlang_package_url} -o $(erlang_tarball) || exit 1
+    echo "After downloading erlang..."
+    ls
     cd - > /dev/null
   else
     output_section "[skip] Already downloaded Erlang ${erlang_version[0]} ${erlang_version[1]}"
