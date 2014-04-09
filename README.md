@@ -55,6 +55,7 @@ rebar_version=(tag 2.2.0)
 always_build_deps=false
 ```
 
+
 #### Some other ways of specifying Elixir version
 
 * _Build Elixir from a branch._ If you specify a branch, that particular Elixir branch will be re-downloaded and built from source every time you deploy.
@@ -74,6 +75,22 @@ elixir_version=(tag v0.12.5)
 ```
 elixir_version=(commit b07fbcf8b73e)
 ```
+
+#### Specifying Erlang verisons
+
+* You can either specify a stable Erlang release version like below
+
+```
+erlang_version=R16B03-1
+```
+
+* OR you can specify that Erlang builds from the master branch must be used
+
+```
+erlang_version=(branch master)
+```
+
+Note that if you specify the master branch of Erlang, then it is Heroku's periodic builds that will be used. I don't work for Heroku, but I'm assuming that's why they have master branch builds.
 
 
 ## Other notes
