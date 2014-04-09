@@ -1,10 +1,25 @@
 function erlang_tarball() {
-  echo "OTP_${erlang_version}.tgz"
+  if [ ${#erlang_version[@]} -eq 2 ];
+  then
+    echo "OTP_${erlang_version[1]}.tgz"
+  else
+    echo "OTP_${erlang_version}.tgz"
+  fi
+}
+
+
+function erlang_download_file() {
+  if [ ${#erlang_version[@]} -eq 2 ];
+  then
+    echo "${erlang_version[1]}.tgz"
+  else
+    echo "OTP_${erlang_version}.tgz"
+  fi
 }
 
 
 function download_erlang() {
-  local erlang_package_url="https://s3.amazonaws.com/heroku-buildpack-erlang/$(erlang_tarball)"
+  local erlang_package_url="https://s3.amazonaws.com/heroku-buildpack-erlang/$(erlang_download_file)"
 
   if [ ! -f ${cache_path}/$(erlang_tarball) ]; then
     output_line "Downloading Erlang package"

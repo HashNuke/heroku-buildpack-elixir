@@ -2,10 +2,10 @@
 
 ### Features
 
-* Easy configuration with `elixir_buildpack.config` file
+* **Easy configuration** with `elixir_buildpack.config` file
 * Use **prebuilt Elixir binaries** or build from source
-* Mix dependency caching
-* Adds the free Heroku Postgres *database upon app creation*
+* Mix **dependency caching**
+* Adds the free Heroku Postgres **database upon app creation**
 * `DATABASE_URL` is made available at compile time
 * Allows configuring Erlang and Rebar versions
 * If your app doesn't have a Procfile, default web task `mix server -p $PORT` will be run.
