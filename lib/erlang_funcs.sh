@@ -8,7 +8,7 @@ function erlang_tarball() {
 }
 
 
-function erlang_download_file() {
+function erlang_remote_filename() {
   if [ ${#erlang_version[@]} -eq 2 ];
   then
     echo "${erlang_version[1]}.tgz"
@@ -19,7 +19,7 @@ function erlang_download_file() {
 
 
 function download_erlang() {
-  local erlang_package_url="https://s3.amazonaws.com/heroku-buildpack-erlang/$(erlang_download_file)"
+  local erlang_package_url="https://s3.amazonaws.com/heroku-buildpack-erlang/$(erlang_remote_filename)"
 
   if [ ! -f ${cache_path}/$(erlang_tarball) ]; then
     output_line "Downloading Erlang package"
@@ -31,7 +31,7 @@ function download_erlang() {
     rm -rf ${cache_path}/OTP_*.tgz
 
     cd ${cache_path}
-    output_section "Fetching Erlang ${erlang_version}"
+    output_section "Fetching Erlang ${erlang_version[0]} ${erlang_version[1]}"
     curl -ksO ${erlang_package_url} -o $(erlang_tarball) || exit 1
     cd - > /dev/null
   else
