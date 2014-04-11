@@ -8,12 +8,21 @@ function erlang_tarball() {
 }
 
 
+function erlang_download_file_prefix() {
+  if [ ${erlang_version:0:1} == "R" ]; then
+    echo "OTP_"
+  else
+    echo "OTP-"
+  fi;
+}
+
+
 function erlang_remote_filename() {
   if [ ${#erlang_version[@]} -eq 2 ];
   then
     echo "${erlang_version[1]}.tgz"
   else
-    echo "OTP_${erlang_version}.tgz"
+    echo "$(erlang_download_file_prefix)${erlang_version}.tgz"
   fi
 }
 
