@@ -13,7 +13,7 @@
 
 #### Version support info
 
-* Erlang - Prebuilt packages
+* Erlang - Prebuilt packages (17.0, R16B03-1, etc)
 * Elixir - Prebuilt binaries or build from a branch, tag or a commit
 * Rebar - Always built from source. You can specify tag, branch or commit.
 
@@ -43,7 +43,7 @@ __Here's a full config file with all available options:__
 
 ```
 # Erlang version
-erlang_version=R16B03-1
+erlang_version=17.0
 
 # Elixir version
 elixir_version=0.12.5
