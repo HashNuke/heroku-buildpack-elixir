@@ -81,3 +81,12 @@ function elixir_download_file() {
 function clean_elixir_downloads() {
   rm -rf ${cache_path}/elixir*.tar.gz ${cache_path}/elixir*.zip
 }
+
+
+function install_hex() {
+  if [ -z ${hex_source} ]; then
+    mix local.hex --force
+  else
+    mix local.install ${hex_source} --force
+  fi
+}
