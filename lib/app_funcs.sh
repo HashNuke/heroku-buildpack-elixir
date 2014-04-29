@@ -1,4 +1,10 @@
 function restore_backups_if_needed() {
+  if [ $always_build_deps != true ]; then
+    if [ -d $(mix_backup_path) ]; then
+      cp -R $(mix_backup_path) ${HOME}/.mix
+    fi
+  fi
+
   if [ $erlang_changed != true ] && \
      [ $elixir_changed != true ] && \
      [ $rebar_changed != true ]  && \
@@ -15,6 +21,14 @@ function restore_backups_if_needed() {
 
   fi
 }
+
+
+function copy_hex() {
+  mkdir -p ${build_path}/.mix/archives
+  cp ${HOME}/.mix/hex.ets ${build_path}/.mix/
+  cp ${HOME}/.mix/archives/hex.ez ${build_path}/.mix/archives
+}
+
 
 function app_dependencies() {
   local git_dir_value=$GIT_DIR
@@ -42,6 +56,7 @@ function backup_deps_and_build_if_needed() {
     # Delete the previous backups
     rm -rf $(deps_backup_path) $(build_backup_path)
 
+    cp -R ${HOME}/.mix $(mix_backup_path)
     cp -R ${build_path}/deps $(deps_backup_path)
     cp -R ${build_path}/_build $(build_backup_path)
   fi
@@ -65,6 +80,7 @@ function write_profile_d_script() {
   output_section "Creating .profile.d with env vars"
   mkdir $build_path/.profile.d
 
-  local export_line="export PATH=\$HOME/.platform_tools:\$HOME/.platform_tools/erlang/bin:\$HOME/.platform_tools/elixir/bin:\$PATH"
+  local export_line="export PATH=\$HOME/.platform_tools:\$HOME/.platform_tools/erlang/bin:\$HOME/.platform_tools/elixir/bin:\$PATH
+                     export LC_CTYPE=en_US.utf8"
   echo $export_line >> $build_path/.profile.d/elixir_buildpack_paths.sh
 }

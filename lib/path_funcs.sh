@@ -33,3 +33,7 @@ function deps_backup_path() {
 function build_backup_path() {
   echo $cache_path/build_backup
 }
+
+function mix_backup_path() {
+  echo $cache_path/.mix
+}

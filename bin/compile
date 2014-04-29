@@ -39,9 +39,11 @@ commands_to_run=(
   download_elixir
   build_elixir
   install_elixir
+  install_hex
 
   restore_backups_if_needed
   app_dependencies
+  copy_hex
   compile_app
   backup_deps_and_build_if_needed
   write_profile_d_script
