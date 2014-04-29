@@ -36,6 +36,8 @@ function download_elixir() {
 
 
 function build_elixir() {
+  export LC_CTYPE=en_US.utf8
+
   if [ $erlang_changed = true ] || [ $elixir_changed = true ]; then
     output_section "Unpacking Elixir ${elixir_version[0]} ${elixir_version[1]}"
     rm -rf $(elixir_build_path)
@@ -80,4 +82,13 @@ function elixir_download_file() {
 
 function clean_elixir_downloads() {
   rm -rf ${cache_path}/elixir*.tar.gz ${cache_path}/elixir*.zip
+}
+
+
+function install_hex() {
+  if [ -z ${hex_source} ]; then
+    mix local.hex --force
+  else
+    mix local.install ${hex_source} --force
+  fi
 }
