@@ -86,9 +86,16 @@ function clean_elixir_downloads() {
 
 
 function install_hex() {
+  output_section "Installing Hex"
   if [ -z ${hex_source} ]; then
     mix local.hex --force
   else
     mix local.install ${hex_source} --force
   fi
+}
+
+
+function install_rebar() {
+  output_section "Installing rebar"
+  mix local.rebar --force
 }
