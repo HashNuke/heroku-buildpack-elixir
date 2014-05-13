@@ -52,7 +52,7 @@ function github_download() {
 
 
 function load_config() {
-  output_section "Checking Erlang, Elixir and Rebar versions"
+  output_section "Checking Erlang and Elixir versions"
 
   local custom_config_file="${build_path}/elixir_buildpack.config"
 
@@ -70,7 +70,6 @@ function load_config() {
   output_line "Will use the following versions:"
   output_line "* Erlang ${erlang_version}"
   output_line "* Elixir ${elixir_version[0]} ${elixir_version[1]}"
-  output_line "* Rebar ${rebar_version[0]} ${rebar_version[1]}"
 }
 
 

@@ -32,14 +32,11 @@ commands_to_run=(
   download_erlang
   install_erlang
 
-  download_rebar
-  build_rebar
-  install_rebar
-
   download_elixir
   build_elixir
   install_elixir
   install_hex
+  install_rebar
 
   restore_backups_if_needed
   app_dependencies

@@ -7,15 +7,15 @@
 * Mix **dependency caching**
 * Adds the free Heroku Postgres **database upon app creation**
 * `DATABASE_URL` is made available at compile time
-* Allows configuring Erlang and Rebar versions
+* Allows configuring Erlang
 * If your app doesn't have a Procfile, default web task `mix server -p $PORT` will be run.
+* Hex and rebar support
 
 
 #### Version support info
 
 * Erlang - Prebuilt packages (17.0, R16B03-1, etc)
 * Elixir - Prebuilt binaries or build from a branch, tag or a commit
-* Rebar - Always built from source. You can specify tag, branch or commit.
 
 
 ## Usage
@@ -47,9 +47,6 @@ erlang_version=17.0
 
 # Elixir version
 elixir_version=0.12.5
-
-# Rebar version
-rebar_version=(tag 2.2.0)
 
 # Do dependencies have to be built from scratch on every deploy?
 always_build_deps=false

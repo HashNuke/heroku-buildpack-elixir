@@ -41,10 +41,10 @@ function app_dependencies() {
   unset GIT_DIR
 
   output_section "Fetching app dependencies with mix"
-  MIX_ENV=prod mix deps.get || exit 1
+  mix deps.get --only prod || exit 1
 
   output_section "Compiling app dependencies"
-  MIX_ENV=prod mix deps.compile || exit 1
+  mix deps.compile || exit 1
 
   export GIT_DIR=$git_dir_value
   cd - > /dev/null
@@ -69,7 +69,7 @@ function compile_app() {
 
   cd $build_path
   output_section "Compiling the app"
-  MIX_ENV=prod mix compile || exit 1
+  mix compile || exit 1
 
   export GIT_DIR=$git_dir_value
   cd - > /dev/null
@@ -81,6 +81,7 @@ function write_profile_d_script() {
   mkdir $build_path/.profile.d
 
   local export_line="export PATH=\$HOME/.platform_tools:\$HOME/.platform_tools/erlang/bin:\$HOME/.platform_tools/elixir/bin:\$PATH
-                     export LC_CTYPE=en_US.utf8"
+                     export LC_CTYPE=en_US.utf8
+                     export MIX_ENV=prod"
   echo $export_line >> $build_path/.profile.d/elixir_buildpack_paths.sh
 }
