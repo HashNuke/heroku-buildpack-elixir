@@ -9,6 +9,7 @@
 * `DATABASE_URL` is made available at compile time
 * Allows configuring Erlang
 * If your app doesn't have a Procfile, default web task `mix server -p $PORT` will be run.
+* Consolidates protocols
 * Hex and rebar support
 
 
@@ -93,6 +94,8 @@ Note that if you specify the master branch of Erlang, then it is Heroku's period
 ## Other notes
 
 * Add your own `Procfile` to your application, else the default web task `mix server -p $PORT` will be used.
+
+* To make use of consolidated protocols they need to be added to the loadpath. Example: `elixir -pa _build/prod/consolidated -S mix run --no-halt`.
 
 * If you create an application with this buildpack, then a free database addon`heroku-postgresql:hobby-dev` is also added. The database credentials are available from the env var `DATABASE_URL`.
 

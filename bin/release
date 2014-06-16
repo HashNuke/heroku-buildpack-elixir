@@ -4,8 +4,6 @@ cat <<EOF
 ---
 addons:
   heroku-postgresql:hobby-dev
-config_vars:
-  MIX_ENV: prod
 default_process_types:
-  web: mix server -p \$PORT
+  web: elixir -pa _build/prod/consolidated -S mix server -p \$PORT
 EOF
