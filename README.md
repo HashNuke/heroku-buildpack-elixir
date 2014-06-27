@@ -74,7 +74,7 @@ elixir_version=(tag v0.12.5)
 elixir_version=(commit b07fbcf8b73e)
 ```
 
-#### Specifying Erlang verisons
+#### Specifying Erlang version
 
 * You can either specify a stable Erlang release version like below
 
