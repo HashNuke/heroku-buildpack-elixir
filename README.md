@@ -30,7 +30,7 @@ heroku create --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.g
 #### Set the buildpack of an existing Heroku app
 
 ```
-heroku config:add BUILDPACK_URL="https://github.com/HashNuke/heroku-buildpack-elixir.git"
+heroku config:set BUILDPACK_URL="https://github.com/HashNuke/heroku-buildpack-elixir.git"
 ```
 
 ## Configuration
