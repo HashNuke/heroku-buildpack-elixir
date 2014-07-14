@@ -91,7 +91,7 @@ function install_hex() {
   if [ -z ${hex_source} ]; then
     mix local.hex --force
   else
-    mix local.install ${hex_source} --force
+    mix archive.install ${hex_source} --force
   fi
 }
 
