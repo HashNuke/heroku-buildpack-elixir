@@ -6,7 +6,7 @@
 * Use **prebuilt Elixir binaries** or build from source
 * Mix **dependency caching**
 * Adds the free Heroku Postgres **database upon app creation**
-* `DATABASE_URL` is made available at compile time
+* `DATABASE_URL` can be made available at compile time adding it to `config_vars_to_export` in `elixir_buildpack.config`
 * Allows configuring Erlang
 * If your app doesn't have a Procfile, default web task `mix server -p $PORT` will be run.
 * Consolidates protocols
@@ -51,6 +51,9 @@ elixir_version=0.12.5
 
 # Do dependencies have to be built from scratch on every deploy?
 always_build_deps=false
+
+# Export heroku config vars
+config_vars_to_export=(DATABASE_URL)
 ```
 
 
@@ -90,6 +93,19 @@ erlang_version=(branch master)
 
 Note that if you specify the master branch of Erlang, then it is Heroku's periodic builds that will be used. I don't work for Heroku, but I'm assuming that's why they have master branch builds.
 
+#### Specifying config vars to export at compile time
+
+* To set a config var on your heroku node you can exec from the shell:
+
+```
+heroku config:set MY_VAR=the_value
+```
+
+* Add the config vars you want to be exported in your `elixir_buildpack.config` file:
+
+```
+config_vars_to_export=(DATABASE_URL MY_VAR)
+```
 
 ## Other notes
 

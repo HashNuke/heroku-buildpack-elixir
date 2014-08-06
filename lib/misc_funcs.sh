@@ -70,13 +70,17 @@ function load_config() {
   output_line "Will use the following versions:"
   output_line "* Erlang ${erlang_version}"
   output_line "* Elixir ${elixir_version[0]} ${elixir_version[1]}"
+  output_line "Will export the following config vars:"
+  output_line "* Config vars ${config_vars_to_export}"
 }
 
 
-# Make the DATABASE_URL available at slug compile time.
+# Make the config vars from config_vars_to_export available at slug compile time.
 # Useful for compiled languages like Erlang and Elixir
-function export_database_url() {
-  if [ -d $env_path ] && [ -f $env_path/DATABASE_URL ]; then
-    export DATABASE_URL=$(cat $env_path/DATABASE_URL)
-  fi
+function export_config_vars() {
+  for config_var in ${config_vars_to_export[@]}; do
+    if [ -d $env_path ] && [ -f $env_path/${config_var} ]; then
+      export ${config_var}=$(cat $env_path/${config_var})
+    fi
+  done
 }

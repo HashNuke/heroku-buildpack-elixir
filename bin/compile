@@ -26,7 +26,7 @@ mkdir $(platform_tools_path)
 
 commands_to_run=(
   load_config
-  export_database_url
+  export_config_vars
 
   download_erlang
   install_erlang
