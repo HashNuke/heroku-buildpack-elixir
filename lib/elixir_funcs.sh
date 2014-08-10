@@ -12,19 +12,21 @@ function download_elixir() {
 
   local download_filename=$(elixir_download_file)
 
-  # If a previous download does not exist
-  # or if a branch is being used, then always re-download
-  if [ ! -f ${cache_path}/${download_filename} ] || [ ${elixir_version[0]} = "branch" ]; then
+  # If set to always rebuild or
+  # if a previous download does not exist or
+  # if a branch is being used, then always re-download
+  if [ $always_rebuild = true ] || \
+     [ ! -f ${cache_path}/${download_filename} ] || \
+     [ ${elixir_version[0]} = "branch" ];
+  then
+    clean_elixir_downloads
     elixir_changed=true
 
     if [ $git_version = true ]; then
       output_section "Downloading source from Github"
-      clean_elixir_downloads
-
       github_download "elixir-lang" "elixir" ${elixir_version[1]}
     else
       output_section "Downloading precompiled binary from Github"
-      clean_elixir_downloads
 
       local download_url="https://github.com/elixir-lang/elixir/releases/download/v${elixir_version}/Precompiled.zip"
       curl -ksL $download_url -o $cache_path/$download_filename || exit 1

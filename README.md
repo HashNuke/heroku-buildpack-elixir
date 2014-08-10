@@ -47,10 +47,10 @@ __Here's a full config file with all available options:__
 erlang_version=17.0
 
 # Elixir version
-elixir_version=0.12.5
+elixir_version=0.15.0
 
-# Do dependencies have to be built from scratch on every deploy?
-always_build_deps=false
+# Always rebuild from scratch on every deploy?
+always_rebuild=false
 
 # Export heroku config vars
 config_vars_to_export=(DATABASE_URL)
@@ -82,7 +82,7 @@ elixir_version=(commit b07fbcf8b73e)
 * You can either specify a stable Erlang release version like below
 
 ```
-erlang_version=R16B03-1
+erlang_version=17.0
 ```
 
 * OR you can specify that Erlang builds from the master branch must be used

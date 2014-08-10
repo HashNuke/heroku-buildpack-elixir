@@ -37,11 +37,11 @@ commands_to_run=(
   install_hex
   install_rebar
 
-  restore_backups_if_needed
+  restore_app
   app_dependencies
   copy_hex
   compile_app
-  backup_deps_and_build_if_needed
+  backup_app
   write_profile_d_script
 )
 

@@ -30,14 +30,14 @@ function erlang_remote_filename() {
 function download_erlang() {
   local erlang_package_url="https://s3.amazonaws.com/heroku-buildpack-erlang/$(erlang_remote_filename)"
 
-  if [ ! -f ${cache_path}/$(erlang_tarball) ]; then
+  # If set to always rebuild or
+  # if a previous download does not exist, then always re-download
+  if [ $always_rebuild = true ] || [ ! -f ${cache_path}/$(erlang_tarball) ]; then
     output_line "Downloading Erlang package"
+    clean_erlang_downloads
 
     # Set this so that rebar and elixir will be force-rebuilt
     erlang_changed=true
-
-    # Delete previously downloaded OTP tarballs
-    rm -rf ${cache_path}/OTP_*.tgz
 
     cd ${cache_path}
     output_section "Fetching Erlang ${erlang_version[0]} ${erlang_version[1]}"
@@ -46,6 +46,11 @@ function download_erlang() {
   else
     output_section "[skip] Already downloaded Erlang ${erlang_version[0]} ${erlang_version[1]}"
   fi
+}
+
+
+function clean_erlang_downloads() {
+  rm -rf ${cache_path}/OTP_*.tgz
 }
 
 
