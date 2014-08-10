@@ -34,6 +34,7 @@ commands_to_run=(
   download_elixir
   build_elixir
   install_elixir
+  restore_mix
   install_hex
   install_rebar
 
@@ -42,6 +43,7 @@ commands_to_run=(
   copy_hex
   compile_app
   backup_app
+  backup_mix
   write_profile_d_script
 )
 

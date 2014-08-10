@@ -1,10 +1,4 @@
 function restore_app() {
-  if [ $always_rebuild != true ]; then
-    if [ -d $(mix_backup_path) ]; then
-      cp -R $(mix_backup_path) ${HOME}/.mix
-    fi
-  fi
-
   if [ $erlang_changed != true ] && \
      [ $elixir_changed != true ] && \
      [ $rebar_changed != true ]  && \
@@ -25,7 +19,9 @@ function restore_app() {
 
 function copy_hex() {
   mkdir -p ${build_path}/.mix/archives
-  cp ${HOME}/.mix/hex.ets ${build_path}/.mix/
+  mkdir -p ${build_path}/.hex
+
+  cp ${HOME}/.hex/registry.ets ${build_path}/.hex/
   cp ${HOME}/.mix/archives/hex.ez ${build_path}/.mix/archives
 }
 
@@ -55,7 +51,6 @@ function backup_app() {
   # Delete the previous backups
   rm -rf $(deps_backup_path) $(build_backup_path)
 
-  cp -R ${HOME}/.mix $(mix_backup_path)
   cp -R ${build_path}/deps $(deps_backup_path)
   cp -R ${build_path}/_build $(build_backup_path)
 }
