@@ -1,14 +1,8 @@
-function restore_backups_if_needed() {
-  if [ $always_build_deps != true ]; then
-    if [ -d $(mix_backup_path) ]; then
-      cp -R $(mix_backup_path) ${HOME}/.mix
-    fi
-  fi
-
+function restore_app() {
   if [ $erlang_changed != true ] && \
      [ $elixir_changed != true ] && \
      [ $rebar_changed != true ]  && \
-     [ $always_build_deps != true ];
+     [ $always_rebuild != true ];
   then
 
     if [ -d $(deps_backup_path) ]; then
@@ -25,7 +19,9 @@ function restore_backups_if_needed() {
 
 function copy_hex() {
   mkdir -p ${build_path}/.mix/archives
-  cp ${HOME}/.mix/hex.ets ${build_path}/.mix/
+  mkdir -p ${build_path}/.hex
+
+  cp ${HOME}/.hex/registry.ets ${build_path}/.hex/
   cp ${HOME}/.mix/archives/hex.ez ${build_path}/.mix/archives
 }
 
@@ -51,15 +47,12 @@ function app_dependencies() {
 }
 
 
-function backup_deps_and_build_if_needed() {
-  if [ $always_build_deps != true ]; then
-    # Delete the previous backups
-    rm -rf $(deps_backup_path) $(build_backup_path)
+function backup_app() {
+  # Delete the previous backups
+  rm -rf $(deps_backup_path) $(build_backup_path)
 
-    cp -R ${HOME}/.mix $(mix_backup_path)
-    cp -R ${build_path}/deps $(deps_backup_path)
-    cp -R ${build_path}/_build $(build_backup_path)
-  fi
+  cp -R ${build_path}/deps $(deps_backup_path)
+  cp -R ${build_path}/_build $(build_backup_path)
 }
 
 

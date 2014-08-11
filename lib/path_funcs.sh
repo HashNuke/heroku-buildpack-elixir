@@ -37,3 +37,7 @@ function build_backup_path() {
 function mix_backup_path() {
   echo $cache_path/.mix
 }
+
+function hex_backup_path() {
+  echo $cache_path/.hex
+}
