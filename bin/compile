@@ -28,6 +28,8 @@ commands_to_run=(
   load_config
   export_config_vars
 
+  clean_cache
+
   download_erlang
   install_erlang
 

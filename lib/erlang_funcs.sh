@@ -6,9 +6,8 @@ function erlang_tarball() {
 function download_erlang() {
   local erlang_package_url="http://s3.hex.pm/builds/erlang/$(erlang_tarball)"
 
-  # If set to always rebuild or
-  # if a previous download does not exist, then always re-download
-  if [ $always_rebuild = true ] || [ ! -f ${cache_path}/$(erlang_tarball) ]; then
+  # If a previous download does not exist, then always re-download
+  if [ ! -f ${cache_path}/$(erlang_tarball) ]; then
     output_line "Downloading Erlang package"
     clean_erlang_downloads
 

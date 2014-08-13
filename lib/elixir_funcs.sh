@@ -12,12 +12,9 @@ function download_elixir() {
 
   local download_filename=$(elixir_download_file)
 
-  # If set to always rebuild or
-  # if a previous download does not exist or
+  # If a previous download does not exist or
   # if a branch is being used, then always re-download
-  if [ $always_rebuild = true ] || \
-     [ ! -f ${cache_path}/${download_filename} ] || \
-     [ ${elixir_version[0]} = "branch" ];
+  if [ ! -f ${cache_path}/${download_filename} ] || [ ${elixir_version[0]} = "branch" ];
   then
     clean_elixir_downloads
     elixir_changed=true
@@ -89,16 +86,12 @@ function clean_elixir_downloads() {
 
 
 function restore_mix() {
-  if [ $always_rebuild != true ]; then
-    if [ -d $(mix_backup_path) ]; then
-      cp -R $(mix_backup_path) ${HOME}/.mix
-    fi
+  if [ -d $(mix_backup_path) ]; then
+    cp -R $(mix_backup_path) ${HOME}/.mix
   fi
 
-  if [ $always_rebuild != true ]; then
-    if [ -d $(hex_backup_path) ]; then
-      cp -R $(hex_backup_path) ${HOME}/.hex
-    fi
+  if [ -d $(hex_backup_path) ]; then
+    cp -R $(hex_backup_path) ${HOME}/.hex
   fi
 }
 
