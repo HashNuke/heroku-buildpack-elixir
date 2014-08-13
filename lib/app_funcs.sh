@@ -37,7 +37,7 @@ function app_dependencies() {
   mix deps.get --only prod || exit 1
 
   output_section "Compiling app dependencies"
-  mix deps.compile || exit 1
+  mix deps.check || exit 1
 
   export GIT_DIR=$git_dir_value
   cd - > /dev/null
