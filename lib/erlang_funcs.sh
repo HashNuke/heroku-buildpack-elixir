@@ -34,9 +34,10 @@ function install_erlang() {
   mkdir -p $(erlang_build_path)
   tar zxf ${cache_path}/$(erlang_tarball) -C $(erlang_build_path) --strip-components=1
 
-  cp -R $(erlang_build_path) $(erlang_path)
-  $(erlang_build_path)/Install -minimal $(erlang_path)
+  mkdir -p /app/.platform_tools
+  ln -s $(erlang_build_path) /app/.platform_tools/erlang
+  $(erlang_build_path)/Install -minimal /app/.platform_tools/erlang
 
-  rm -rf $(erlang_build_path)
+  cp -R $(erlang_build_path) $(erlang_path)
   PATH=$(erlang_path)/bin:$PATH
 }
