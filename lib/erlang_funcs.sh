@@ -1,34 +1,10 @@
 function erlang_tarball() {
-  if [ ${#erlang_version[@]} -eq 2 ];
-  then
-    echo "OTP_${erlang_version[1]}.tgz"
-  else
-    echo "OTP_${erlang_version}.tgz"
-  fi
-}
-
-
-function erlang_download_file_prefix() {
-  if [ ${erlang_version:0:1} == "R" ]; then
-    echo "OTP_"
-  else
-    echo "OTP-"
-  fi;
-}
-
-
-function erlang_remote_filename() {
-  if [ ${#erlang_version[@]} -eq 2 ];
-  then
-    echo "${erlang_version[1]}.tgz"
-  else
-    echo "$(erlang_download_file_prefix)${erlang_version}.tgz"
-  fi
+  echo "OTP-${erlang_version}.tar.gz"
 }
 
 
 function download_erlang() {
-  local erlang_package_url="https://s3.amazonaws.com/heroku-buildpack-erlang/$(erlang_remote_filename)"
+  local erlang_package_url="http://s3.hex.pm/builds/erlang/$(erlang_tarball)"
 
   # If set to always rebuild or
   # if a previous download does not exist, then always re-download
@@ -39,18 +15,16 @@ function download_erlang() {
     # Set this so that rebar and elixir will be force-rebuilt
     erlang_changed=true
 
-    cd ${cache_path}
-    output_section "Fetching Erlang ${erlang_version[0]} ${erlang_version[1]}"
-    curl -ks ${erlang_package_url} -o $(erlang_tarball) || exit 1
-    cd - > /dev/null
+    output_section "Fetching Erlang ${erlang_version}"
+    curl -ks ${erlang_package_url} -o ${cache_path}/$(erlang_tarball) || exit 1
   else
-    output_section "[skip] Already downloaded Erlang ${erlang_version[0]} ${erlang_version[1]}"
+    output_section "[skip] Already downloaded Erlang ${erlang_version}"
   fi
 }
 
 
 function clean_erlang_downloads() {
-  rm -rf ${cache_path}/OTP_*.tgz
+  rm -rf ${cache_path}/OTP-*.tar.gz
 }
 
 
@@ -59,12 +33,11 @@ function install_erlang() {
 
   rm -rf $(erlang_build_path)
   mkdir -p $(erlang_build_path)
-  tar zxf ${cache_path}/$(erlang_tarball) -C $(erlang_build_path) --strip-components=2
-
-  mkdir -p /app/.platform_tools
-  ln -s $(erlang_build_path) /app/.platform_tools/erlang
-  $(erlang_build_path)/Install -minimal /app/.platform_tools/erlang
+  tar zxf ${cache_path}/$(erlang_tarball) -C $(erlang_build_path) --strip-components=1
 
   cp -R $(erlang_build_path) $(erlang_path)
+  $(erlang_build_path)/Install -minimal $(erlang_path)
+
+  rm -rf $(erlang_build_path)
   PATH=$(erlang_path)/bin:$PATH
 }
