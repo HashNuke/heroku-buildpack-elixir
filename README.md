@@ -15,7 +15,7 @@
 
 #### Version support info
 
-* Erlang - Prebuilt packages (17.0, R16B03-1, etc)
+* Erlang - Prebuilt packages (17.2, 17.1, etc)
 * Elixir - Prebuilt binaries or build from a branch, tag or a commit
 
 
@@ -44,10 +44,10 @@ __Here's a full config file with all available options:__
 
 ```
 # Erlang version
-erlang_version=17.0
+erlang_version=17.2
 
 # Elixir version
-elixir_version=0.15.0
+elixir_version=0.15.1
 
 # Always rebuild from scratch on every deploy?
 always_rebuild=false
@@ -79,19 +79,11 @@ elixir_version=(commit b07fbcf8b73e)
 
 #### Specifying Erlang version
 
-* You can either specify a stable Erlang release version like below
+* You can specify an Erlang release version like below
 
 ```
-erlang_version=17.0
+erlang_version=17.2
 ```
-
-* OR you can specify that Erlang builds from the master branch must be used
-
-```
-erlang_version=(branch master)
-```
-
-Note that if you specify the master branch of Erlang, then it is Heroku's periodic builds that will be used. I don't work for Heroku, but I'm assuming that's why they have master branch builds.
 
 #### Specifying config vars to export at compile time
 
