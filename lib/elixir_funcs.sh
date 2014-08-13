@@ -1,87 +1,59 @@
 function download_elixir() {
-  if [ ${#elixir_version[@]} -eq 1 ];
-  then
-    local git_version=false
-  elif [ ${#elixir_version[@]} -eq 2 ];
-  then
-    local git_version=true
-  else
-    output_line "Invalid Elixir version specified"
-    exit 1
-  fi
+  fix_elixir_version
 
-  local download_filename=$(elixir_download_file)
-
-  # If a previous download does not exist or
-  # if a branch is being used, then always re-download
-  if [ ! -f ${cache_path}/${download_filename} ] || [ ${elixir_version[0]} = "branch" ];
-  then
+  # If a previous download does not exist, then always re-download
+  if [ ! -f ${cache_path}/$(elixir_download_file) ]; then
     clean_elixir_downloads
     elixir_changed=true
 
-    if [ $git_version = true ]; then
-      output_section "Downloading source from Github"
-      github_download "elixir-lang" "elixir" ${elixir_version[1]}
-    else
-      output_section "Downloading precompiled binary from Github"
+    output_section "Downloading Elixir"
 
-      local download_url="https://github.com/elixir-lang/elixir/releases/download/v${elixir_version}/Precompiled.zip"
-      curl -ksL $download_url -o $cache_path/$download_filename || exit 1
-    fi
+    local download_url="http://s3.hex.pm/builds/elixir/${elixir_version}.zip"
+    curl -ksL ${download_url} -o ${cache_path}/$(elixir_download_file) || exit 1
   else
-    output_section "[skip] Already downloaded Elixir ${elixir_version[0]} ${elixir_version[1]}"
-  fi
-}
-
-
-function build_elixir() {
-  export LC_CTYPE=en_US.utf8
-
-  if [ $erlang_changed = true ] || [ $elixir_changed = true ]; then
-    output_section "Unpacking Elixir ${elixir_version[0]} ${elixir_version[1]}"
-    rm -rf $(elixir_build_path)
-    mkdir $(elixir_build_path)
-
-    # If git version (git version specification has 2 array elements)
-    if [ ${#elixir_version[@]} -eq 2 ]; then
-      tar zxf $cache_path/$(elixir_download_file) -C $(elixir_build_path) --strip-components=1
-      cd $(elixir_build_path)
-      output_section "Building Elixir from source"
-      make
-      cd - > /dev/null
-    else
-      cd $(elixir_build_path)
-      jar xf $cache_path/$(elixir_download_file)
-      cd - > /dev/null
-    fi
-  else
-    output_section "[skip] Already unpacked and built Elixir"
+    output_section "[skip] Already downloaded Elixir ${elixir_version}"
   fi
 }
 
 
 function install_elixir() {
-  output_section "Installing Elixir ${elixir_version[0]} ${elixir_version[1]}"
+  output_section "Installing Elixir ${elixir_version}"
 
-  cp -R $(elixir_build_path) $(elixir_path)
+  mkdir -p $(elixir_path)
+  cd $(elixir_path)
+  jar xf ${cache_path}/$(elixir_download_file)
+  cd - > /dev/null
+
   chmod +x $(elixir_path)/bin/*
-  PATH=$(elixir_path)/bin:$PATH
+  PATH=$(elixir_path)/bin:${PATH}
+
+  export LC_CTYPE=en_US.utf8
   export MIX_ENV=prod
 }
 
 
-function elixir_download_file() {
-  if [ ${#elixir_version[@]} -eq 2 ];
-  then
-    echo elixir-${elixir_version[1]}.tar.gz
-  else
-    echo elixir-${elixir_version}-precompiled.zip
+function fix_elixir_version() {
+  if [ ${#elixir_version[@]} -ne 1 ]; then
+    output_line "Invalid Elixir version specified"
+    output_line "See the README for allowed formats at:"
+    output_line "https://github.com/HashNuke/heroku-buildpack-elixir"
+    exit 1
+  fi
+
+  # If we detect a version string (ex: 0.15.1) we prefix it with "v"
+  if [[ ${elixir_version} =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+    elixir_version=v${elixir_version}
   fi
 }
 
 
+function elixir_download_file() {
+  echo elixir-${elixir_version}.zip
+}
+
+
 function clean_elixir_downloads() {
-  rm -rf ${cache_path}/elixir*.tar.gz ${cache_path}/elixir*.zip
+  rm -rf ${cache_path}/elixir*.zip
 }
 
 
