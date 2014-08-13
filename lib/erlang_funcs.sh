@@ -12,7 +12,7 @@ function download_erlang() {
     output_line "Downloading Erlang package"
     clean_erlang_downloads
 
-    # Set this so that rebar and elixir will be force-rebuilt
+    # Set this so elixir will be force-rebuilt
     erlang_changed=true
 
     output_section "Fetching Erlang ${erlang_version}"

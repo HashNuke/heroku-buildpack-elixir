@@ -1,7 +1,6 @@
 function restore_app() {
   if [ $erlang_changed != true ] && \
      [ $elixir_changed != true ] && \
-     [ $rebar_changed != true ]  && \
      [ $always_rebuild != true ];
   then
 
