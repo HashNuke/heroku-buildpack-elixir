@@ -65,10 +65,10 @@ config_vars_to_export=(DATABASE_URL)
 elixir_version=0.15.1
 ```
 
-* Use prebuilt Elixir branch
+* Use prebuilt Elixir branch, the *branch* specifier ensures that it will be downloaded every time
 
 ```
-elixir_version=master
+elixir_version=(branch master)
 ```
 
 #### Specifying Erlang version

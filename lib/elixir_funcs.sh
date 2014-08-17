@@ -2,7 +2,7 @@ function download_elixir() {
   fix_elixir_version
 
   # If a previous download does not exist, then always re-download
-  if [ ! -f ${cache_path}/$(elixir_download_file) ]; then
+  if [ ${force_fetch} = true ] || [ ! -f ${cache_path}/$(elixir_download_file) ]; then
     clean_elixir_downloads
     elixir_changed=true
 
@@ -33,16 +33,21 @@ function install_elixir() {
 
 
 function fix_elixir_version() {
-  if [ ${#elixir_version[@]} -ne 1 ]; then
+  if [ ${#elixir_version[@]} -eq 2 ] && [ ${elixir_version[0]} = "branch" ]; then
+    force_fetch=true
+    elixir_version=${elixir_version[1]}
+
+  elif [ ${#elixir_version[@]} -eq 1 ]; then
+    # If we detect a version string (ex: 0.15.1) we prefix it with "v"
+    if [[ ${elixir_version} =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+      elixir_version=v${elixir_version}
+    fi
+
+  else
     output_line "Invalid Elixir version specified"
     output_line "See the README for allowed formats at:"
     output_line "https://github.com/HashNuke/heroku-buildpack-elixir"
     exit 1
-  fi
-
-  # If we detect a version string (ex: 0.15.1) we prefix it with "v"
-  if [[ ${elixir_version} =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
-    elixir_version=v${elixir_version}
   fi
 }
 
@@ -93,7 +98,7 @@ function install_rebar() {
   # Remove the 'if' when most users have migrated
   # away from 0.15.1 and earlier version
 
-  if [ -d ${HOME}/.hex/rebar ]; then
+  if [ ! -f ${HOME}/.mix/rebar ]; then
     mix local.rebar --force
   fi
 }
