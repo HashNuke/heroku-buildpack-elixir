@@ -14,10 +14,6 @@ function erlang_build_path() {
   echo "${cache_path}/erlang"
 }
 
-function elixir_build_path() {
-  echo "${cache_path}/elixir"
-}
-
 function deps_backup_path() {
   echo $cache_path/deps_backup
 }

@@ -3,20 +3,20 @@
 ### Features
 
 * **Easy configuration** with `elixir_buildpack.config` file
-* Use **prebuilt Elixir binaries** or build from source
-* Mix **dependency caching**
+* Use **prebuilt Elixir binaries**
 * Adds the free Heroku Postgres **database upon app creation**
 * `DATABASE_URL` can be made available at compile time adding it to `config_vars_to_export` in `elixir_buildpack.config`
 * Allows configuring Erlang
 * If your app doesn't have a Procfile, default web task `mix server -p $PORT` will be run.
 * Consolidates protocols
 * Hex and rebar support
+* Caching of Hex packages, Mix dependencies and downloads
 
 
 #### Version support info
 
 * Erlang - Prebuilt packages (17.2, 17.1, etc)
-* Elixir - Prebuilt binaries or build from a branch, tag or a commit
+* Elixir - Prebuilt releases (0.15.1, 0.15.0, etc) or prebuilt branches (master, stable, etc)
 
 
 ## Usage
@@ -57,24 +57,18 @@ config_vars_to_export=(DATABASE_URL)
 ```
 
 
-#### Some other ways of specifying Elixir version
+#### Specifying Elixir version
 
-* _Build Elixir from a branch._ If you specify a branch, that particular Elixir branch will be re-downloaded and built from source every time you deploy.
+* Use prebuilt Elixir release
+
+```
+elixir_version=0.15.1
+```
+
+* Use prebuilt Elixir branch, the *branch* specifier ensures that it will be downloaded every time
 
 ```
 elixir_version=(branch master)
-```
-
-* _Build Elixir from a tag_
-
-```
-elixir_version=(tag v0.12.5)
-```
-
-* _Build Elixir from a particular commit_
-
-```
-elixir_version=(commit b07fbcf8b73e)
 ```
 
 #### Specifying Erlang version

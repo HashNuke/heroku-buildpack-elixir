@@ -34,7 +34,6 @@ commands_to_run=(
   install_erlang
 
   download_elixir
-  build_elixir
   install_elixir
   restore_mix
   install_hex
