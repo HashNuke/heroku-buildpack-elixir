@@ -1,4 +1,8 @@
 function restore_app() {
+  if [ $always_rebuild = true ]; then
+    rm -rf ${build_path}/_build
+  fi
+
   if [ $erlang_changed != true ]; then
     if [ -d $(deps_backup_path) ]; then
       cp -R $(deps_backup_path) ${build_path}/deps
