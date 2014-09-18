@@ -16,7 +16,7 @@
 #### Version support info
 
 * Erlang - Prebuilt packages (17.2, 17.1, etc)
-* Elixir - Prebuilt releases (0.15.1, 0.15.0, etc) or prebuilt branches (master, stable, etc)
+* Elixir - Prebuilt releases (1.0.0, 0.15.1 etc) or prebuilt branches (master, stable, etc)
 
 
 ## Usage
@@ -47,7 +47,7 @@ __Here's a full config file with all available options:__
 erlang_version=17.2
 
 # Elixir version
-elixir_version=0.15.1
+elixir_version=1.0.0
 
 # Always rebuild from scratch on every deploy?
 always_rebuild=false
@@ -62,7 +62,7 @@ config_vars_to_export=(DATABASE_URL)
 * Use prebuilt Elixir release
 
 ```
-elixir_version=0.15.1
+elixir_version=1.0.0
 ```
 
 * Use prebuilt Elixir branch, the *branch* specifier ensures that it will be downloaded every time
