@@ -89,6 +89,6 @@ function export_config_vars() {
 function clean_cache() {
   if [ $always_rebuild = true ]; then
     output_line "Cleaning all cache to force rebuilds"
-    rm -rf $(cache_path)
+    rm -rf $cache_path/*
   fi
 }
