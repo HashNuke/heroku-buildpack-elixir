@@ -22,8 +22,7 @@ function install_elixir() {
   mkdir -p $(elixir_path)
   cd $(elixir_path)
 
-  # Cedar-14 has unzip. Older Heroku stacks don't have it
-  if hash unzip 2>/dev/null; then
+  if [ ${STACK} = "cedar-14" ] ; then
     unzip ${cache_path}/$(elixir_download_file)
   else
     jar xf ${cache_path}/$(elixir_download_file)
