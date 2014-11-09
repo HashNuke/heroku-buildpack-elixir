@@ -14,7 +14,6 @@ function download_erlang() {
 
   # If a previous download does not exist, then always re-download
   if [ ! -f ${cache_path}/$(erlang_tarball) ]; then
-    output_line "Downloading Erlang package"
     clean_erlang_downloads
 
     # Set this so elixir will be force-rebuilt
@@ -40,6 +39,7 @@ function install_erlang() {
   mkdir -p $(erlang_build_path)
   tar zxf ${cache_path}/$(erlang_tarball) -C $(erlang_build_path) --strip-components=1
 
+  rm -rf /app/.platform_tools/erlang
   mkdir -p /app/.platform_tools
   ln -s $(erlang_build_path) /app/.platform_tools/erlang
   $(erlang_build_path)/Install -minimal /app/.platform_tools/erlang

@@ -3,7 +3,7 @@ function restore_app() {
     rm -rf ${build_path}/_build
   fi
 
-  if [ $erlang_changed != true ]; then
+  if [ $erlang_changed != true ] || [ $elixir_changed != true ]; then
     if [ -d $(deps_backup_path) ]; then
       cp -R $(deps_backup_path) ${build_path}/deps
     fi

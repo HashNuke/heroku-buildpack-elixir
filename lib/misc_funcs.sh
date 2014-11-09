@@ -88,7 +88,18 @@ function export_config_vars() {
 
 function clean_cache() {
   if [ $always_rebuild = true ]; then
-    output_line "Cleaning all cache to force rebuilds"
+    output_section "Cleaning all cache to force rebuilds"
     rm -rf $cache_path/*
+  else
+    stack_change
   fi
+}
+
+function stack_change() {
+  if [ ! -f "${cache_path}/stack" ] || [ $(cat "${cache_path}/stack") != ${STACK} ]; then
+    output_section "Stack changed, will rebuild"
+    rm -rf ${cache_path}/*
+  fi
+
+  echo ${STACK} > "${cache_path}/stack"
 }

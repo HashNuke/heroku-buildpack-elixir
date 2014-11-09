@@ -6,7 +6,7 @@ function download_elixir() {
     clean_elixir_downloads
     elixir_changed=true
 
-    output_section "Downloading Elixir"
+    output_section "Fetching Elixir ${elixir_version}"
 
     local download_url="http://s3.hex.pm/builds/elixir/${elixir_version}.zip"
     curl -ksL ${download_url} -o ${cache_path}/$(elixir_download_file) || exit 1
@@ -23,7 +23,7 @@ function install_elixir() {
   cd $(elixir_path)
 
   if [ ${STACK} = "cedar-14" ] ; then
-    unzip ${cache_path}/$(elixir_download_file)
+    unzip -q ${cache_path}/$(elixir_download_file)
   else
     jar xf ${cache_path}/$(elixir_download_file)
   fi
