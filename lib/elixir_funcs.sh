@@ -34,7 +34,6 @@ function install_elixir() {
   PATH=$(elixir_path)/bin:${PATH}
 
   export LC_CTYPE=en_US.utf8
-  export MIX_ENV=prod
 }
 
 
