@@ -27,6 +27,7 @@ mkdir $(platform_tools_path)
 commands_to_run=(
   load_config
   export_config_vars
+  export_mix_env
 
   clean_cache
 

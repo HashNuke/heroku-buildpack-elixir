@@ -85,6 +85,14 @@ function export_config_vars() {
   done
 }
 
+function export_mix_env() {
+  if [ -d $env_path ] && [ -f $env_path/MIX_ENV ]; then
+    export MIX_ENV=$(cat $env_path/MIX_ENV)
+  else
+    export MIX_ENV=prod
+  fi
+}
+
 
 function clean_cache() {
   if [ $always_rebuild = true ]; then

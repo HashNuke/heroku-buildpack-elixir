@@ -78,6 +78,6 @@ function write_profile_d_script() {
 
   local export_line="export PATH=\$HOME/.platform_tools:\$HOME/.platform_tools/erlang/bin:\$HOME/.platform_tools/elixir/bin:\$PATH
                      export LC_CTYPE=en_US.utf8
-                     export MIX_ENV=prod"
+                     export MIX_ENV=${MIX_ENV}"
   echo $export_line >> $build_path/.profile.d/elixir_buildpack_paths.sh
 }
