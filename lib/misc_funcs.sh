@@ -91,6 +91,8 @@ function export_mix_env() {
   else
     export MIX_ENV=prod
   fi
+
+  output_line "* MIX_ENV=${MIX_ENV}"
 }
 
 
