@@ -11,6 +11,7 @@
 * Consolidates protocols
 * Hex and rebar support
 * Caching of Hex packages, Mix dependencies and downloads
+* Allow execution of post Erlang/Elixir/App hooks
 
 
 #### Version support info
@@ -54,6 +55,15 @@ always_rebuild=false
 
 # Export heroku config vars
 config_vars_to_export=(DATABASE_URL)
+
+# Execute bash script after Erlang installation
+post_erlang_hook=deploy/post_erlang.sh
+
+# Execute bash script after Elixir installation
+post_elixir_hook=deploy/post_elixir.sh
+
+# Execute bash script after App installation
+post_app_hook=deploy/post_app.sh
 ```
 
 
@@ -91,6 +101,28 @@ heroku config:set MY_VAR=the_value
 
 ```
 config_vars_to_export=(DATABASE_URL MY_VAR)
+```
+
+#### Specifying post hooks scripts
+
+Post hook scripts files path are relative to your app's root dir.
+
+* The `post_erlang_hook` is executed after the Erlang installation and before the Elixir installation.
+* The `post_elixir_hook` is executed after the Elixir installation and before the App installation.
+* The `post_app_hook` is executed after the App installation.
+
+__Create a bash script to execute (e.g. `deploy/post_erlang.sh`):__
+
+```bash
+#!/usr/bin/env bash
+
+echo "After Erlang installation"
+```
+
+__Specify the script you want to be executed in your `elixir_buildpack.config` file:__
+
+```
+post_erlang_hook=deploy/post_erlang.sh
 ```
 
 ## Other notes
