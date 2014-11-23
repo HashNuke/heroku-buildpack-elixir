@@ -21,6 +21,7 @@ source ${build_pack_path}/lib/misc_funcs.sh
 source ${build_pack_path}/lib/erlang_funcs.sh
 source ${build_pack_path}/lib/elixir_funcs.sh
 source ${build_pack_path}/lib/app_funcs.sh
+source ${build_pack_path}/lib/hooks_funcs.sh
 
 mkdir $(platform_tools_path)
 
@@ -34,16 +35,23 @@ commands_to_run=(
   download_erlang
   install_erlang
 
+  exec_post_erlang
+
   download_elixir
   install_elixir
   restore_mix
   install_hex
   install_rebar
 
+  exec_post_elixir
+
   restore_app
   app_dependencies
   copy_hex
   compile_app
+
+  exec_post_app
+
   backup_app
   backup_mix
   write_profile_d_script
