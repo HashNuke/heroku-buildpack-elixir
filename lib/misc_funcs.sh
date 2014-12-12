@@ -68,6 +68,7 @@ function load_config() {
   fi
 
   output_line "Will use the following versions:"
+  output_line "* Stack ${STACK}"
   output_line "* Erlang ${erlang_version}"
   output_line "* Elixir ${elixir_version[0]} ${elixir_version[1]}"
   output_line "Will export the following config vars:"
