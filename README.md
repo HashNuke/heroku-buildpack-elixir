@@ -93,6 +93,10 @@ heroku config:set MY_VAR=the_value
 config_vars_to_export=(DATABASE_URL MY_VAR)
 ```
 
+#### Running a custom compilation script
+
+* To run an arbitrary shell script at the end of the compilation process, add `post_compile.sh` file to the root.
+
 ## Other notes
 
 * Add your own `Procfile` to your application, else the default web task `mix server -p $PORT` will be used.
