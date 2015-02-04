@@ -20,7 +20,7 @@ function copy_hex() {
   mkdir -p ${build_path}/.hex
 
   cp ${HOME}/.hex/registry.ets ${build_path}/.hex/
-  cp ${HOME}/.mix/archives/hex.ez ${build_path}/.mix/archives
+  cp ${HOME}/.mix/archives/`basename ${hex_source}` ${build_path}/.mix/archives
 }
 
 
