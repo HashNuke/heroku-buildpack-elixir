@@ -71,6 +71,7 @@ function compile_app() {
 
   # if exrm release are activated then run the release task
   if [ $exrm_release = true ]; then
+    output_section "Releasing the app"
     mix release
   fi
 
