@@ -15,6 +15,9 @@ build_path=$(cd $1 && pwd)
 cache_path=$(cd $2 && pwd)
 env_path=$(cd $3 && pwd)
 
+export BUILDPACK_BUILD_PATH=${build_path}
+export BUILDPACK_CACHE_PATH=${cache_path}
+export BUILDPACK_ENV_PATH=${env_path}
 
 source ${build_pack_path}/lib/path_funcs.sh
 source ${build_pack_path}/lib/misc_funcs.sh
@@ -47,6 +50,8 @@ commands_to_run=(
   backup_app
   backup_mix
   write_profile_d_script
+
+  run_custom_script
 )
 
 for command in "${commands_to_run[@]}"

@@ -83,3 +83,12 @@ function write_profile_d_script() {
                      export MIX_ENV=${MIX_ENV}"
   echo $export_line >> $build_path/.profile.d/elixir_buildpack_paths.sh
 }
+
+function run_custom_script() {
+  local custom_compile_script="${build_path}/post_compile.sh"
+  if [ -f $custom_compile_script ];
+    then
+    output_section "Running custom compile script (post_compile.sh)"
+    sh $custom_compile_script || exit 1
+  fi
+}
