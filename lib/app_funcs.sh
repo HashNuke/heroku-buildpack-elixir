@@ -69,6 +69,12 @@ function compile_app() {
   mix compile --force || exit 1
   mix compile.protocols || exit 1
 
+  # if exrm release are activated then run the release task
+  if [ $exrm_release = true ]; then
+    output_section "Releasing the app"
+    mix release
+  fi
+
   export GIT_DIR=$git_dir_value
   cd - > /dev/null
 }
