@@ -11,6 +11,7 @@
 * Consolidates protocols
 * Hex and rebar support
 * Caching of Hex packages, Mix dependencies and downloads
+* exrm releases support
 
 
 #### Version support info
@@ -54,6 +55,9 @@ always_rebuild=false
 
 # Export heroku config vars
 config_vars_to_export=(DATABASE_URL)
+
+# Support exrm releases
+exrm_release=false
 ```
 
 
@@ -92,6 +96,10 @@ heroku config:set MY_VAR=the_value
 ```
 config_vars_to_export=(DATABASE_URL MY_VAR)
 ```
+
+## exrm release
+
+if exrm support is enabled then after compilation, the task 'mix release' is also run.
 
 ## Other notes
 
