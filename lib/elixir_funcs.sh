@@ -101,11 +101,5 @@ function install_hex() {
 function install_rebar() {
   output_section "Installing rebar"
 
-  # The --force flag was added in Elixir 0.15.2
-  # Remove the 'if' when most users have migrated
-  # away from 0.15.1 and earlier version
-
-  if [ ! -f ${HOME}/.mix/rebar ]; then
-    mix local.rebar --force
-  fi
+  mix local.rebar --force
 }
