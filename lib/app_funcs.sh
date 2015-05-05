@@ -36,6 +36,7 @@ function app_dependencies() {
   mix deps.get --only $MIX_ENV || exit 1
 
   output_section "Compiling app dependencies"
+  mix deps.compile
 
   # TODO: If elixir adds 'mix clean --unused' we should call it here
   mix deps.clean --unused
@@ -62,11 +63,10 @@ function compile_app() {
 
   cd $build_path
   output_section "Compiling the app"
+  mix compile || exit 1
 
-  # We need to force compilation of the application because
-  # Heroku and our caching mess with the files mtime
-
-  mix compile --force || exit 1
+  # TODO: Remove this eventually, elixir 1.0.4 added :build_embedded that
+  # compiles protocols
   mix compile.protocols || exit 1
 
   export GIT_DIR=$git_dir_value
