@@ -36,6 +36,10 @@ function app_dependencies() {
   mix deps.get --only $MIX_ENV || exit 1
 
   output_section "Compiling app dependencies"
+
+  # TODO: If elixir adds 'mix clean --unused' we should call it here
+  mix deps.clean --unused
+
   mix deps.check || exit 1
 
   export GIT_DIR=$git_dir_value
