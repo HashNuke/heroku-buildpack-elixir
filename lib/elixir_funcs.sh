@@ -8,8 +8,8 @@ function download_elixir() {
 
     output_section "Fetching Elixir ${elixir_version}"
 
-    local download_url="http://s3.hex.pm/builds/elixir/${elixir_version}.zip"
-    curl -ksL ${download_url} -o ${cache_path}/$(elixir_download_file) || exit 1
+    local download_url="https://s3.amazonaws.com/s3.hex.pm/builds/elixir/${elixir_version}.zip"
+    curl -s ${download_url} -o ${cache_path}/$(elixir_download_file) || exit 1
   else
     output_section "[skip] Already downloaded Elixir ${elixir_version}"
   fi
@@ -101,11 +101,5 @@ function install_hex() {
 function install_rebar() {
   output_section "Installing rebar"
 
-  # The --force flag was added in Elixir 0.15.2
-  # Remove the 'if' when most users have migrated
-  # away from 0.15.1 and earlier version
-
-  if [ ! -f ${HOME}/.mix/rebar ]; then
-    mix local.rebar --force
-  fi
+  mix local.rebar --force
 }

@@ -1,13 +1,9 @@
 function restore_app() {
-  if [ $always_rebuild = true ]; then
-    rm -rf ${build_path}/_build
+  if [ -d $(deps_backup_path) ]; then
+    cp -R $(deps_backup_path) ${build_path}/deps
   fi
 
-  if [ $erlang_changed != true ] || [ $elixir_changed != true ]; then
-    if [ -d $(deps_backup_path) ]; then
-      cp -R $(deps_backup_path) ${build_path}/deps
-    fi
-
+  if [ $erlang_changed != true ] && [ $elixir_changed != true ]; then
     if [ -d $(build_backup_path) ]; then
       cp -R $(build_backup_path) ${build_path}/_build
     fi
@@ -37,9 +33,13 @@ function app_dependencies() {
   unset GIT_DIR
 
   output_section "Fetching app dependencies with mix"
-  mix deps.get --only prod || exit 1
+  mix deps.get --only $MIX_ENV || exit 1
 
   output_section "Compiling app dependencies"
+  mix deps.compile
+
+  mix deps.clean --unused
+
   mix deps.check || exit 1
 
   export GIT_DIR=$git_dir_value
@@ -62,11 +62,10 @@ function compile_app() {
 
   cd $build_path
   output_section "Compiling the app"
+  mix compile || exit 1
 
-  # We need to force compilation of the application because
-  # Heroku and our caching mess with the files mtime
-
-  mix compile --force || exit 1
+  # TODO: Remove this eventually, elixir 1.0.4 added :build_embedded that
+  # compiles protocols
   mix compile.protocols || exit 1
 
   export GIT_DIR=$git_dir_value
