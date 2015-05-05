@@ -38,7 +38,6 @@ function app_dependencies() {
   output_section "Compiling app dependencies"
   mix deps.compile
 
-  # TODO: If elixir adds 'mix clean --unused' we should call it here
   mix deps.clean --unused
 
   mix deps.check || exit 1
