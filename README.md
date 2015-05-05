@@ -95,11 +95,24 @@ config_vars_to_export=(DATABASE_URL MY_VAR)
 
 ## Other notes
 
-* Add your own `Procfile` to your application, else the default web task `mix server -p $PORT` will be used.
+* Add your own `Procfile` to your application, else the default web task `mix run --no-halt` will be used.
 
-* To make use of consolidated protocols they need to be added to the loadpath. Example: `elixir -pa _build/prod/consolidated -S mix run --no-halt`.
+* If you create an application with this buildpack, then a free database addon `heroku-postgresql:hobby-dev` is also added. The database credentials are available from the env var `DATABASE_URL`.
 
-* If you create an application with this buildpack, then a free database addon`heroku-postgresql:hobby-dev` is also added. The database credentials are available from the env var `DATABASE_URL`.
+* Your application should build embedded and start permanent. Build embedded will consolidate protocols for a performance boost, start permanent will ensure that Heroku restarts your application if it crashes. See below for an example of how to use these features in your Mix project:
+
+```elixir
+defmodule MyApp.Mixfile do
+  use Mix.Project
+
+  def project do
+    [app: :my_app,
+     version: "0.0.1",
+     build_embedded: Mix.env == :prod,
+     start_permanent: Mix.env == :prod]
+  end
+end
+```
 
 
 ## Credits
