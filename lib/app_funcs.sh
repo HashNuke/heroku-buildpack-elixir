@@ -35,13 +35,6 @@ function app_dependencies() {
   output_section "Fetching app dependencies with mix"
   mix deps.get --only $MIX_ENV || exit 1
 
-  output_section "Compiling app dependencies"
-  mix deps.compile
-
-  mix deps.clean --unused
-
-  mix deps.check || exit 1
-
   export GIT_DIR=$git_dir_value
   cd - > /dev/null
 }
@@ -61,8 +54,10 @@ function compile_app() {
   unset GIT_DIR
 
   cd $build_path
-  output_section "Compiling the app"
+  output_section "Compiling"
   mix compile || exit 1
+
+  mix deps.clean --unused
 
   # TODO: Remove this eventually, elixir 1.0.4 added :build_embedded that
   # compiles protocols
