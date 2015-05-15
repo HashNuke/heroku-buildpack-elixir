@@ -106,6 +106,8 @@ function check_stack() {
     output_section "Stack changed, will rebuild"
     rm -rf ${cache_path}/*
   fi
+
+  echo ${STACK} > "${cache_path}/stack"
 }
 
 function clean_cache() {
