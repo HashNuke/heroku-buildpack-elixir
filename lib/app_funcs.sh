@@ -1,11 +1,11 @@
 function restore_app() {
   if [ -d $(deps_backup_path) ]; then
-    cp -R $(deps_backup_path) ${build_path}/deps
+    cp -pR $(deps_backup_path) ${build_path}/deps
   fi
 
   if [ $erlang_changed != true ] && [ $elixir_changed != true ]; then
     if [ -d $(build_backup_path) ]; then
-      cp -R $(build_backup_path) ${build_path}/_build
+      cp -pR $(build_backup_path) ${build_path}/_build
     fi
   fi
 }
@@ -41,8 +41,8 @@ function backup_app() {
   # Delete the previous backups
   rm -rf $(deps_backup_path) $(build_backup_path)
 
-  cp -R ${build_path}/deps $(deps_backup_path)
-  cp -R ${build_path}/_build $(build_backup_path)
+  cp -pR ${build_path}/deps $(deps_backup_path)
+  cp -pR ${build_path}/_build $(build_backup_path)
 }
 
 

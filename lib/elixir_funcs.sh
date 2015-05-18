@@ -66,11 +66,11 @@ function clean_elixir_downloads() {
 
 function restore_mix() {
   if [ -d $(mix_backup_path) ]; then
-    cp -R $(mix_backup_path) ${HOME}/.mix
+    cp -pR $(mix_backup_path) ${HOME}/.mix
   fi
 
   if [ -d $(hex_backup_path) ]; then
-    cp -R $(hex_backup_path) ${HOME}/.hex
+    cp -pR $(hex_backup_path) ${HOME}/.hex
   fi
 }
 
@@ -78,8 +78,8 @@ function backup_mix() {
   # Delete the previous backups
   rm -rf $(mix_backup_path) $(hex_backup_path)
 
-  cp -R ${HOME}/.mix $(mix_backup_path)
-  cp -R ${HOME}/.hex $(hex_backup_path)
+  cp -pR ${HOME}/.mix $(mix_backup_path)
+  cp -pR ${HOME}/.hex $(hex_backup_path)
 }
 
 function install_hex() {
