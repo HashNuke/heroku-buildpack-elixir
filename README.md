@@ -4,7 +4,6 @@
 
 * **Easy configuration** with `elixir_buildpack.config` file
 * Use **prebuilt Elixir binaries**
-* Adds the free Heroku Postgres **database upon app creation**
 * `DATABASE_URL` can be made available at compile time adding it to `config_vars_to_export` in `elixir_buildpack.config`
 * Allows configuring Erlang
 * If your app doesn't have a Procfile, default web task `mix server -p $PORT` will be run.
