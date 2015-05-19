@@ -29,6 +29,7 @@ commands_to_run=(
   export_config_vars
   export_mix_env
 
+  check_stack
   clean_cache
 
   download_erlang

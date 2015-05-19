@@ -96,21 +96,23 @@ function export_mix_env() {
   output_line "* MIX_ENV=${MIX_ENV}"
 }
 
-
-function clean_cache() {
-  if [ $always_rebuild = true ]; then
-    output_section "Cleaning all cache to force rebuilds"
-    rm -rf $cache_path/*
-  else
-    stack_change
+function check_stack() {
+  if [ ${STACK} = "cedar" ]; then
+    echo "ERROR: cedar stack is not supported, upgrade to cedar-14"
+    exit 1
   fi
-}
 
-function stack_change() {
   if [ ! -f "${cache_path}/stack" ] || [ $(cat "${cache_path}/stack") != ${STACK} ]; then
     output_section "Stack changed, will rebuild"
     rm -rf ${cache_path}/*
   fi
 
   echo ${STACK} > "${cache_path}/stack"
+}
+
+function clean_cache() {
+  if [ $always_rebuild = true ]; then
+    output_section "Cleaning all cache to force rebuilds"
+    rm -rf $cache_path/*
+  fi
 }

@@ -3,7 +3,7 @@
 cat <<EOF
 ---
 addons:
-  heroku-postgresql:hobby-dev
+  []
 default_process_types:
   web: mix run --no-halt
 EOF

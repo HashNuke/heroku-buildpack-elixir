@@ -1,11 +1,11 @@
 function restore_app() {
   if [ -d $(deps_backup_path) ]; then
-    cp -R $(deps_backup_path) ${build_path}/deps
+    cp -pR $(deps_backup_path) ${build_path}/deps
   fi
 
   if [ $erlang_changed != true ] && [ $elixir_changed != true ]; then
     if [ -d $(build_backup_path) ]; then
-      cp -R $(build_backup_path) ${build_path}/_build
+      cp -pR $(build_backup_path) ${build_path}/_build
     fi
   fi
 }
@@ -23,15 +23,12 @@ function copy_hex() {
 
 
 function app_dependencies() {
-  local git_dir_value=$GIT_DIR
-
-  # Enter build dir to perform app-related actions
-  cd $build_path
-
   # Unset this var so that if the parent dir is a git repo, it isn't detected
   # And all git operations are performed on the respective repos
+  local git_dir_value=$GIT_DIR
   unset GIT_DIR
 
+  cd $build_path
   output_section "Fetching app dependencies with mix"
   mix deps.get --only $MIX_ENV || exit 1
 
@@ -44,8 +41,8 @@ function backup_app() {
   # Delete the previous backups
   rm -rf $(deps_backup_path) $(build_backup_path)
 
-  cp -R ${build_path}/deps $(deps_backup_path)
-  cp -R ${build_path}/_build $(build_backup_path)
+  cp -pR ${build_path}/deps $(deps_backup_path)
+  cp -pR ${build_path}/_build $(build_backup_path)
 }
 
 
@@ -58,10 +55,6 @@ function compile_app() {
   mix compile || exit 1
 
   mix deps.clean --unused
-
-  # TODO: Remove this eventually, elixir 1.0.4 added :build_embedded that
-  # compiles protocols
-  mix compile.protocols || exit 1
 
   export GIT_DIR=$git_dir_value
   cd - > /dev/null

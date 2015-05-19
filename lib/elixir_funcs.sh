@@ -11,13 +11,12 @@ function download_elixir() {
     local download_url="https://s3.amazonaws.com/s3.hex.pm/builds/elixir/${elixir_version}.zip"
     curl -s ${download_url} -o ${cache_path}/$(elixir_download_file) || exit 1
   else
-    output_section "[skip] Already downloaded Elixir ${elixir_version}"
+    output_section "Using cached Elixir ${elixir_version}"
   fi
 }
 
-
 function install_elixir() {
-  output_section "Installing Elixir ${elixir_version}"
+  output_section "Installing Elixir ${elixir_version} $(elixir_changed)"
 
   mkdir -p $(elixir_path)
   cd $(elixir_path)
@@ -35,7 +34,6 @@ function install_elixir() {
 
   export LC_CTYPE=en_US.utf8
 }
-
 
 function fix_elixir_version() {
   if [ ${#elixir_version[@]} -eq 2 ] && [ ${elixir_version[0]} = "branch" ]; then
@@ -58,34 +56,30 @@ function fix_elixir_version() {
   fi
 }
 
-
 function elixir_download_file() {
   echo elixir-${elixir_version}.zip
 }
-
 
 function clean_elixir_downloads() {
   rm -rf ${cache_path}/elixir*.zip
 }
 
-
 function restore_mix() {
   if [ -d $(mix_backup_path) ]; then
-    cp -R $(mix_backup_path) ${HOME}/.mix
+    cp -pR $(mix_backup_path) ${HOME}/.mix
   fi
 
   if [ -d $(hex_backup_path) ]; then
-    cp -R $(hex_backup_path) ${HOME}/.hex
+    cp -pR $(hex_backup_path) ${HOME}/.hex
   fi
 }
-
 
 function backup_mix() {
   # Delete the previous backups
   rm -rf $(mix_backup_path) $(hex_backup_path)
 
-  cp -R ${HOME}/.mix $(mix_backup_path)
-  cp -R ${HOME}/.hex $(hex_backup_path)
+  cp -pR ${HOME}/.mix $(mix_backup_path)
+  cp -pR ${HOME}/.hex $(hex_backup_path)
 }
 
 function install_hex() {
@@ -97,9 +91,14 @@ function install_hex() {
   fi
 }
 
-
 function install_rebar() {
   output_section "Installing rebar"
 
   mix local.rebar --force
+}
+
+function elixir_changed() {
+  if [ $elixir_changed = true ]; then
+    echo "(changed)"
+  fi
 }
