@@ -24,33 +24,27 @@ source ${build_pack_path}/lib/app_funcs.sh
 
 mkdir $(platform_tools_path)
 
-commands_to_run=(
-  load_config
-  export_config_vars
-  export_mix_env
 
-  check_stack
-  clean_cache
+load_config
+export_config_vars
+export_mix_env
 
-  download_erlang
-  install_erlang
+check_stack
+clean_cache
 
-  download_elixir
-  install_elixir
-  restore_mix
-  install_hex
-  install_rebar
+download_erlang
+install_erlang
 
-  restore_app
-  app_dependencies
-  copy_hex
-  compile_app
-  backup_app
-  backup_mix
-  write_profile_d_script
-)
+download_elixir
+install_elixir
+restore_mix
+install_hex
+install_rebar
 
-for command in "${commands_to_run[@]}"
-do
-  eval $command
-done
+restore_app
+app_dependencies
+copy_hex
+compile_app
+backup_app
+backup_mix
+write_profile_d_script
