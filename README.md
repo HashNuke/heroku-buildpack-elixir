@@ -6,7 +6,7 @@
 * Use **prebuilt Elixir binaries**
 * `DATABASE_URL` can be made available at compile time adding it to `config_vars_to_export` in `elixir_buildpack.config`
 * Allows configuring Erlang
-* If your app doesn't have a Procfile, default web task `mix server -p $PORT` will be run.
+* If your app doesn't have a Procfile, default web task `mix run --no-halt` will be run.
 * Consolidates protocols
 * Hex and rebar support
 * Caching of Hex packages, Mix dependencies and downloads
