@@ -72,7 +72,7 @@ function load_config() {
   output_line "* Erlang ${erlang_version}"
   output_line "* Elixir ${elixir_version[0]} ${elixir_version[1]}"
   output_line "Will export the following config vars:"
-  output_line "* Config vars ${config_vars_to_export}"
+  output_line "* Config vars ${config_vars_to_export[*]}"
 }
 
 
