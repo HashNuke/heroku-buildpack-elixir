@@ -1,20 +1,3 @@
-# Runs stuff in a wrapper. If exit code is not zero, it exits
-#
-# Usage:
-#     function greet() {
-#       echo "Hello $1"
-#     }
-#     try_run "greet Akash"
-function try_run() {
-  (eval $1)
-  local cmd_result=$?
-  if [[ $cmd_result != 0 ]] ; then
-      echo "Exiting"
-      exit $cmd_result
-  fi
-}
-
-
 # Outputs log line
 #
 # Usage:
@@ -35,19 +18,6 @@ function output_line() {
 function output_section() {
   local indentation="----->"
   echo "${indentation} $1"
-}
-
-
-# Download archive of branch, tag or commit of a project from Github
-#
-# Usage:
-#
-#     github_download "elixir-lang" "elixir" "master"
-#
-function github_download() {
-  # We don't use the -J option because curl on Heroku is really old.
-  # So we pass a filename ourselves.
-  curl -k -s -L "https://github.com/$1/$2/archive/$3.tar.gz" -o "${cache_path}/$2-$3.tar.gz" || exit 1
 }
 
 
