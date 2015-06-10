@@ -63,9 +63,9 @@ function compile_app() {
 function post_compile_hook() {
   cd $build_path
 
-  if [ -f post_compile.sh ]; then
-    output_section "Executing post_compile.sh"
-    ./post_compile.sh || exit 1
+  if [ -n "$post_compile" ]; then
+    output_section "Executing post compile: $post_compile"
+    $post_compile || exit 1
   fi
 
   cd - > /dev/null
