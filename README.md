@@ -54,6 +54,9 @@ always_rebuild=false
 
 # Export heroku config vars
 config_vars_to_export=(DATABASE_URL)
+
+# A command to run right before starting the app
+post_compile="pwd"
 ```
 
 
