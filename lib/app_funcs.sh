@@ -61,6 +61,15 @@ function compile_app() {
 }
 
 
+function post_compile_hook() {
+  : ${POST_COMPILE_HOOK:="post_compile_hook"}
+  path=${build_path}/${POST_COMPILE_HOOK}
+
+  output_section "Executing post-compile hook at ${path}"
+  source path
+}
+
+
 function write_profile_d_script() {
   output_section "Creating .profile.d with env vars"
   mkdir -p $build_path/.profile.d

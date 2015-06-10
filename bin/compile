@@ -45,6 +45,7 @@ restore_app
 app_dependencies
 copy_hex
 compile_app
+post_compile_hook
 backup_app
 backup_mix
 write_profile_d_script
