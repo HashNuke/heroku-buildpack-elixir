@@ -10,7 +10,7 @@
 * Consolidates protocols
 * Hex and rebar support
 * Caching of Hex packages, Mix dependencies and downloads
-* Post compilation hook through `post_compile.sh`
+* Post compilation hook through `post_compile` configuration
 
 
 #### Version support
@@ -55,7 +55,7 @@ always_rebuild=false
 # Export heroku config vars
 config_vars_to_export=(DATABASE_URL)
 
-# A command to run right before starting the app
+# A command to run right after compiling the app
 post_compile="pwd"
 ```
 
@@ -117,7 +117,7 @@ config_vars_to_export=(DATABASE_URL MY_VAR)
   end
   ```
 
-* The buildpack will execute the `post_compile.sh` file in the root directory of your repository after your application has been compiled. This script can be used to build or prepare things for your application, for example compiling assets.
+* The buildpack will execute the command configured in `post_compile` in the root directory of your application after it has been compiled. This script can be used to build or prepare things for your application, for example compiling assets.
 
 
 ## Credits
