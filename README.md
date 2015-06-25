@@ -1,6 +1,6 @@
 # Heroku Buildpack for Elixir
 
-### Features
+## Features
 
 * **Easy configuration** with `elixir_buildpack.config` file
 * Use **prebuilt Elixir binaries**
@@ -10,9 +10,10 @@
 * Consolidates protocols
 * Hex and rebar support
 * Caching of Hex packages, Mix dependencies and downloads
+* Post compilation hook through `post_compile` configuration
 
 
-#### Version support info
+#### Version support
 
 * Erlang - Prebuilt packages (17.5, 17.4, etc)
 * Elixir - Prebuilt releases (1.0.4, 1.0.3, etc) or prebuilt branches (master, stable, etc)
@@ -53,6 +54,9 @@ always_rebuild=false
 
 # Export heroku config vars
 config_vars_to_export=(DATABASE_URL)
+
+# A command to run right after compiling the app
+post_compile="pwd"
 ```
 
 
@@ -100,18 +104,20 @@ config_vars_to_export=(DATABASE_URL MY_VAR)
 
 * Your application should build embedded and start permanent. Build embedded will consolidate protocols for a performance boost, start permanent will ensure that Heroku restarts your application if it crashes. See below for an example of how to use these features in your Mix project:
 
-```elixir
-defmodule MyApp.Mixfile do
-  use Mix.Project
+  ```elixir
+  defmodule MyApp.Mixfile do
+    use Mix.Project
 
-  def project do
-    [app: :my_app,
-     version: "0.0.1",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod]
+    def project do
+      [app: :my_app,
+       version: "0.0.1",
+       build_embedded: Mix.env == :prod,
+       start_permanent: Mix.env == :prod]
+    end
   end
-end
-```
+  ```
+
+* The buildpack will execute the command configured in `post_compile` in the root directory of your application after it has been compiled. This script can be used to build or prepare things for your application, for example compiling assets.
 
 
 ## Credits

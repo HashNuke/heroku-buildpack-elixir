@@ -60,6 +60,17 @@ function compile_app() {
   cd - > /dev/null
 }
 
+function post_compile_hook() {
+  cd $build_path
+
+  if [ -n "$post_compile" ]; then
+    output_section "Executing post compile: $post_compile"
+    $post_compile || exit 1
+  fi
+
+  cd - > /dev/null
+}
+
 
 function write_profile_d_script() {
   output_section "Creating .profile.d with env vars"
