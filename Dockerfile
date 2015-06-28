@@ -5,7 +5,7 @@ USER app
 WORKDIR /app
 
 ENV HOME /app
-ENV PORT 3000
+ENV PORT 4000
 
 RUN mkdir -p /app/heroku
 RUN mkdir -p /app/src
@@ -14,4 +14,4 @@ RUN mkdir -p /app/.profile.d
 WORKDIR /app/src
 
 ONBUILD COPY . /app/src
-ONBUILD EXPOSE 3000
+ONBUILD EXPOSE 4000
