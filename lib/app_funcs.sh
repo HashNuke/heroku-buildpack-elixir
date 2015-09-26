@@ -15,7 +15,7 @@ function copy_hex() {
   mkdir -p ${build_path}/.mix/archives
   mkdir -p ${build_path}/.hex
 
-  hex_file=`basename ${hex_source:-hex.ez}`
+  hex_file=`basename ${hex_source:-hex*.ez}`
 
   cp ${HOME}/.hex/registry.ets ${build_path}/.hex/
   cp ${HOME}/.mix/archives/${hex_file} ${build_path}/.mix/archives
