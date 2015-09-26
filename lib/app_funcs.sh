@@ -14,17 +14,24 @@ function restore_app() {
 function copy_hex() {
   mkdir -p ${build_path}/.mix/archives
   mkdir -p ${build_path}/.hex
-  hex_file=`basename ${hex_source:-hex-*.ez}`
 
-  # For older versions of hex which have no version name in file
-  if [ -z "$hex_file" ]; then
-    hex_file="hex.ez"
+  if [ -z "$hex_source" ]; then
+    hex_file=`basename ${hex_source}`
+  else
+    # hex file names after elixir-1.1 in the hex-<version>.ez form
+    hex_file=$(ls -t ${HOME}/.mix/archives/hex-*.ez | head -n 1)
+
+    # For older versions of hex which have no version name in file
+    if [ -z "$hex_file" ]; then
+      hex_file="hex.ez"
+    fi
   fi
 
   cp ${HOME}/.hex/registry.ets ${build_path}/.hex/
-  
-  output_section "Copying hex from $hex_file"
-  cp ${HOME}/.mix/archives/${hex_file} ${build_path}/.mix/archives
+
+  full_hex_file_path=${HOME}/.mix/archives/${hex_file}
+  output_section "Copying hex from $full_hex_file_path"
+  cp $full_hex_file_path ${build_path}/.mix/archives
 }
 
 
