@@ -14,10 +14,16 @@ function restore_app() {
 function copy_hex() {
   mkdir -p ${build_path}/.mix/archives
   mkdir -p ${build_path}/.hex
+  hex_file=`basename ${hex_source:-hex-*.ez}`
 
-  hex_file=`basename ${hex_source:-hex*.ez}`
+  # For older versions of hex which have no version name in file
+  if [ -z "$hex_file" ]; then
+    hex_file="hex.ez"
+  fi
 
   cp ${HOME}/.hex/registry.ets ${build_path}/.hex/
+  
+  output_section "Copying hex from $hex_file"
   cp ${HOME}/.mix/archives/${hex_file} ${build_path}/.mix/archives
 }
 
