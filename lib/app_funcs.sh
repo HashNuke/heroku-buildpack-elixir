@@ -15,7 +15,7 @@ function copy_hex() {
   mkdir -p ${build_path}/.mix/archives
   mkdir -p ${build_path}/.hex
 
-  if [ -z "$hex_source" ]; then
+  if [ -n "$hex_source" ]; then
     hex_file=`basename ${hex_source}`
   else
     # hex file names after elixir-1.1 in the hex-<version>.ez form
