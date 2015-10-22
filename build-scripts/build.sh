@@ -6,12 +6,17 @@ changed_files=$(
 mkdir -p builds/otp
 
 function run_build {
-  docker build -t otp-build build-scripts -f $HEROKU_STACK.dockerfile
-  docker run -t -e OTP_VERSION=$OTP_VERSION --name=otp-build-${OTP_VERSION}-${HEROKU-STACK} otp-build-${HEROKU_STACK}
+  local heroku_stack=$1
+  local otp_version=$2
 
-  docker cp otp-build-${OTP_VERSION}:/home/build/OTP-${OTP_VERSION}.tar.gz otp-builds/OTP-${OTP_VERSION}-${HEROKU_STACK}.tar.gz
+  docker build -t otp-build build-scripts -f $heroku_stack.dockerfile
+  docker run -t -e OTP_VERSION=$otp_version --name=otp-build-${otp_version}-${heroku_stack} otp-build-${heroku_stack}
+
+  docker cp otp-build-${otp_version}-${heroku_stack}:/home/build/OTP-${otp_version}.tar.gz otp-builds/OTP-${otp_version}-${heroku_stack}.tar.gz
   ls builds/otp
 }
+
+echo $TRAVIS_COMMIT_RANGE
 
 if [[ $changed_files =~ "otp-versions" ]]; then
   echo "file changed"
