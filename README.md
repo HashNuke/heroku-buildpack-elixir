@@ -120,6 +120,11 @@ config_vars_to_export=(DATABASE_URL MY_VAR)
 * The buildpack will execute the command configured in `post_compile` in the root directory of your application after it has been compiled. This script can be used to build or prepare things for your application, for example compiling assets.
 
 
+## Development
+
+The build scripts to build erlang are in a separate repository - <https://github.com/HashNuke/heroku-buildpack-elixir-otp-builds>
+
+
 ## Credits
 
 &copy; Akash Manohar under The MIT License. Feel free to do whatever you want with it.
