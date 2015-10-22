@@ -44,7 +44,7 @@ __Here's a full config file with all available options:__
 
 ```
 # Erlang version
-erlang_version=17.5
+erlang_version=18.1.3
 
 # Elixir version
 elixir_version=1.0.4
