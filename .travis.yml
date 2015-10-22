@@ -14,4 +14,4 @@ install:
   - "sudo apt-get install docker-engine"
   - "pip install awscli"
 
-script: "sudo bash build-scripts/docker.sh"
+script: "sudo bash build-scripts/build.sh"
