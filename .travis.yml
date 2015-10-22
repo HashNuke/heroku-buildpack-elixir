@@ -1,16 +1,25 @@
 sudo: required
 language: python
 python:
-  - "2.7"
-
+- '2.7'
 env:
-  - HEROKU_STACK=cedar-14
-
+- HEROKU_STACK=cedar-14
 install:
-  - "sudo apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D"
-  - "echo \"deb https://apt.dockerproject.org/repo ubuntu-precise main\" > /etc/apt/sources.list.d/docker.list"
-  - "sudo apt-get update"
-  - "sudo apt-get install docker-engine"
-  - "pip install awscli"
-
-script: "sudo bash build-scripts/build.sh"
+- sudo apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+- echo "deb https://apt.dockerproject.org/repo ubuntu-precise main" > /etc/apt/sources.list.d/docker.list
+- sudo apt-get update
+- sudo apt-get install docker-engine
+- pip install awscli
+script: sudo bash build-scripts/build.sh
+deploy:
+  provider: s3
+  access_key_id: AKIAI3U3FZ7PNMN5TRGA
+  secret_access_key:
+    secure: tYton3bTx8taneGKp+EmYsaCwSUqA8rr0GTMibj4WvYCC1yUziQyZT7pMfQK5iDSndTMAg85YV1guqmcL6wouKWrT72dvIl5i107vWFVCMiLEeDCtvPXxUJZ0Th8WqqaFtIcCeTIrFaRi4JcgzT85YryvOh/moCMkmmlb9pBydM=
+  bucket: heroku-buildpack-elixir
+  local-dir: builds/otp
+  upload-dir: otp-builds
+  acl: public_read
+  on:
+    repo: HashNuke/heroku-buildpack-elixir
+    branch: otp-builds
