@@ -13,6 +13,7 @@ install:
 script: sudo bash build-scripts/build.sh
 deploy:
   provider: s3
+  region: us-east-1
   access_key_id: AKIAI3U3FZ7PNMN5TRGA
   secret_access_key:
     secure: tYton3bTx8taneGKp+EmYsaCwSUqA8rr0GTMibj4WvYCC1yUziQyZT7pMfQK5iDSndTMAg85YV1guqmcL6wouKWrT72dvIl5i107vWFVCMiLEeDCtvPXxUJZ0Th8WqqaFtIcCeTIrFaRi4JcgzT85YryvOh/moCMkmmlb9pBydM=
@@ -20,6 +21,7 @@ deploy:
   local-dir: builds/otp
   upload-dir: otp-builds
   acl: public_read
+  condition: $(ls -A builds/otp)
   on:
     repo: HashNuke/heroku-buildpack-elixir
     branch: otp-builds
