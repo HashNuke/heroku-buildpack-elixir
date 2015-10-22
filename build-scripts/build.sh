@@ -16,7 +16,8 @@ function run_build {
   ls builds/otp
 }
 
-echo $TRAVIS_COMMIT_RANGE
+echo "TRAVIS COMMIT: $TRAVIS_COMMIT"
+echo "TRAVIS COMMIT RANGE: $TRAVIS_COMMIT_RANGE"
 
 if [[ $changed_files =~ "otp-versions" ]]; then
   echo "file changed"
