@@ -122,7 +122,8 @@ config_vars_to_export=(DATABASE_URL MY_VAR)
 
 ## Development
 
-The build scripts to build erlang are in a separate repository - <https://github.com/HashNuke/heroku-buildpack-elixir-otp-builds>
+* Build scripts to build erlang are at <https://github.com/HashNuke/heroku-buildpack-elixir-otp-builds>
+* Sample app to test is available at <https://github.com/HashNuke/heroku-buildpack-elixir-test>
 
 
 ## Credits
