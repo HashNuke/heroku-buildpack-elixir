@@ -46,7 +46,7 @@ __Here's a full config file with all available options:__
 
 ```
 # Erlang version
-erlang_version=18.1.3
+erlang_version=18.2.1
 
 # Elixir version
 elixir_version=1.2.0
@@ -81,7 +81,7 @@ elixir_version=(branch master)
 * You can specify an Erlang release version like below
 
 ```
-erlang_version=18.1
+erlang_version=18.2.1
 ```
 
 #### Specifying config vars to export at compile time
