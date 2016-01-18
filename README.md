@@ -59,6 +59,9 @@ config_vars_to_export=(DATABASE_URL)
 
 # A command to run right after compiling the app
 post_compile="pwd"
+
+# Set the path the app is run from
+runtime_path=/app
 ```
 
 
