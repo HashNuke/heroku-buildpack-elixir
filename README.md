@@ -102,8 +102,6 @@ config_vars_to_export=(DATABASE_URL MY_VAR)
 
 * Add your own `Procfile` to your application, else the default web task `mix run --no-halt` will be used.
 
-* If you create an application with this buildpack, then a free database addon `heroku-postgresql:hobby-dev` is also added. The database credentials are available from the env var `DATABASE_URL`.
-
 * Your application should build embedded and start permanent. Build embedded will consolidate protocols for a performance boost, start permanent will ensure that Heroku restarts your application if it crashes. See below for an example of how to use these features in your Mix project:
 
   ```elixir
