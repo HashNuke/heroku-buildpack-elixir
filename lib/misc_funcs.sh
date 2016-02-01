@@ -67,17 +67,17 @@ function export_mix_env() {
 }
 
 function check_stack() {
-  if [ ${STACK} = "cedar" ]; then
+  if [ "${STACK}" = "cedar" ]; then
     echo "ERROR: cedar stack is not supported, upgrade to cedar-14"
     exit 1
   fi
 
-  if [ ! -f "${cache_path}/stack" ] || [ $(cat "${cache_path}/stack") != ${STACK} ]; then
+  if [ ! -f "${cache_path}/stack" ] || [ $(cat "${cache_path}/stack") != "${STACK}" ]; then
     output_section "Stack changed, will rebuild"
     rm -rf ${cache_path}/*
   fi
 
-  echo ${STACK} > "${cache_path}/stack"
+  echo "${STACK}" > "${cache_path}/stack"
 }
 
 function clean_cache() {
