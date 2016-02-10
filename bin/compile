@@ -40,6 +40,8 @@ restore_mix
 install_hex
 install_rebar
 
+pre_compile_hook
+
 restore_app
 app_dependencies
 copy_hex

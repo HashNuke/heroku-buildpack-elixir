@@ -10,7 +10,7 @@
 * Consolidates protocols
 * Hex and rebar support
 * Caching of Hex packages, Mix dependencies and downloads
-* Post compilation hook through `post_compile` configuration
+* Pre & Post compilation hooks through `pre_compile`, `post_compile` configuration
 
 
 #### Version support
@@ -56,6 +56,9 @@ always_rebuild=false
 
 # Export heroku config vars
 config_vars_to_export=(DATABASE_URL)
+
+# A command to run right before compiling the app (after elixir, .etc)
+pre_compile="pwd"
 
 # A command to run right after compiling the app
 post_compile="pwd"
@@ -117,7 +120,7 @@ config_vars_to_export=(DATABASE_URL MY_VAR)
   end
   ```
 
-* The buildpack will execute the command configured in `post_compile` in the root directory of your application after it has been compiled. This script can be used to build or prepare things for your application, for example compiling assets.
+* The buildpack will execute the commands configured in `pre_compile` and/or `post_compile` in the root directory of your application before/after it has been compiled (respectively). These scripts can be used to build or prepare things for your application, for example compiling assets.
 
 
 #### Using older version of buildpack
