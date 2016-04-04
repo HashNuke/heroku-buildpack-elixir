@@ -6,6 +6,14 @@ function erlang_path() {
   echo "$(platform_tools_path)/erlang"
 }
 
+function runtime_platform_tools_path() {
+  echo "${runtime_path}/.platform_tools"
+}
+
+function runtime_erlang_path() {
+  echo "$(runtime_platform_tools_path)/erlang"
+}
+
 function elixir_path() {
   echo "$(platform_tools_path)/elixir"
 }
