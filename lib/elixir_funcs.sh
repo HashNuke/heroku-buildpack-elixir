@@ -84,16 +84,11 @@ function backup_mix() {
 
 function install_hex() {
   output_section "Installing Hex"
-  if [ -z ${hex_source} ]; then
-    mix local.hex --force
-  else
-    mix archive.install ${hex_source} --force
-  fi
+  mix local.hex --force
 }
 
 function install_rebar() {
   output_section "Installing rebar"
-
   mix local.rebar --force
 }
 
