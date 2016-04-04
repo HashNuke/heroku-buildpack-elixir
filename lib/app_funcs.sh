@@ -83,6 +83,17 @@ function post_compile_hook() {
   cd - > /dev/null
 }
 
+function pre_compile_hook() {
+  cd $build_path
+
+  if [ -n "$pre_compile" ]; then
+    output_section "Executing pre compile: $pre_compile"
+    $pre_compile || exit 1
+  fi
+
+  cd - > /dev/null
+}
+
 
 function write_profile_d_script() {
   output_section "Creating .profile.d with env vars"
