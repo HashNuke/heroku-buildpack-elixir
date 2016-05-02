@@ -96,7 +96,6 @@ function pre_compile_hook() {
   cd - > /dev/null
 }
 
-
 function write_profile_d_script() {
   output_section "Creating .profile.d with env vars"
   mkdir -p $build_path/.profile.d
@@ -104,5 +103,16 @@ function write_profile_d_script() {
   local export_line="export PATH=\$HOME/.platform_tools:\$HOME/.platform_tools/erlang/bin:\$HOME/.platform_tools/elixir/bin:\$PATH
                      export LC_CTYPE=en_US.utf8
                      export MIX_ENV=${MIX_ENV}"
+
   echo $export_line >> $build_path/.profile.d/elixir_buildpack_paths.sh
+}
+
+function write_export() {
+  output_section "Writing export for multi-buildpack support"
+
+  local export_line="export PATH=$(platform_tools_path):$(erlang_path)/bin:$(elixir_path)/bin:\$PATH
+                     export LC_CTYPE=en_US.utf8
+                     export MIX_ENV=${MIX_ENV}"
+
+  echo $export_line > $build_pack_path/export
 }

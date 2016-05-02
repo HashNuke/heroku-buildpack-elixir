@@ -49,5 +49,6 @@ compile_app
 backup_app
 backup_mix
 write_profile_d_script
+write_export
 
 post_compile_hook
