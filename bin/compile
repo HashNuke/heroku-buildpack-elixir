@@ -48,6 +48,6 @@ copy_hex
 compile_app
 backup_app
 backup_mix
+write_profile_d_script
 
 post_compile_hook
-write_profile_d_script
