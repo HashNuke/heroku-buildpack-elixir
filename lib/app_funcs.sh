@@ -15,23 +15,17 @@ function copy_hex() {
   mkdir -p ${build_path}/.mix/archives
   mkdir -p ${build_path}/.hex
 
-  if [ -n "$hex_source" ]; then
-    hex_file=`basename ${hex_source}`
+  # hex file names after elixir-1.1 in the hex-<version>.ez form
+  full_hex_file_path=$(ls -t ${HOME}/.mix/archives/hex-* | head -n 1)
 
-    full_hex_file_path=${HOME}/.mix/archives/${hex_file}
-  else
-    # hex file names after elixir-1.1 in the hex-<version>.ez form
-    full_hex_file_path=$(ls -t ${HOME}/.mix/archives/hex-* | head -n 1)
-
-    # For older versions of hex which have no version name in file
-    if [ -z "$full_hex_file_path" ]; then
-      full_hex_file_path=${HOME}/.mix/archives/hex.ez
-    fi
+  # For older versions of hex which have no version name in file
+  if [ -z "$full_hex_file_path" ]; then
+    full_hex_file_path=${HOME}/.mix/archives/hex.ez
   fi
 
   cp ${HOME}/.hex/registry.ets ${build_path}/.hex/
 
-  output_section "Copying hex from $full_hex_file_path"
+  output_section "Copying hex from: $full_hex_file_path"
   cp -R $full_hex_file_path ${build_path}/.mix/archives
 }
 
