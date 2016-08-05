@@ -57,10 +57,12 @@ function export_config_vars() {
 }
 
 function export_mix_env() {
-  if [ -d $env_path ] && [ -f $env_path/MIX_ENV ]; then
-    export MIX_ENV=$(cat $env_path/MIX_ENV)
-  else
-    export MIX_ENV=prod
+  if [ -z "$MIX_ENV" ]; then 
+    if [ -d $env_path ] && [ -f $env_path/MIX_ENV ]; then
+      export MIX_ENV=$(cat $env_path/MIX_ENV)
+    else
+      export MIX_ENV=prod
+    fi
   fi
 
   output_line "* MIX_ENV=${MIX_ENV}"
