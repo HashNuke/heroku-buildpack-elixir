@@ -4,7 +4,7 @@ mix_file_url="$1/mix.exs"
 
 if [ -f $mix_file_url ];
 then
-  echo "elixir"
+  echo "Elixir"
   exit 0
 else
   exit 1
