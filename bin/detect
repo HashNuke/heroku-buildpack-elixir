@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
-mix_file_url="$1/mix.exs"
+build_pack_path=$(cd $(dirname $(dirname $0)); pwd)
+build_root_path=$(cd $1 && pwd)
+source ${build_pack_path}/lib/path_funcs.sh
+source ${build_pack_path}/lib/misc_funcs.sh
+load_config
+
+mix_file_url="$(build_path)/mix.exs"
 
 if [ -f $mix_file_url ];
 then

@@ -1,20 +1,19 @@
 function restore_app() {
   if [ -d $(deps_backup_path) ]; then
-    cp -pR $(deps_backup_path) ${build_path}/deps
+    cp -pR $(deps_backup_path) $(build_path)/deps
   fi
 
   if [ $erlang_changed != true ] && [ $elixir_changed != true ]; then
     if [ -d $(build_backup_path) ]; then
-      cp -pR $(build_backup_path) ${build_path}/_build
+      cp -pR $(build_backup_path) $(build_path)/_build
     fi
   fi
 }
 
 
 function copy_hex() {
-  mkdir -p ${build_path}/.mix/archives
-  mkdir -p ${build_path}/.hex
-
+  mkdir -p $build_root_path/.mix/archives
+  mkdir -p $build_root_path/.hex
 
   # hex is a directory from elixir-1.3.0
   full_hex_file_path=$(ls -dt ${HOME}/.mix/archives/hex-* | head -n 1)
@@ -29,10 +28,10 @@ function copy_hex() {
     full_hex_file_path=${HOME}/.mix/archives/hex.ez
   fi
 
-  cp ${HOME}/.hex/registry.ets ${build_path}/.hex/
+  cp ${HOME}/.hex/registry.ets $build_root_path/.hex/
 
   output_section "Copying hex from $full_hex_file_path"
-  cp -R $full_hex_file_path ${build_path}/.mix/archives
+  cp -R $full_hex_file_path $build_root_path/.mix/archives
 }
 
 
@@ -42,8 +41,9 @@ function app_dependencies() {
   local git_dir_value=$GIT_DIR
   unset GIT_DIR
 
-  cd $build_path
+  cd $(build_path)
   output_section "Fetching app dependencies with mix"
+
   mix deps.get --only $MIX_ENV || exit 1
 
   export GIT_DIR=$git_dir_value
@@ -55,8 +55,8 @@ function backup_app() {
   # Delete the previous backups
   rm -rf $(deps_backup_path) $(build_backup_path)
 
-  cp -pR ${build_path}/deps $(deps_backup_path)
-  cp -pR ${build_path}/_build $(build_backup_path)
+  cp -pR $(build_path)/deps $(deps_backup_path)
+  cp -pR $(build_path)/_build $(build_backup_path)
 }
 
 
@@ -64,7 +64,7 @@ function compile_app() {
   local git_dir_value=$GIT_DIR
   unset GIT_DIR
 
-  cd $build_path
+  cd $(build_path)
   output_section "Compiling"
   mix compile || exit 1
 
@@ -75,7 +75,7 @@ function compile_app() {
 }
 
 function post_compile_hook() {
-  cd $build_path
+  cd $(build_path)
 
   if [ -n "$post_compile" ]; then
     output_section "Executing post compile: $post_compile"
@@ -86,7 +86,7 @@ function post_compile_hook() {
 }
 
 function pre_compile_hook() {
-  cd $build_path
+  cd $(build_path)
 
   if [ -n "$pre_compile" ]; then
     output_section "Executing pre compile: $pre_compile"
@@ -98,13 +98,13 @@ function pre_compile_hook() {
 
 function write_profile_d_script() {
   output_section "Creating .profile.d with env vars"
-  mkdir -p $build_path/.profile.d
+  mkdir -p $build_root_path/.profile.d
 
-  local export_line="export PATH=\$HOME/.platform_tools:\$HOME/.platform_tools/erlang/bin:\$HOME/.platform_tools/elixir/bin:\$PATH
+  local export_line="export PATH=$(runtime_erlang_path)/bin:$(runtime_elixir_path)/bin:\$PATH
                      export LC_CTYPE=en_US.utf8
                      export MIX_ENV=${MIX_ENV}"
 
-  echo $export_line >> $build_path/.profile.d/elixir_buildpack_paths.sh
+  echo $export_line >> $build_root_path/.profile.d/elixir_buildpack_paths.sh
 }
 
 function write_export() {

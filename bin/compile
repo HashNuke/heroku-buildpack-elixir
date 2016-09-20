@@ -11,25 +11,32 @@ build_pack_path=$(cd $(dirname $(dirname $0)); pwd)
 # Ensure dirs are present
 mkdir -p $1 $2 $3
 
-build_path=$(cd $1 && pwd)
-cache_path=$(cd $2 && pwd)
-env_path=$(cd $3 && pwd)
-
-
 source ${build_pack_path}/lib/path_funcs.sh
 source ${build_pack_path}/lib/misc_funcs.sh
 source ${build_pack_path}/lib/erlang_funcs.sh
 source ${build_pack_path}/lib/elixir_funcs.sh
 source ${build_pack_path}/lib/app_funcs.sh
 
-mkdir $(platform_tools_path)
+build_root_path=$(cd $1 && pwd)
 
 load_config
+print_config
+
+cache_path=$(cd $2 && pwd)
+env_path=$(cd $3 && pwd)
+
+mkdir $(platform_tools_path)
+
 export_config_vars
 export_mix_env
 
 check_stack
 clean_cache
+
+
+echo "Elixir path is $(elixir_path)"
+
+
 
 download_erlang
 install_erlang

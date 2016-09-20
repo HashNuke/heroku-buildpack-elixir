@@ -31,6 +31,8 @@ function install_elixir() {
 
   chmod +x $(elixir_path)/bin/*
   PATH=$(elixir_path)/bin:${PATH}
+  output_line $(elixir_path)
+  output_line $PATH
 
   export LC_CTYPE=en_US.utf8
 }
@@ -89,7 +91,6 @@ function install_hex() {
 
 function install_rebar() {
   output_section "Installing rebar"
-
   mix local.rebar --force
 }
 
