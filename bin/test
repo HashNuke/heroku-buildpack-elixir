@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export MIX_ENV="test"
+
+cd "$1" && mix test
