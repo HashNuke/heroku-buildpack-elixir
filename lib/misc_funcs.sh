@@ -61,7 +61,7 @@ function export_mix_env() {
     if [ -d $env_path ] && [ -f $env_path/MIX_ENV ]; then
       export MIX_ENV=$(cat $env_path/MIX_ENV)
     else
-      export MIX_ENV=prod
+      export MIX_ENV=${1:-prod}
     fi
   fi
 
