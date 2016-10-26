@@ -35,6 +35,10 @@ heroku buildpacks:set https://github.com/HashNuke/heroku-buildpack-elixir
 
 The above method always uses the latest version of the buildpack. To use a specific older version of the buildpack, [see notes below](#using-older-version-of-buildpack).
 
+#### Using Heroku CI
+
+This buildpack supports Heroku CI. To enable viewing test runs on Heroku, add [tapex](https://github.com/joshwlewis/tapex) to your project.
+
 ## Configuration
 
 Create a `elixir_buildpack.config` file in your app's root dir. The file's syntax is bash.
