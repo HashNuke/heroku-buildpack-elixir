@@ -51,16 +51,18 @@ function load_config() {
 function export_config_vars() {
   for config_var in ${config_vars_to_export[@]}; do
     if [ -d $env_path ] && [ -f $env_path/${config_var} ]; then
-      export ${config_var}=$(cat $env_path/${config_var})
+      export ${config_var}="$(cat $env_path/${config_var})"
     fi
   done
 }
 
 function export_mix_env() {
-  if [ -d $env_path ] && [ -f $env_path/MIX_ENV ]; then
-    export MIX_ENV=$(cat $env_path/MIX_ENV)
-  else
-    export MIX_ENV=prod
+  if [ -z "$MIX_ENV" ]; then
+    if [ -d $env_path ] && [ -f $env_path/MIX_ENV ]; then
+      export MIX_ENV=$(cat $env_path/MIX_ENV)
+    else
+      export MIX_ENV=${1:-prod}
+    fi
   fi
 
   output_line "* MIX_ENV=${MIX_ENV}"
