@@ -56,6 +56,15 @@ function export_config_vars() {
   done
 }
 
+
+function export_default_env_vars() {
+  if [ -d "$ENV_DIR" ]; then
+    for e in $(ls $ENV_DIR); do
+      export "$e=$(cat $ENV_DIR/$e)"
+    done
+  fi
+}
+
 function export_mix_env() {
   if [ -z "$MIX_ENV" ]; then
     if [ -d $env_path ] && [ -f $env_path/MIX_ENV ]; then
