@@ -26,7 +26,6 @@ mkdir $(platform_tools_path)
 
 load_config
 export_default_env_vars
-export_config_vars
 export_mix_env
 
 check_stack

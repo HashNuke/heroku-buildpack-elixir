@@ -46,17 +46,6 @@ function load_config() {
 }
 
 
-# Make the config vars from config_vars_to_export available at slug compile time.
-# Useful for compiled languages like Erlang and Elixir
-function export_config_vars() {
-  for config_var in ${config_vars_to_export[@]}; do
-    if [ -d $env_path ] && [ -f $env_path/${config_var} ]; then
-      export ${config_var}="$(cat $env_path/${config_var})"
-    fi
-  done
-}
-
-
 function export_default_env_vars() {
   whitelist_regex=${2:-''}
   blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
