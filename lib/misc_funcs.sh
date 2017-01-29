@@ -46,7 +46,7 @@ function load_config() {
 }
 
 
-function export_default_env_vars() {
+function export_env_vars() {
   whitelist_regex=${2:-''}
   blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
   if [ -d "$ENV_DIR" ]; then
