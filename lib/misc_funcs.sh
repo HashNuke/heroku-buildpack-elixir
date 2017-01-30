@@ -22,9 +22,11 @@ function output_section() {
 
 
 function load_config() {
-  output_section "Checking Erlang and Elixir versions"
+  output_section "Checking for buildpack configuration"
 
-  local custom_config_file="${build_path}/elixir_buildpack.config"
+  local custom_config_file="${build_root_path}/elixir_buildpack.config"
+
+  output_line $custom_config_file
 
   # Source for default versions file from buildpack first
   source "${build_pack_path}/elixir_buildpack.config"
@@ -36,7 +38,10 @@ function load_config() {
     output_line "WARNING: elixir_buildpack.config wasn't found in the app"
     output_line "Using default config from Elixir buildpack"
   fi
+}
 
+function print_config() {
+  output_section "Checking Erlang and Elixir versions"
   output_line "Will use the following versions:"
   output_line "* Stack ${STACK}"
   output_line "* Erlang ${erlang_version}"
@@ -44,7 +49,6 @@ function load_config() {
   output_line "Will export the following config vars:"
   output_line "* Config vars ${config_vars_to_export[*]}"
 }
-
 
 # Make the config vars from config_vars_to_export available at slug compile time.
 # Useful for compiled languages like Erlang and Elixir

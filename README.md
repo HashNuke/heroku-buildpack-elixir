@@ -68,7 +68,10 @@ pre_compile="pwd"
 post_compile="pwd"
 
 # Set the path the app is run from
-runtime_path=/app
+runtime_path="\$HOME"
+
+# Set the subdirectory the app lives in
+app_subdirectory=.
 ```
 
 

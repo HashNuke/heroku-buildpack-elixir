@@ -1,5 +1,13 @@
+function app_home_path() {
+  echo "${HOME}/${app_subdirectory}"
+}
+
+function build_path() {
+  echo "${build_root_path}/${app_subdirectory}"
+}
+
 function platform_tools_path() {
-  echo "${build_path}/.platform_tools"
+  echo "$(build_path)/.platform_tools"
 }
 
 function erlang_path() {
@@ -16,6 +24,10 @@ function runtime_erlang_path() {
 
 function elixir_path() {
   echo "$(platform_tools_path)/elixir"
+}
+
+function runtime_elixir_path() {
+  echo "$(runtime_platform_tools_path)/elixir"
 }
 
 function erlang_build_path() {
