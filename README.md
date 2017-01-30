@@ -58,6 +58,9 @@ elixir_version=1.2.0
 # Always rebuild from scratch on every deploy?
 always_rebuild=false
 
+# Export heroku config vars
+config_vars_to_export=(DATABASE_URL)
+
 # A command to run right before compiling the app (after elixir, .etc)
 pre_compile="pwd"
 
@@ -68,13 +71,6 @@ post_compile="pwd"
 runtime_path=/app
 ```
 
-
-#### Migrating from previous build pack
-the following has been deprecated:
-```
-# Export heroku config vars
-config_vars_to_export=(DATABASE_URL)
-```
 
 #### Specifying Elixir version
 

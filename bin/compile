@@ -25,7 +25,7 @@ source ${build_pack_path}/lib/app_funcs.sh
 mkdir $(platform_tools_path)
 
 load_config
-export_env_vars
+export_config_vars
 export_mix_env
 
 check_stack
