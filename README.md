@@ -53,13 +53,10 @@ __Here's a full config file with all available options:__
 erlang_version=18.2.1
 
 # Elixir version
-elixir_version=1.2.0
+elixir_version=1.4.0
 
 # Always rebuild from scratch on every deploy?
 always_rebuild=false
-
-# Export heroku config vars
-config_vars_to_export=(DATABASE_URL)
 
 # A command to run right before compiling the app (after elixir, .etc)
 pre_compile="pwd"
@@ -72,12 +69,19 @@ runtime_path=/app
 ```
 
 
+#### Migrating from previous build pack
+the following has been deprecated:
+```
+# Export heroku config vars
+config_vars_to_export=(DATABASE_URL)
+```
+
 #### Specifying Elixir version
 
 * Use prebuilt Elixir release
 
 ```
-elixir_version=1.2.0
+elixir_version=1.4.0
 ```
 
 * Use prebuilt Elixir branch, the *branch* specifier ensures that it will be downloaded every time

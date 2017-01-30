@@ -8,6 +8,7 @@ function download_elixir() {
 
     output_section "Fetching Elixir ${elixir_version}"
 
+
     local download_url="https://s3.amazonaws.com/s3.hex.pm/builds/elixir/${elixir_version}.zip"
     curl -s ${download_url} -o ${cache_path}/$(elixir_download_file) || exit 1
   else
