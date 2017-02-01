@@ -41,19 +41,20 @@ function load_config() {
   output_line "* Stack ${STACK}"
   output_line "* Erlang ${erlang_version}"
   output_line "* Elixir ${elixir_version[0]} ${elixir_version[1]}"
-  output_line "Will export the following config vars:"
-  output_line "* Config vars ${config_vars_to_export[*]}"
 }
 
 
-# Make the config vars from config_vars_to_export available at slug compile time.
-# Useful for compiled languages like Erlang and Elixir
-function export_config_vars() {
-  for config_var in ${config_vars_to_export[@]}; do
-    if [ -d $env_path ] && [ -f $env_path/${config_var} ]; then
-      export ${config_var}="$(cat $env_path/${config_var})"
-    fi
-  done
+function export_env_vars() {
+  whitelist_regex=${2:-''}
+  blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
+  if [ -d "$env_path" ]; then
+    output_section "Will export the following config vars:"
+    for e in $(ls $env_path); do
+      echo "$e" | grep -E "$whitelist_regex" | grep -vE "$blacklist_regex" &&
+      export "$e=$(cat $env_path/$e)"
+      :
+    done
+  fi
 }
 
 function export_mix_env() {
