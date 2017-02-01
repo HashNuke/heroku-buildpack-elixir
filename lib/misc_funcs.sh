@@ -47,11 +47,11 @@ function load_config() {
 function export_env_vars() {
   whitelist_regex=${2:-''}
   blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
-  if [ -d "$ENV_DIR" ]; then
-    output_line "Will export the following config vars:"
-    for e in $(ls $ENV_DIR); do
+  if [ -d "$env_path" ]; then
+    output_section "Will export the following config vars:"
+    for e in $(ls $env_path); do
       echo "$e" | grep -E "$whitelist_regex" | grep -vE "$blacklist_regex" &&
-      export "$e=$(cat $ENV_DIR/$e)"
+      export "$e=$(cat $env_path/$e)"
       :
     done
   fi
