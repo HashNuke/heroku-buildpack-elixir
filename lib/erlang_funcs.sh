@@ -34,6 +34,8 @@ function install_erlang() {
   rm -rf $(runtime_erlang_path)
   mkdir -p $(runtime_platform_tools_path)
   ln -s $(erlang_build_path) $(runtime_erlang_path)
+  echo $(runtime_erlang_path)
+
   $(erlang_build_path)/Install -minimal $(runtime_erlang_path)
 
   cp -R $(erlang_build_path) $(erlang_path)
