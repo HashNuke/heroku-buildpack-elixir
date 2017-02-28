@@ -28,6 +28,7 @@ env_path=$(cd $3 && pwd)
 mkdir $(platform_tools_path)
 
 export_config_vars
+
 export_mix_env
 
 check_stack

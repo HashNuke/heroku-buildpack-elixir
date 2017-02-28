@@ -4,7 +4,6 @@
 
 * **Easy configuration** with `elixir_buildpack.config` file
 * Use **prebuilt Elixir binaries**
-* `DATABASE_URL` can be made available at compile time adding it to `config_vars_to_export` in `elixir_buildpack.config`
 * Allows configuring Erlang
 * If your app doesn't have a Procfile, default web task `mix run --no-halt` will be run.
 * Consolidates protocols
@@ -35,6 +34,10 @@ heroku buildpacks:set https://github.com/HashNuke/heroku-buildpack-elixir
 
 The above method always uses the latest version of the buildpack. To use a specific older version of the buildpack, [see notes below](#using-older-version-of-buildpack).
 
+#### Using Heroku CI
+
+This buildpack supports Heroku CI. To enable viewing test runs on Heroku, add [tapex](https://github.com/joshwlewis/tapex) to your project.
+
 ## Configuration
 
 Create a `elixir_buildpack.config` file in your app's root dir. The file's syntax is bash.
@@ -54,9 +57,6 @@ elixir_version=1.2.0
 # Always rebuild from scratch on every deploy?
 always_rebuild=false
 
-# Export heroku config vars
-config_vars_to_export=(DATABASE_URL)
-
 # A command to run right before compiling the app (after elixir, .etc)
 pre_compile="pwd"
 
@@ -70,6 +70,13 @@ runtime_path="\$HOME"
 app_subdirectory=.
 ```
 
+
+#### Migrating from previous build pack
+the following has been deprecated and should be removed from `elixir_buildpack.config`:
+```
+# Export heroku config vars
+config_vars_to_export=(DATABASE_URL)
+```
 
 #### Specifying Elixir version
 
@@ -99,12 +106,6 @@ erlang_version=18.2.1
 
 ```
 heroku config:set MY_VAR=the_value
-```
-
-* Add the config vars you want to be exported in your `elixir_buildpack.config` file:
-
-```
-config_vars_to_export=(DATABASE_URL MY_VAR)
 ```
 
 ## Other notes

@@ -46,8 +46,6 @@ function print_config() {
   output_line "* Stack ${STACK}"
   output_line "* Erlang ${erlang_version}"
   output_line "* Elixir ${elixir_version[0]} ${elixir_version[1]}"
-  output_line "Will export the following config vars:"
-  output_line "* Config vars ${config_vars_to_export[*]}"
 }
 
 # Make the config vars from config_vars_to_export available at slug compile time.
@@ -58,6 +56,7 @@ function export_config_vars() {
       export ${config_var}=$(cat $env_path/${config_var})
     fi
   done
+
 }
 
 function export_mix_env() {
@@ -65,7 +64,7 @@ function export_mix_env() {
     if [ -d $env_path ] && [ -f $env_path/MIX_ENV ]; then
       export MIX_ENV=$(cat $env_path/MIX_ENV)
     else
-      export MIX_ENV=prod
+      export MIX_ENV=${1:-prod}
     fi
   fi
 
