@@ -29,7 +29,7 @@ function copy_hex() {
     full_hex_file_path=${HOME}/.mix/archives/hex.ez
   fi
 
-  cp ${HOME}/.hex/registry.ets ${build_path}/.hex/
+  cp -R ${HOME}/.hex/ ${build_path}/.hex/
 
   output_section "Copying hex from $full_hex_file_path"
   cp -R $full_hex_file_path ${build_path}/.mix/archives
@@ -66,7 +66,7 @@ function compile_app() {
 
   cd $build_path
   output_section "Compiling"
-  mix compile || exit 1
+  mix compile --force || exit 1
 
   mix deps.clean --unused
 

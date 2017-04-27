@@ -4,7 +4,6 @@
 
 * **Easy configuration** with `elixir_buildpack.config` file
 * Use **prebuilt Elixir binaries**
-* `DATABASE_URL` can be made available at compile time adding it to `config_vars_to_export` in `elixir_buildpack.config`
 * Allows configuring Erlang
 * If your app doesn't have a Procfile, default web task `mix run --no-halt` will be run.
 * Consolidates protocols
@@ -58,9 +57,6 @@ elixir_version=1.2.0
 # Always rebuild from scratch on every deploy?
 always_rebuild=false
 
-# Export heroku config vars
-config_vars_to_export=(DATABASE_URL)
-
 # A command to run right before compiling the app (after elixir, .etc)
 pre_compile="pwd"
 
@@ -71,6 +67,13 @@ post_compile="pwd"
 runtime_path=/app
 ```
 
+
+#### Migrating from previous build pack
+the following has been deprecated and should be removed from `elixir_buildpack.config`:
+```
+# Export heroku config vars
+config_vars_to_export=(DATABASE_URL)
+```
 
 #### Specifying Elixir version
 
@@ -100,12 +103,6 @@ erlang_version=18.2.1
 
 ```
 heroku config:set MY_VAR=the_value
-```
-
-* Add the config vars you want to be exported in your `elixir_buildpack.config` file:
-
-```
-config_vars_to_export=(DATABASE_URL MY_VAR)
 ```
 
 ## Other notes
