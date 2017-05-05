@@ -91,6 +91,8 @@ function install_rebar() {
   output_section "Installing rebar"
 
   mix local.rebar --force
+
+  PATH=${PATH}:${HOME}/.mix
 }
 
 function elixir_changed() {
