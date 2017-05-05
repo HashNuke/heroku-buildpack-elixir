@@ -5,5 +5,5 @@ cat <<EOF
 addons:
   []
 default_process_types:
-  web: mix run --no-halt
+  web: MIX_ENV=prod mix phoenix.server
 EOF
