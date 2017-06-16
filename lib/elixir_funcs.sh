@@ -43,8 +43,8 @@ function fix_elixir_version() {
   elif [ ${#elixir_version[@]} -eq 1 ]; then
     force_fetch=false
 
-    # If we detect a version string (ex: 0.15.1) we prefix it with "v"
-    if [[ ${elixir_version} =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+    # If we detect a version string (e.g. 1.14 or 1.14.0) we prefix it with "v"
+    if [[ ${elixir_version} =~ ^[0-9]+\.[0-9]+ ]]; then
       elixir_version=v${elixir_version}
     fi
 
