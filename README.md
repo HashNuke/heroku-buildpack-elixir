@@ -29,7 +29,7 @@ heroku create --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.g
 #### Set the buildpack for an existing Heroku app
 
 ```
-heroku buildpacks:set https://github.com/HashNuke/heroku-buildpack-elixir
+heroku buildpacks:set https://github.com/HashNuke/heroku-buildpack-elixir.git
 ```
 
 The above method always uses the latest version of the buildpack. To use a specific older version of the buildpack, [see notes below](#using-older-version-of-buildpack).
