@@ -1,11 +1,11 @@
 function restore_app() {
   if [ -d $(deps_backup_path) ]; then
-    cp -pR $(deps_backup_path) ${build_path}/deps
+    cp -pR $(deps_backup_path)/ ${build_path}/deps
   fi
 
   if [ $erlang_changed != true ] && [ $elixir_changed != true ]; then
     if [ -d $(build_backup_path) ]; then
-      cp -pR $(build_backup_path) ${build_path}/_build
+      cp -pR $(build_backup_path)/ ${build_path}/_build
     fi
   fi
 }
@@ -15,12 +15,11 @@ function copy_hex() {
   mkdir -p ${build_path}/.mix/archives
   mkdir -p ${build_path}/.hex
 
-
   # hex is a directory from elixir-1.3.0
-  full_hex_file_path=$(ls -dt ${HOME}/.mix/archives/hex-* | head -n 1)
+  full_hex_file_path=$(ls -dt ${HOME}/.mix/archives/hex-*/ | head -n 1)
 
   # hex file names after elixir-1.1 in the hex-<version>.ez form
-  if [ -z "$full_hex_file_path" ]; then
+  if [ -z "${full_hex_file_path}" ]; then
     full_hex_file_path=$(ls -t ${HOME}/.mix/archives/hex-*.ez | head -n 1)
   fi
 
@@ -31,8 +30,8 @@ function copy_hex() {
 
   cp -R ${HOME}/.hex/ ${build_path}/.hex/
 
-  output_section "Copying hex from $full_hex_file_path"
-  cp -R $full_hex_file_path ${build_path}/.mix/archives
+  output_section "Copying hex from ${full_hex_file_path}"
+  cp -R ${full_hex_file_path} ${build_path}/.mix/archives
 }
 
 
@@ -55,8 +54,8 @@ function backup_app() {
   # Delete the previous backups
   rm -rf $(deps_backup_path) $(build_backup_path)
 
-  cp -pR ${build_path}/deps $(deps_backup_path)
-  cp -pR ${build_path}/_build $(build_backup_path)
+  cp -pR ${build_path}/deps/ $(deps_backup_path)
+  cp -pR ${build_path}/_build/ $(build_backup_path)
 }
 
 
