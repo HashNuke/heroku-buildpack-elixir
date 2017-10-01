@@ -54,6 +54,12 @@ erlang_version=18.2.1
 # Elixir version
 elixir_version=1.2.0
 
+# Hex version
+hex_version=0.17.1 # can also be "latest"
+
+# Rebar version
+rebar3_version=3.3.6 # can also be "latest"
+
 # Always rebuild from scratch on every deploy?
 always_rebuild=false
 
