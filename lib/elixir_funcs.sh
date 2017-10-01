@@ -90,14 +90,22 @@ function backup_mix() {
 }
 
 function install_hex() {
-  output_section "Installing Hex"
-  mix local.hex --force
+  if [ "$hex_version" != "latest" ] && mix archive | grep --quiet -E "hex-$hex_version$"; then
+    output_section "Using cached Hex $hex_version"
+  else
+    output_section "Installing latest Hex"
+    mix local.hex --force
+  fi
 }
 
 function install_rebar() {
-  output_section "Installing rebar"
-
-  mix local.rebar --force
+  echo
+  if [ "$rebar3_version" != "latest" ] && [ -f ~/.mix/rebar3 ] && ~/.mix/rebar3 --version | grep --quiet -E "$rebar3_version "; then
+    output_section "Using cached Rebar $rebar3_version"
+  else
+    output_section "Installing latest Rebar from hex.pm"
+    mix local.rebar --force
+  fi
 }
 
 function elixir_changed() {
