@@ -57,6 +57,9 @@ elixir_version=1.2.0
 # Always rebuild from scratch on every deploy?
 always_rebuild=false
 
+# A command to run right before fetching dependencies
+pre_fetch_dependencies="pwd"
+
 # A command to run right before compiling the app (after elixir, .etc)
 pre_compile="pwd"
 
@@ -125,6 +128,7 @@ heroku config:set MY_VAR=the_value
   ```
 
 * The buildpack will execute the commands configured in `pre_compile` and/or `post_compile` in the root directory of your application before/after it has been compiled (respectively). These scripts can be used to build or prepare things for your application, for example compiling assets.
+* The buildpack will execute the commands configured in `pre_fetch_dependencies` in the root directory of your application before it fetches the applicatoin dependencies. This script can be used to clean certain dependencies before fetching new ones.
 
 
 #### Using older version of buildpack
