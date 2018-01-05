@@ -35,6 +35,16 @@ function copy_hex() {
   cp -R $full_hex_file_path ${build_path}/.mix/archives
 }
 
+function pre_app_dependencies() {
+  cd $build_path
+
+  if [ -n "$pre_fetch_dependencies" ]; then
+    output_section "Executing hook before fetching app dependencies: $pre_fetch_dependencies"
+    $pre_fetch_dependencies || exit 1
+  fi
+
+  cd - > /dev/null
+}
 
 function app_dependencies() {
   # Unset this var so that if the parent dir is a git repo, it isn't detected

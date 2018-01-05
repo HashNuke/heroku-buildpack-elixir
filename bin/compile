@@ -42,6 +42,7 @@ install_rebar
 
 
 restore_app
+pre_app_dependencies
 app_dependencies
 copy_hex
 
