@@ -40,18 +40,22 @@ restore_mix
 install_hex
 install_rebar
 
+# deprecated_hook, here for backwards compatibility
+pre_compile_hook
 
 restore_app
-pre_app_dependencies
+hook_pre_app_dependencies
 app_dependencies
 copy_hex
 
-pre_compile_hook
+hook_pre_compile
 compile_app
-post_compile_hook
+hook_post_compile
 
 backup_app
 backup_mix
 write_profile_d_script
 write_export
 
+# deprecated_hook, here for backwards compatibility
+post_compile_hook
