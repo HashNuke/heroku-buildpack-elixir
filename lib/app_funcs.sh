@@ -29,10 +29,10 @@ function copy_hex() {
     full_hex_file_path=${HOME}/.mix/archives/hex.ez
   fi
 
-  cp -R ${HOME}/.hex/ ${build_path}/.hex/
+  cp -R $(hex_backup_path)/* ${build_path}/.hex/
 
   output_section "Copying hex from $full_hex_file_path"
-  cp -R $full_hex_file_path ${build_path}/.mix/archives
+  cp -f -R $full_hex_file_path ${build_path}/.mix/archives
 }
 
 function hook_pre_app_dependencies() {
