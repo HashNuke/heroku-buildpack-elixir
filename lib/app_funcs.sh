@@ -35,6 +35,38 @@ function copy_hex() {
   cp -R $full_hex_file_path ${build_path}/.mix/archives
 }
 
+function hook_pre_app_dependencies() {
+  cd $build_path
+
+  if [ -n "$hook_pre_fetch_dependencies" ]; then
+    output_section "Executing hook before fetching app dependencies: $hook_pre_fetch_dependencies"
+    $hook_pre_fetch_dependencies || exit 1
+  fi
+
+  cd - > /dev/null
+}
+
+function hook_pre_compile() {
+  cd $build_path
+
+  if [ -n "$hook_pre_compile" ]; then
+    output_section "Executing hook before compile: $hook_pre_compile"
+    $hook_pre_compile || exit 1
+  fi
+
+  cd - > /dev/null
+}
+
+function hook_post_compile() {
+  cd $build_path
+
+  if [ -n "$hook_post_compile" ]; then
+    output_section "Executing hook after compile: $hook_post_compile"
+    $hook_post_compile || exit 1
+  fi
+
+  cd - > /dev/null
+}
 
 function app_dependencies() {
   # Unset this var so that if the parent dir is a git repo, it isn't detected
@@ -78,7 +110,7 @@ function post_compile_hook() {
   cd $build_path
 
   if [ -n "$post_compile" ]; then
-    output_section "Executing post compile: $post_compile"
+    output_section "Executing DEPRECATED post compile: $post_compile"
     $post_compile || exit 1
   fi
 
@@ -89,7 +121,7 @@ function pre_compile_hook() {
   cd $build_path
 
   if [ -n "$pre_compile" ]; then
-    output_section "Executing pre compile: $pre_compile"
+    output_section "Executing DEPRECATED pre compile: $pre_compile"
     $pre_compile || exit 1
   fi
 
