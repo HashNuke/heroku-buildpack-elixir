@@ -138,7 +138,7 @@ function write_profile_d_script() {
   # Only write MIX_ENV to profile if the application did not set MIX_ENV
   if [ ! -f $env_path/MIX_ENV ]; then
     export_line="${export_line}
-                 export MIX_ENV=prod"
+                 export MIX_ENV=${MIX_ENV}"
   fi
 
   echo $export_line >> $build_path/.profile.d/elixir_buildpack_paths.sh
@@ -153,7 +153,7 @@ function write_export() {
   # Only write MIX_ENV to export if the application did not set MIX_ENV
   if [ ! -f $env_path/MIX_ENV ]; then
     export_line="${export_line}
-                 export MIX_ENV=prod"
+                 export MIX_ENV=${MIX_ENV}"
   fi
 
   echo $export_line > $build_pack_path/export
