@@ -23,16 +23,25 @@
 #### Create a Heroku app with this buildpack
 
 ```
-heroku create --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.git"
+heroku create --buildpack hashnuke/elixir
 ```
 
 #### Set the buildpack for an existing Heroku app
 
 ```
+heroku buildpacks:set hashnuke/elixir
+```
+
+#### Use the edge version of buildpack with a Heroku app
+
+The `hashnuke/elixir` buildpack contains the latest published version of
+the buildpack, but you can use the edge version (i.e. the source code in this repo) by running:
+
+```
 heroku buildpacks:set https://github.com/HashNuke/heroku-buildpack-elixir.git
 ```
 
-The above method always uses the latest version of the buildpack. To use a specific older version of the buildpack, [see notes below](#using-older-version-of-buildpack).
+The above method always uses the latest version of the buildpack code. To use a specific older version of the buildpack, [see notes below](#using-older-version-of-buildpack).
 
 #### Using Heroku CI
 
