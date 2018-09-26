@@ -13,7 +13,7 @@ function download_erlang() {
     # Set this so elixir will be force-rebuilt
     erlang_changed=true
 
-    output_section "Fetching Erlang ${erlang_version}"
+    output_section "Fetching Erlang ${erlang_version} from ${erlang_package_url}"
     curl -s ${erlang_package_url} -o ${cache_path}/$(erlang_tarball) || exit 1
   else
     output_section "Using cached Erlang ${erlang_version}"
