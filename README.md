@@ -20,6 +20,8 @@
   * The full list of releases can be found here: https://github.com/elixir-lang/elixir/releases
   * The full list of branches can be found here: https://github.com/elixir-lang/elixir/branches
 
+Note: you should choose an Elixir and Erlang version that are [compatible with one another](https://hexdocs.pm/elixir/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp).
+
 
 ## Usage
 
