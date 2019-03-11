@@ -148,15 +148,15 @@ heroku config:set MY_VAR=the_value
 
 #### Using older version of buildpack
 
-Using the above methods always uses the latest version of the buildpack. We attempt to maintain the buildpack for as many old Elixir and Erlang releases as possible. But sometimes it does get hard since there's a matrix of 3 variables involved here (Erlang version, Elixir version and Heroku stack). If your application cannot be updated for some reason and requires an older version of the buildpack then use the [releases](https://github.com/HashNuke/heroku-buildpack-elixir/releases) page to pick a tag to use. Use the buildpack url with the tag name.
+Using the above methods always uses the latest version of the buildpack. We attempt to maintain the buildpack for as many old Elixir and Erlang releases as possible. But sometimes it does get hard since there's a matrix of 3 variables involved here (Erlang version, Elixir version and Heroku stack). If your application cannot be updated for some reason and requires an older version of the buildpack then use the [commits](https://github.com/HashNuke/heroku-buildpack-elixir/commits/master) page to pick a commit to use. Use the buildpack url with the commit SHA.
 
-For example, if you pick the tag "v3", then the buildpack url for your app would be:
+For example, if you pick the commit ["883f33e10879b4b8b030753c13aa3d0dda82e1e7"](https://github.com/HashNuke/heroku-buildpack-elixir/commit/883f33e10879b4b8b030753c13aa3d0dda82e1e7), then the buildpack url for your app would be:
 
 ```
-https://github.com/HashNuke/heroku-buildpack-elixir.git#v3
+https://github.com/HashNuke/heroku-buildpack-elixir.git#883f33e10879b4b8b030753c13aa3d0dda82e1e7
 ```
 
-We only create a new tag/release when we've made breaking changes. So consider all tagged versions older than master as not recommended for use and not supported any further.
+Consider all versions (e.g. commits, tags) older than master as not recommended for use and not supported any further.
 
 ## Development
 
