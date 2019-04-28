@@ -77,7 +77,7 @@ function check_stack() {
 
   if [ ! -f "${cache_path}/stack" ] || [ $(cat "${cache_path}/stack") != "${STACK}" ]; then
     output_section "Stack changed, will rebuild"
-    rm -rf ${cache_path}/*
+    $(clear_cached_files)
   fi
 
   echo "${STACK}" > "${cache_path}/stack"
@@ -86,6 +86,15 @@ function check_stack() {
 function clean_cache() {
   if [ $always_rebuild = true ]; then
     output_section "Cleaning all cache to force rebuilds"
-    rm -rf $cache_path/*
+    $(clear_cached_files)
   fi
+}
+
+function clear_cached_files() {
+  rm -rf \
+    $(erlang_build_path) \
+    $(deps_backup_path) \
+    $(build_backup_path) \
+    $(mix_backup_path) \
+    $(hex_backup_path)
 }

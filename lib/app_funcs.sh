@@ -35,6 +35,38 @@ function copy_hex() {
   cp -R $full_hex_file_path ${build_path}/.mix/archives
 }
 
+function hook_pre_app_dependencies() {
+  cd $build_path
+
+  if [ -n "$hook_pre_fetch_dependencies" ]; then
+    output_section "Executing hook before fetching app dependencies: $hook_pre_fetch_dependencies"
+    $hook_pre_fetch_dependencies || exit 1
+  fi
+
+  cd - > /dev/null
+}
+
+function hook_pre_compile() {
+  cd $build_path
+
+  if [ -n "$hook_pre_compile" ]; then
+    output_section "Executing hook before compile: $hook_pre_compile"
+    $hook_pre_compile || exit 1
+  fi
+
+  cd - > /dev/null
+}
+
+function hook_post_compile() {
+  cd $build_path
+
+  if [ -n "$hook_post_compile" ]; then
+    output_section "Executing hook after compile: $hook_post_compile"
+    $hook_post_compile || exit 1
+  fi
+
+  cd - > /dev/null
+}
 
 function app_dependencies() {
   # Unset this var so that if the parent dir is a git repo, it isn't detected
@@ -78,7 +110,7 @@ function post_compile_hook() {
   cd $build_path
 
   if [ -n "$post_compile" ]; then
-    output_section "Executing post compile: $post_compile"
+    output_section "Executing DEPRECATED post compile: $post_compile"
     $post_compile || exit 1
   fi
 
@@ -89,7 +121,7 @@ function pre_compile_hook() {
   cd $build_path
 
   if [ -n "$pre_compile" ]; then
-    output_section "Executing pre compile: $pre_compile"
+    output_section "Executing DEPRECATED pre compile: $pre_compile"
     $pre_compile || exit 1
   fi
 
@@ -101,8 +133,13 @@ function write_profile_d_script() {
   mkdir -p $build_path/.profile.d
 
   local export_line="export PATH=\$HOME/.platform_tools:\$HOME/.platform_tools/erlang/bin:\$HOME/.platform_tools/elixir/bin:\$PATH
-                     export LC_CTYPE=en_US.utf8
-                     export MIX_ENV=${MIX_ENV}"
+                     export LC_CTYPE=en_US.utf8"
+
+  # Only write MIX_ENV to profile if the application did not set MIX_ENV
+  if [ ! -f $env_path/MIX_ENV ]; then
+    export_line="${export_line}
+                 export MIX_ENV=${MIX_ENV}"
+  fi
 
   echo $export_line >> $build_path/.profile.d/elixir_buildpack_paths.sh
 }
@@ -111,8 +148,13 @@ function write_export() {
   output_section "Writing export for multi-buildpack support"
 
   local export_line="export PATH=$(platform_tools_path):$(erlang_path)/bin:$(elixir_path)/bin:$PATH
-                     export LC_CTYPE=en_US.utf8
-                     export MIX_ENV=${MIX_ENV}"
+                     export LC_CTYPE=en_US.utf8"
+
+  # Only write MIX_ENV to export if the application did not set MIX_ENV
+  if [ ! -f $env_path/MIX_ENV ]; then
+    export_line="${export_line}
+                 export MIX_ENV=${MIX_ENV}"
+  fi
 
   echo $export_line > $build_pack_path/export
 }

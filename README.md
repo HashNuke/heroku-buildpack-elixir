@@ -9,13 +9,19 @@
 * Consolidates protocols
 * Hex and rebar support
 * Caching of Hex packages, Mix dependencies and downloads
-* Pre & Post compilation hooks through `pre_compile`, `post_compile` configuration
+* Pre & Post compilation hooks through `hook_pre_compile`, `hook_post_compile` configuration
 
 
 #### Version support
 
 * Erlang - Prebuilt packages (17.5, 17.4, etc)
-* Elixir - Prebuilt releases (1.0.4, 1.0.3, etc) or prebuilt branches (master, stable, etc)
+  * The full list of prebuilt packages can be found here: https://github.com/HashNuke/heroku-buildpack-elixir-otp-builds/blob/master/otp-versions
+  * Note: if a version you want is missing then you can create a PR that adds it
+* Elixir - Prebuilt releases (1.0.4, 1.0.3, etc) or prebuilt branches (master, v1.7, etc)
+  * The full list of releases can be found here: https://github.com/elixir-lang/elixir/releases
+  * The full list of branches can be found here: https://github.com/elixir-lang/elixir/branches
+
+Note: you should choose an Elixir and Erlang version that are [compatible with one another](https://hexdocs.pm/elixir/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp).
 
 
 ## Usage
@@ -23,16 +29,25 @@
 #### Create a Heroku app with this buildpack
 
 ```
-heroku create --buildpack "https://github.com/HashNuke/heroku-buildpack-elixir.git"
+heroku create --buildpack hashnuke/elixir
 ```
 
 #### Set the buildpack for an existing Heroku app
 
 ```
+heroku buildpacks:set hashnuke/elixir
+```
+
+#### Use the edge version of buildpack with a Heroku app
+
+The `hashnuke/elixir` buildpack contains the latest published version of
+the buildpack, but you can use the edge version (i.e. the source code in this repo) by running:
+
+```
 heroku buildpacks:set https://github.com/HashNuke/heroku-buildpack-elixir.git
 ```
 
-The above method always uses the latest version of the buildpack. To use a specific older version of the buildpack, [see notes below](#using-older-version-of-buildpack).
+The above method always uses the latest version of the buildpack code. To use a specific older version of the buildpack, [see notes below](#using-older-version-of-buildpack).
 
 #### Using Heroku CI
 
@@ -57,11 +72,14 @@ elixir_version=1.2.0
 # Always rebuild from scratch on every deploy?
 always_rebuild=false
 
+# A command to run right before fetching dependencies
+hook_pre_fetch_dependencies="pwd"
+
 # A command to run right before compiling the app (after elixir, .etc)
-pre_compile="pwd"
+hook_pre_compile="pwd"
 
 # A command to run right after compiling the app
-post_compile="pwd"
+hook_post_compile="pwd"
 
 # Set the path the app is run from
 runtime_path=/app
@@ -124,7 +142,8 @@ heroku config:set MY_VAR=the_value
   end
   ```
 
-* The buildpack will execute the commands configured in `pre_compile` and/or `post_compile` in the root directory of your application before/after it has been compiled (respectively). These scripts can be used to build or prepare things for your application, for example compiling assets.
+* The buildpack will execute the commands configured in `hook_pre_compile` and/or `hook_post_compile` in the root directory of your application before/after it has been compiled (respectively). These scripts can be used to build or prepare things for your application, for example compiling assets.
+* The buildpack will execute the commands configured in `hook_pre_fetch_dependencies` in the root directory of your application before it fetches the applicatoin dependencies. This script can be used to clean certain dependencies before fetching new ones.
 
 
 #### Using older version of buildpack
