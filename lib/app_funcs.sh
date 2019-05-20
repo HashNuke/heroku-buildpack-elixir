@@ -1,11 +1,13 @@
 function restore_app() {
   if [ -d $(deps_backup_path) ]; then
-    cp -pR $(deps_backup_path) ${build_path}/deps
+    mkdir -p ${build_path}/deps
+    cp -pR $(deps_backup_path)/* ${build_path}/deps
   fi
 
   if [ $erlang_changed != true ] && [ $elixir_changed != true ]; then
     if [ -d $(build_backup_path) ]; then
-      cp -pR $(build_backup_path) ${build_path}/_build
+      mkdir -p ${build_path}/_build
+      cp -pR $(build_backup_path)/* ${build_path}/_build
     fi
   fi
 }
@@ -29,7 +31,7 @@ function copy_hex() {
     full_hex_file_path=${HOME}/.mix/archives/hex.ez
   fi
 
-  cp -R ${HOME}/.hex/ ${build_path}/.hex/
+  cp -R ${HOME}/.hex/* ${build_path}/.hex/
 
   output_section "Copying hex from $full_hex_file_path"
   cp -R $full_hex_file_path ${build_path}/.mix/archives
@@ -87,8 +89,9 @@ function backup_app() {
   # Delete the previous backups
   rm -rf $(deps_backup_path) $(build_backup_path)
 
-  cp -pR ${build_path}/deps $(deps_backup_path)
-  cp -pR ${build_path}/_build $(build_backup_path)
+  mkdir -p $(deps_backup_path) $(build_backup_path)
+  cp -pR ${build_path}/deps/* $(deps_backup_path)
+  cp -pR ${build_path}/_build/* $(build_backup_path)
 }
 
 
