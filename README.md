@@ -72,6 +72,9 @@ elixir_version=1.2.0
 # Always rebuild from scratch on every deploy?
 always_rebuild=false
 
+# Create a release using `mix release`? (requires Elixir 1.9)
+release=true
+
 # A command to run right before fetching dependencies
 hook_pre_fetch_dependencies="pwd"
 
