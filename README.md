@@ -163,6 +163,20 @@ We only create a new tag/release when we've made breaking changes. So consider a
 * Build scripts to build erlang are at <https://github.com/HashNuke/heroku-buildpack-elixir-otp-builds>
 * Sample app to test is available at <https://github.com/HashNuke/heroku-buildpack-elixir-test>
 
+## Testing
+
+To run tests
+```
+git clone https://github.com/HashNuke/heroku-buildpack-elixir
+export BUILDPACK="$(pwd)/heroku-buildpack-elixir"
+git clone https://github.com/jesseshieh/heroku-buildpack-testrunner
+git clone https://github.com/kward/shunit2
+export SHUNIT_HOME="$(pwd)/shunit2"
+cd heroku-buildpack-testrunner
+bin/run $BUILDPACK
+```
+
+See more info at https://github.com/jesseshieh/heroku-buildpack-testrunner/blob/master/README.md
 
 ## Credits
 
