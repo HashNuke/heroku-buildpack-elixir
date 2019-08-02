@@ -20,11 +20,3 @@ testExactErlangVersionMajorOnly() {
 testExactErlangVersionMajorMinorOnly() {
   assertEquals 0 $(exact_erlang_version_available "21.0" "$VERSIONS")
 }
-
-
-
-
-
-
-
-
