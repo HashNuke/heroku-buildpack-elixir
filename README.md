@@ -170,7 +170,7 @@ To run tests
 git clone https://github.com/HashNuke/heroku-buildpack-elixir
 export BUILDPACK="$(pwd)/heroku-buildpack-elixir"
 git clone https://github.com/jesseshieh/heroku-buildpack-testrunner
-git clone https://github.com/kward/shunit2
+git clone https://github.com/jesseshieh/shunit2
 export SHUNIT_HOME="$(pwd)/shunit2"
 cd heroku-buildpack-testrunner
 bin/run $BUILDPACK
