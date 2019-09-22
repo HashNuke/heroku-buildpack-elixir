@@ -50,8 +50,9 @@ copy_hex
 
 hook_pre_compile
 compile_app
-release_app
 hook_post_compile
+
+release_app
 
 backup_app
 backup_mix
