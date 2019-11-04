@@ -26,17 +26,23 @@ Note: you should choose an Elixir and Erlang version that are [compatible with o
 
 #### Create a Heroku app with this buildpack
 
-    heroku create --buildpack hashnuke/elixir
+```
+heroku create --buildpack hashnuke/elixir
+```
 
 #### Set the buildpack for an existing Heroku app
 
-    heroku buildpacks:set hashnuke/elixir
+```
+heroku buildpacks:set hashnuke/elixir
+```
 
 #### Use the edge version of buildpack
 
 The `hashnuke/elixir` buildpack contains the latest published version of the buildpack, but you can use the edge version (i.e. the source code in this repo) by running:
 
-    heroku buildpacks:set https://github.com/HashNuke/heroku-buildpack-elixir.git
+```
+heroku buildpacks:set https://github.com/HashNuke/heroku-buildpack-elixir.git
+```
 
 When you decide to use the published or the edge version of the buildpack you should be aware that, although we attempt to maintain the buildpack for as many old Elixir and Erlang releases as possible, it is sometimes difficult since there's a matrix of 3 variables involved: Erlang version, Elixir version and Heroku stack. If your application cannot be updated for some reason and requires an older version of the buildpack then [use a specific version of buildpack](#use-a-specific-version-of-buildpack).
 
@@ -46,7 +52,9 @@ The methods above always use the latest version of the buildpack code. To use a 
 
 For example, if you pick the commit ["883f33e10879b4b8b030753c13aa3d0dda82e1e7"](https://github.com/HashNuke/heroku-buildpack-elixir/commit/883f33e10879b4b8b030753c13aa3d0dda82e1e7), then the buildpack url for your app would be:
 
-    https://github.com/HashNuke/heroku-buildpack-elixir.git#883f33e10879b4b8b030753c13aa3d0dda82e1e7
+```
+https://github.com/HashNuke/heroku-buildpack-elixir.git#883f33e10879b4b8b030753c13aa3d0dda82e1e7
+```
 
 **It is recommended to use a buildpack url with a commit SHA on production apps.** This prevents the unpleasant moment when your Heroku build fails because the buildpack you use just got updated with a breaking change. Having buildpacks pinned to a specific version is like having your Hex packages pinned to a specific version in `mix.lock`.
 
