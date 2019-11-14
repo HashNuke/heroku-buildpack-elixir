@@ -54,6 +54,8 @@ hook_pre_compile
 compile_app
 hook_post_compile
 
+release_app
+
 backup_app
 backup_mix
 write_profile_d_script

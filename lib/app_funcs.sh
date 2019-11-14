@@ -115,6 +115,17 @@ function compile_app() {
   cd - > /dev/null
 }
 
+function release_app() {
+  cd $build_path
+
+  if [ $release = true ]; then
+    output_section "Building release"
+    mix release --overwrite
+  fi
+
+  cd - > /dev/null
+}
+
 function post_compile_hook() {
   cd $build_path
 
