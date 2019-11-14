@@ -1,11 +1,13 @@
 function restore_app() {
   if [ -d $(deps_backup_path) ]; then
-    cp -pR $(deps_backup_path) ${build_path}/deps
+    mkdir -p ${build_path}/deps
+    cp -pR $(deps_backup_path)/* ${build_path}/deps
   fi
 
   if [ $erlang_changed != true ] && [ $elixir_changed != true ]; then
     if [ -d $(build_backup_path) ]; then
-      cp -pR $(build_backup_path) ${build_path}/_build
+      mkdir -p ${build_path}/_build
+      cp -pR $(build_backup_path)/* ${build_path}/_build
     fi
   fi
 }
@@ -29,7 +31,7 @@ function copy_hex() {
     full_hex_file_path=${HOME}/.mix/archives/hex.ez
   fi
 
-  cp -R $(hex_backup_path)/* ${build_path}/.hex/
+  cp -R ${HOME}/.hex/* ${build_path}/.hex/
 
   output_section "Copying hex from $full_hex_file_path"
   cp -f -R $full_hex_file_path ${build_path}/.mix/archives
@@ -87,8 +89,9 @@ function backup_app() {
   # Delete the previous backups
   rm -rf $(deps_backup_path) $(build_backup_path)
 
-  cp -pR ${build_path}/deps $(deps_backup_path)
-  cp -pR ${build_path}/_build $(build_backup_path)
+  mkdir -p $(deps_backup_path) $(build_backup_path)
+  cp -pR ${build_path}/deps/* $(deps_backup_path)
+  cp -pR ${build_path}/_build/* $(build_backup_path)
 }
 
 
@@ -98,11 +101,28 @@ function compile_app() {
 
   cd $build_path
   output_section "Compiling"
-  mix compile --force || exit 1
+
+  if [ -n "$hook_compile" ]; then
+     output_section "(using custom compile command)"
+     $hook_compile || exit 1
+  else
+     mix compile --force || exit 1
+  fi
 
   mix deps.clean --unused
 
   export GIT_DIR=$git_dir_value
+  cd - > /dev/null
+}
+
+function release_app() {
+  cd $build_path
+
+  if [ $release = true ]; then
+    output_section "Building release"
+    mix release --overwrite
+  fi
+
   cd - > /dev/null
 }
 
@@ -138,7 +158,7 @@ function write_profile_d_script() {
   # Only write MIX_ENV to profile if the application did not set MIX_ENV
   if [ ! -f $env_path/MIX_ENV ]; then
     export_line="${export_line}
-                 export MIX_ENV=prod"
+                 export MIX_ENV=${MIX_ENV}"
   fi
 
   echo $export_line >> $build_path/.profile.d/elixir_buildpack_paths.sh
@@ -147,13 +167,13 @@ function write_profile_d_script() {
 function write_export() {
   output_section "Writing export for multi-buildpack support"
 
-  local export_line="export PATH=$(platform_tools_path):$(erlang_path)/bin:$(elixir_path)/bin:\$PATH
+  local export_line="export PATH=$(platform_tools_path):$(erlang_path)/bin:$(elixir_path)/bin:$PATH
                      export LC_CTYPE=en_US.utf8"
 
   # Only write MIX_ENV to export if the application did not set MIX_ENV
   if [ ! -f $env_path/MIX_ENV ]; then
     export_line="${export_line}
-                 export MIX_ENV=prod"
+                 export MIX_ENV=${MIX_ENV}"
   fi
 
   echo $export_line > $build_pack_path/export
