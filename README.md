@@ -69,12 +69,12 @@ This buildpack supports Heroku CI.
 
 This buildpack can optionally build an [Elixir release](https://hexdocs.pm/mix/Mix.Tasks.Release.html). The release build will be run after `hook_post_compile`.
 
+WARNING: If you need to do further compilation using another buildpack, such as the [Phoenix static buildpack](https://github.com/gjaldon/heroku-buildpack-phoenix-static), you probably don't want to use this option. See the [Elixir release buildpack](https://github.com/chrismcg/heroku-buildpack-elixir-mix-release) instead.
+
 To build and use a release for an app called `foo` compiled with `MIX_ENV=prod`:
 1. Make sure `elixir_version` in `elixir_buildpack.config` is at least 1.9
 2. Add `release=true` to `elixir_buildpack.config`
 3. Use `web: _build/prod/rel/foo/bin/foo start` in your Procfile
-
-If you need to do further compilation using another buildpack, such as the [Phoenix static buildpack](https://github.com/gjaldon/heroku-buildpack-phoenix-static), you will need a more modular solution. See the [Elixir release buildpack](https://github.com/chrismcg/heroku-buildpack-elixir-mix-release) instead.
 
 ## Configuration
 
