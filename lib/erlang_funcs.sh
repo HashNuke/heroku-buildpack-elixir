@@ -32,12 +32,11 @@ function install_erlang() {
   tar zxf ${cache_path}/$(erlang_tarball) -C $(erlang_build_path) --strip-components=1
 
   rm -rf $(runtime_erlang_path)
-  mkdir -p $(runtime_platform_tools_path)
-  ln -s $(erlang_build_path) $(runtime_erlang_path)
+  mkdir -p $(runtime_erlang_path)
+  cp -R $(erlang_build_path)/* $(runtime_erlang_path)
   $(erlang_build_path)/Install -minimal $(runtime_erlang_path)
 
-  cp -R $(erlang_build_path) $(erlang_path)
-  PATH=$(erlang_path)/bin:$PATH
+  PATH=$(runtime_erlang_path)/bin:$PATH
 }
 
 function erlang_changed() {
