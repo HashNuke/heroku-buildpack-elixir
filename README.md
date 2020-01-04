@@ -76,6 +76,8 @@ To build and use a release for an app called `foo` compiled with `MIX_ENV=prod`:
 2. Add `release=true` to `elixir_buildpack.config`
 3. Use `web: _build/prod/rel/foo/bin/foo start` in your Procfile
 
+NOTE: This requires the master version of the buildpack (or a commit later than 7d369c)
+
 ## Configuration
 
 Create a `elixir_buildpack.config` file in your app's root dir. The file's syntax is bash.
