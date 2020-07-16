@@ -53,6 +53,9 @@ function fix_elixir_version() {
 
     # If we detect a version string (e.g. 1.14 or 1.14.0) we prefix it with "v"
     if [[ ${elixir_version} =~ ^[0-9]+\.[0-9]+ ]]; then
+      # strip out any non-digit non-dot characters
+      # TODO: what about ^M for non-version strings?
+      elixir_version=$(echo "$elixir_version" | sed 's/[^0-9.]*//g')
       elixir_version=v${elixir_version}
     fi
 
