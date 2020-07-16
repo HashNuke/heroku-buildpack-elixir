@@ -107,8 +107,7 @@ function fix_erlang_version() {
 }
 
 function fix_elixir_version() {
-  # Strip out ^M which messes up bash arrays here
-  elixir_version=$(echo "$elixir_version" | sed 's///g')
+  # TODO: this breaks if there is an carriage return behind elixir_version=(branch master)^M
   if [ ${#elixir_version[@]} -eq 2 ] && [ ${elixir_version[0]} = "branch" ]; then
     force_fetch=true
     elixir_version=${elixir_version[1]}
