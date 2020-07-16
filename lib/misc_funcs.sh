@@ -103,9 +103,7 @@ function clear_cached_files() {
 }
 
 function fix_erlang_version() {
-  output_line "$erlang_version"
   erlang_version=$(echo "$erlang_version" | sed 's/[^0-9.]*//g')
-  output_line "$erlang_version"
 }
 
 function fix_elixir_version() {
