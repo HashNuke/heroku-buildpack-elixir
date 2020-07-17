@@ -37,6 +37,9 @@ function load_config() {
     output_line "Using default config from Elixir buildpack"
   fi
 
+  fix_erlang_version
+  fix_elixir_version
+
   output_line "Will use the following versions:"
   output_line "* Stack ${STACK}"
   output_line "* Erlang ${erlang_version}"
@@ -98,3 +101,32 @@ function clear_cached_files() {
     $(mix_backup_path) \
     $(hex_backup_path)
 }
+
+function fix_erlang_version() {
+  erlang_version=$(echo "$erlang_version" | sed 's/[^0-9.]*//g')
+}
+
+function fix_elixir_version() {
+  # TODO: this breaks if there is an carriage return behind elixir_version=(branch master)^M
+  if [ ${#elixir_version[@]} -eq 2 ] && [ ${elixir_version[0]} = "branch" ]; then
+    force_fetch=true
+    elixir_version=${elixir_version[1]}
+
+  elif [ ${#elixir_version[@]} -eq 1 ]; then
+    force_fetch=false
+
+    # If we detect a version string (e.g. 1.14 or 1.14.0) we prefix it with "v"
+    if [[ ${elixir_version} =~ ^[0-9]+\.[0-9]+ ]]; then
+      # strip out any non-digit non-dot characters
+      elixir_version=$(echo "$elixir_version" | sed 's/[^0-9.]*//g')
+      elixir_version=v${elixir_version}
+    fi
+
+  else
+    output_line "Invalid Elixir version specified"
+    output_line "See the README for allowed formats at:"
+    output_line "https://github.com/HashNuke/heroku-buildpack-elixir"
+    exit 1
+  fi
+}
+
