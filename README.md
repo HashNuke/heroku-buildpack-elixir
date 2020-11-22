@@ -22,6 +22,18 @@
 
 Note: you should choose an Elixir and Erlang version that are [compatible with one another](https://hexdocs.pm/elixir/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp).
 
+#### Heroku 20 and Cloud Native Support
+
+* Heroku 20 users should use [this buildpack](https://github.com/elixir-buildpack/heroku-buildpack)
+* Cloud Native users should use [this buildpack](https://github.com/elixir-buildpack/cloud-native-buildpack)
+
+**This buildpack does not support Heroku 20 and is not Cloud Native compatible.** This buildpack uses Erlang OTP releases that are compiled on
+the Cedar 14 stack. As a result, it does not support the Heroku 20 stack and is compiled using older versions of some libraries (such as OpenSSL).
+The [elixir-buildpack/heroku-buildpack](https://github.com/elixir-buildpack/heroku-buildpack) is a fork of this buildpack that uses versions of OTP
+that are compiled on a [new build system](https://github.com/elixir-buildpack/heroku-otp) that compiles OTP on the Heroku Docker images for each stack (16, 18, 20).
+The [elixir-buildpack/cloud-native-buildpack](https://github.com/elixir-buildpack/cloud-native-buildpack) is a buildpack that is actively under development
+and is designed specifically to follow the Cloud Native Buildpack conventions.
+
 ## Usage
 
 #### Create a Heroku app with this buildpack
