@@ -30,7 +30,13 @@ function install_erlang() {
   rm -rf $(erlang_path)
   mkdir -p $(erlang_path)
   tar zxf ${cache_path}/$(erlang_tarball) -C $(erlang_path) --strip-components=1
-  $(erlang_path)/Install -minimal $(erlang_path)
+
+  # we need to move stuff to the runtime path to avoid errors like this
+  # /app/.platform_tools/erlang/bin/erl: 29: exec: /tmp/build_73771b4c/.platform_tools/erlang/erts-10.7/bin/erlexec: not found
+  rm -rf $(runtime_erlang_path)
+  mkdir -p $(runtime_platform_tools_path)
+  ln -s $(erlang_path) $(runtime_erlang_path)
+  $(erlang_path)/Install -minimal $(runtime_erlang_path)
 
   PATH=$(erlang_path)/bin:$PATH
 }
