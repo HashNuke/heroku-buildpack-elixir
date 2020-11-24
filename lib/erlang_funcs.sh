@@ -27,16 +27,10 @@ function clean_erlang_downloads() {
 function install_erlang() {
   output_section "Installing Erlang ${erlang_version} $(erlang_changed)"
 
-  rm -rf $(erlang_build_path)
-  mkdir -p $(erlang_build_path)
-  tar zxf ${cache_path}/$(erlang_tarball) -C $(erlang_build_path) --strip-components=1
+  rm -rf $(erlang_path)
+  mkdir -p $(erlang_path)
+  tar zxf ${cache_path}/$(erlang_tarball) -C $(erlang_path) --strip-components=1
 
-  rm -rf $(runtime_erlang_path)
-  mkdir -p $(runtime_platform_tools_path)
-  ln -s $(erlang_build_path) $(runtime_erlang_path)
-  $(erlang_build_path)/Install -minimal $(runtime_erlang_path)
-
-  cp -R $(erlang_build_path) $(erlang_path)
   PATH=$(erlang_path)/bin:$PATH
 }
 
