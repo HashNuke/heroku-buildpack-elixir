@@ -95,6 +95,7 @@ function clean_cache() {
 
 function clear_cached_files() {
   rm -rf \
+    $(erlang_build_path) \
     $(deps_backup_path) \
     $(build_backup_path) \
     $(mix_backup_path) \
