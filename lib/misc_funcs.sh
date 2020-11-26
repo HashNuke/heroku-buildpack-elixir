@@ -20,6 +20,11 @@ function output_section() {
   echo "${indentation} $1"
 }
 
+function output_warning() {
+  local spacing="      "
+  echo -e "${spacing} \e[31m$1\e[0m"
+}
+
 function assert_elixir_version_set() {
   custom_config_file=$1
 
@@ -32,7 +37,7 @@ function assert_elixir_version_set() {
     # For now, just print a warning. In the future, we will fail and require an explicit
     # elixir_version to be set.
     output_line ""
-    output_line "IMPORTANT: The default elixir_version will be removed on 6/1/2021. Please explicitly set an elixir_version in your elixir_buildpack.config before then or your deploys will fail."
+    output_warning "IMPORTANT: The default elixir_version will be removed on 6/1/2021. Please explicitly set an elixir_version in your elixir_buildpack.config before then or your deploys will fail."
     output_line ""
   fi
 }
