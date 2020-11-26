@@ -20,6 +20,22 @@ function output_section() {
   echo "${indentation} $1"
 }
 
+function assert_elixir_version_set() {
+  custom_config_file=$1
+
+  # 0 when found
+  # 1 when not found
+  # 2 when file does not exist
+  grep -q -e "^elixir_version=" $custom_config_file 2>/dev/null
+
+  if [ $? -ne 0 ]; then
+    # For now, just print a warning. In the future, we will fail and require an explicit
+    # elixir_version to be set.
+    output_line ""
+    output_line "IMPORTANT: The default elixir_version will be removed on 6/1/2021. Please explicitly set an elixir_version in your elixir_buildpack.config before then or your deploys will fail."
+    output_line ""
+  fi
+}
 
 function load_config() {
   output_section "Checking Erlang and Elixir versions"
@@ -37,6 +53,7 @@ function load_config() {
     output_line "Using default config from Elixir buildpack"
   fi
 
+  assert_elixir_version_set $custom_config_file
   fix_erlang_version
   fix_elixir_version
 
