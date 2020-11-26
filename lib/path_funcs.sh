@@ -18,6 +18,10 @@ function elixir_path() {
   echo "$(platform_tools_path)/elixir"
 }
 
+function erlang_build_path() {
+  echo "${cache_path}/erlang"
+}
+
 function deps_backup_path() {
   echo $cache_path/deps_backup
 }
