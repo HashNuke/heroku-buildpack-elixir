@@ -37,7 +37,7 @@ function assert_elixir_version_set() {
     # For now, just print a warning. In the future, we will fail and require an explicit
     # elixir_version to be set.
     output_line ""
-    output_warning "IMPORTANT: The default elixir_version will be removed on 6/1/2021. Please explicitly set an elixir_version in your elixir_buildpack.config before then or your deploys will fail."
+    output_warning "IMPORTANT: The default elixir_version will be removed on 2021-06-01. Please explicitly set an elixir_version in your elixir_buildpack.config before then or your deploys will fail."
     output_line ""
   fi
 }
@@ -151,4 +151,3 @@ function fix_elixir_version() {
     exit 1
   fi
 }
-
