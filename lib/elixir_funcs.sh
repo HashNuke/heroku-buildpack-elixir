@@ -42,7 +42,8 @@ function install_elixir() {
 }
 
 function elixir_download_file() {
-  echo elixir-${elixir_version}.zip
+  local otp_version=$(otp_version ${erlang_version})
+  echo elixir-${elixir_version}-otp-${otp_version}.zip
 }
 
 function clean_elixir_downloads() {
