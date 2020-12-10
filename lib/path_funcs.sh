@@ -20,7 +20,7 @@ function elixir_path() {
 
 function erlang_build_path() {
   if [ -z "$tmp_erlang_build_dir" ]; then
-    tmp_erlang_build_dir=$(mktemp -d)
+    global tmp_erlang_build_dir=$(mktemp -d)
   fi
   echo "${tmp_erlang_build_dir}/erlang"
 }
