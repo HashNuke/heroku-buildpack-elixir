@@ -26,8 +26,8 @@ function output_warning() {
 }
 
 function output_stderr() { 
-  # outputs to stderr in case it is inside a function so it does not
-  # disturb the return value
+  # Outputs to stderr in case it is inside a function so it does not
+  # disturb the return value. Useful for debugging.
   echo "$@" 1>&2; 
 }
 
