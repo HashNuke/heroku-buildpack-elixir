@@ -19,7 +19,8 @@ function elixir_path() {
 }
 
 function erlang_build_path() {
-  echo "${cache_path}/erlang"
+  tmp_dir=$(mktemp -d)
+  echo "${tmp_dir}/erlang"
 }
 
 function deps_backup_path() {
