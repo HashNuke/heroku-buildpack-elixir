@@ -25,6 +25,13 @@ function output_warning() {
   echo -e "${spacing} \e[31m$1\e[0m"
 }
 
+function output_stderr() { 
+  # Outputs to stderr in case it is inside a function so it does not
+  # disturb the return value. Useful for debugging.
+  echo "$@" 1>&2; 
+}
+
+
 function assert_elixir_version_set() {
   custom_config_file=$1
 
