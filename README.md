@@ -14,23 +14,20 @@
 #### Version support
 
 * Erlang - Prebuilt packages (17.5, 17.4, etc)
-  * The full list of prebuilt packages can be found here: https://github.com/HashNuke/heroku-buildpack-elixir-otp-builds/blob/master/otp-versions
-  * Note: if a version you want is missing then you can create a PR that adds it
+  * The full list of prebuilt packages can be found here: 
+    * gigalixir-20 or heroku-20 stacks: https://repo.hex.pm/builds/otp/ubuntu-20.04/builds.txt
+    * All other stacks: https://github.com/HashNuke/heroku-buildpack-elixir-otp-builds/blob/master/otp-versions
 * Elixir - Prebuilt releases (1.0.4, 1.0.3, etc) or prebuilt branches (master, v1.7, etc)
   * The full list of releases can be found here: https://github.com/elixir-lang/elixir/releases
   * The full list of branches can be found here: https://github.com/elixir-lang/elixir/branches
 
 Note: you should choose an Elixir and Erlang version that are [compatible with one another](https://hexdocs.pm/elixir/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp).
 
-#### Heroku 20 and Cloud Native Support
+#### Cloud Native Support
 
-* Heroku 20 users should use [this buildpack](https://github.com/elixir-buildpack/heroku-buildpack)
 * Cloud Native users should use [this buildpack](https://github.com/elixir-buildpack/cloud-native-buildpack)
 
-**This buildpack does not support Heroku 20 and is not Cloud Native compatible.** This buildpack uses Erlang OTP releases that are compiled on
-the Cedar 14 stack. As a result, it does not support the Heroku 20 stack and is compiled using older versions of some libraries (such as OpenSSL).
-The [elixir-buildpack/heroku-buildpack](https://github.com/elixir-buildpack/heroku-buildpack) is a fork of this buildpack that uses versions of OTP
-that are compiled on a [new build system](https://github.com/elixir-buildpack/heroku-otp) that compiles OTP on the Heroku Docker images for each stack (16, 18, 20).
+**This buildpack is not guaranteed to be Cloud Native compatible.** 
 The [elixir-buildpack/cloud-native-buildpack](https://github.com/elixir-buildpack/cloud-native-buildpack) is a buildpack that is actively under development
 and is designed specifically to follow the Cloud Native Buildpack conventions.
 
