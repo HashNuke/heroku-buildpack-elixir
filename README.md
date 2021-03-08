@@ -93,15 +93,17 @@ Create a `elixir_buildpack.config` file in your app's root dir. The file's synta
 
 If you don't specify a config option, then the default option from the buildpack's [`elixir_buildpack.config`](https://github.com/HashNuke/heroku-buildpack-elixir/blob/master/elixir_buildpack.config) file will be used.
 
+**NOTE:** The versions of Elixir and Erlang listed below and the buildpack's default versions will not reflect the latest released versions and this might cause issues with your build. Make sure to read the [version support section](#version-support) while choosing your specific versions.
+
 
 __Here's a full config file with all available options:__
 
 ```
-# Erlang version
-erlang_version=18.2.1
+# Erlang version works as of 03/08/2021.
+erlang_version=22.3
 
-# Elixir version
-elixir_version=1.2.0
+# Elixir version works as of 03/08/2021.
+elixir_version=1.9.0
 
 # Always rebuild from scratch on every deploy?
 always_rebuild=false
