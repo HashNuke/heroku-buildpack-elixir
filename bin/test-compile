@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e -o pipefail
+
 build_pack_path=$(cd $(dirname $(dirname $0)); pwd)
 
 source ${build_pack_path}/lib/misc_funcs.sh

@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
+set -e -o pipefail
+
 cd "$1" && mix test ${test_args}
