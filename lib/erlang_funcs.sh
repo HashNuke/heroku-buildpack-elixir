@@ -35,7 +35,13 @@ function install_erlang() {
   ln -s $(erlang_build_path) $(runtime_erlang_path)
   $(erlang_build_path)/Install -minimal $(runtime_erlang_path)
 
-  cp -R $(erlang_build_path) $(erlang_path)
+  # only copy if using old build system;
+  # newer versions of the build system run builds with BUILD_PATH=/app
+  # https://github.com/HashNuke/heroku-buildpack-elixir/issues/194#issuecomment-800425532
+  if [ "${erlang_path}" != "${runtime_erlang_path}" ]; then
+    cp -R $(erlang_build_path) $(erlang_path)
+  fi
+
   PATH=$(erlang_path)/bin:$PATH
 }
 

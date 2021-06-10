@@ -17,6 +17,12 @@ function copy_hex() {
   mkdir -p ${build_path}/.mix/archives
   mkdir -p ${build_path}/.hex
 
+  # copying hex is not necessary on the new build system,
+  # which builds in /app (which is the same as $HOME)
+  # https://github.com/HashNuke/heroku-buildpack-elixir/issues/194
+  if [ ${HOME} == ${build_path} ]; then
+    return 0
+  fi
 
   # hex is a directory from elixir-1.3.0
   full_hex_file_path=$(ls -dt ${HOME}/.mix/archives/hex-* | head -n 1)
