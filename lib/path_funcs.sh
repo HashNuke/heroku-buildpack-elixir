@@ -38,18 +38,30 @@ function erlang_build_path() {
   echo "${tmp_erlang_build_dir}/erlang"
 }
 
+function stack_based_cache_path() {
+  echo "${cache_path}/heroku-buildpack-elixir/stack-cache"
+}
+
 function deps_backup_path() {
-  echo $cache_path/deps_backup
+  echo $(stack_based_cache_path)/deps_backup
 }
 
 function build_backup_path() {
-  echo $cache_path/build_backup
+  echo $(stack_based_cache_path)/build_backup
 }
 
 function mix_backup_path() {
-  echo $cache_path/.mix
+  echo $(stack_based_cache_path)/.mix
 }
 
 function hex_backup_path() {
-  echo $cache_path/.hex
+  echo $(stack_based_cache_path)/.hex
+}
+
+function erlang_cache_path() {
+  echo $(stack_based_cache_path)/erlang
+}
+
+function elixir_cache_path() {
+  echo $(stack_based_cache_path)/elixir
 }

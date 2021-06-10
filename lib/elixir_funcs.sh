@@ -1,6 +1,8 @@
 function download_elixir() {
   # If a previous download does not exist, then always re-download
-  if [ ${force_fetch} = true ] || [ ! -f ${cache_path}/$(elixir_download_file) ]; then
+  mkdir -p $(elixir_cache_path)
+
+  if [ ${force_fetch} = true ] || [ ! -f $(elixir_cache_path)/$(elixir_download_file) ]; then
     clean_elixir_downloads
     elixir_changed=true
     local otp_version=$(otp_version ${erlang_version})
@@ -9,12 +11,12 @@ function download_elixir() {
 
     output_section "Fetching Elixir ${elixir_version} for OTP ${otp_version} from ${download_url}"
 
-    curl -s ${download_url} -o ${cache_path}/$(elixir_download_file)
+    curl -s ${download_url} -o $(elixir_cache_path)/$(elixir_download_file)
 
     if [ $? -ne 0 ]; then
       output_section "Falling back to fetching Elixir ${elixir_version} for generic OTP version"
       local download_url="https://repo.hex.pm/builds/elixir/${elixir_version}.zip"
-      curl -s ${download_url} -o ${cache_path}/$(elixir_download_file) || exit 1
+      curl -s ${download_url} -o $(elixir_cache_path)/$(elixir_download_file) || exit 1
     fi
   else
     output_section "Using cached Elixir ${elixir_version}"
@@ -28,9 +30,9 @@ function install_elixir() {
   cd $(elixir_path)
 
   if type "unzip" &> /dev/null; then
-    unzip -q ${cache_path}/$(elixir_download_file)
+    unzip -q $(elixir_cache_path)/$(elixir_download_file)
   else
-    jar xf ${cache_path}/$(elixir_download_file)
+    jar xf $(elixir_cache_path)/$(elixir_download_file)
   fi
 
   cd - > /dev/null
@@ -47,7 +49,8 @@ function elixir_download_file() {
 }
 
 function clean_elixir_downloads() {
-  rm -rf ${cache_path}/elixir*.zip
+  rm -rf $(elixir_cache_path)
+  mkdir -p $(elixir_cache_path)
 }
 
 function restore_mix() {
