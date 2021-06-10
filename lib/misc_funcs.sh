@@ -101,6 +101,26 @@ function export_mix_env() {
   output_line "* MIX_ENV=${MIX_ENV}"
 }
 
+function export_mix_home() {
+  if [ -z "$MIX_HOME" ]; then
+    if [ -d $env_path ] && [ -f $env_path/MIX_HOME ]; then
+      export MIX_HOME=$(cat $env_path/MIX_HOME)
+    else
+      export MIX_HOME=$(build_mix_home_path)
+    fi
+  fi
+}
+
+function export_hex_home() {
+  if [ -z "$HEX_HOME" ]; then
+    if [ -d $env_path ] && [ -f $env_path/HEX_HOME ]; then
+      export HEX_HOME=$(cat $env_path/HEX_HOME)
+    else
+      export HEX_HOME=$(build_hex_home_path)
+    fi
+  fi
+}
+
 function check_stack() {
   if [ "${STACK}" = "cedar" ]; then
     echo "ERROR: cedar stack is not supported, upgrade to cedar-14"
@@ -120,13 +140,19 @@ function check_stack() {
 # function
 function clean_old_cache_files() {
   rm -rf \
-    $(erlang_build_path) \
+    $(build_erlang_path) \
     ${cache_path}/deps_backup \
     ${cache_path}/build_backup \
     ${cache_path}/.mix \
     ${cache_path}/.hex
   rm -rf ${cache_path}/OTP-*.zip
   rm -rf ${cache_path}/elixir*.zip
+}
+
+function clean_elixir_version_dependent_cache() {
+  rm -rf \
+    $(hex_backup_path) \
+    $(mix_backup_path)
 }
 
 function clean_cache() {

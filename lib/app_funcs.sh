@@ -14,27 +14,17 @@ function restore_app() {
 
 
 function copy_hex() {
-  mkdir -p ${build_path}/.mix/archives
-  mkdir -p ${build_path}/.hex
+  mkdir -p $(runtime_hex_home_path)
 
-
-  # hex is a directory from elixir-1.3.0
-  full_hex_file_path=$(ls -dt ${HOME}/.mix/archives/hex-* | head -n 1)
-
-  # hex file names after elixir-1.1 in the hex-<version>.ez form
-  if [ -z "$full_hex_file_path" ]; then
-    full_hex_file_path=$(ls -t ${HOME}/.mix/archives/hex-*.ez | head -n 1)
+  # copying hex is only necessary on the old build system.
+  # If the build_hex_home_path is the same as runtime_hex_home_path
+  # (which is specifified by the buildpack consumer in their elixir_buildpack.config),
+  # then we don't need to copy (and doing so will result in an error)
+  # https://github.com/HashNuke/heroku-buildpack-elixir/issues/194
+  if [ $(build_hex_home_path) != $(runtime_hex_home_path) ]; then
+    output_section "Copying hex from $(build_hex_home_path)"
+    cp -R $(build_hex_home_path)/* "$(runtime_hex_home_path)/"
   fi
-
-  # For older versions of hex which have no version name in file
-  if [ -z "$full_hex_file_path" ]; then
-    full_hex_file_path=${HOME}/.mix/archives/hex.ez
-  fi
-
-  cp -R ${HOME}/.hex/* ${build_path}/.hex/
-
-  output_section "Copying hex from $full_hex_file_path"
-  cp -R $full_hex_file_path ${build_path}/.mix/archives
 }
 
 function hook_pre_app_dependencies() {
@@ -71,16 +61,17 @@ function hook_post_compile() {
 }
 
 function app_dependencies() {
-  # Unset this var so that if the parent dir is a git repo, it isn't detected
-  # And all git operations are performed on the respective repos
-  local git_dir_value=$GIT_DIR
-  unset GIT_DIR
+  mkdir -p "$(build_mix_home_path)"
 
   cd $build_path
   output_section "Fetching app dependencies with mix"
-  mix deps.get --only $MIX_ENV || exit 1
 
-  export GIT_DIR=$git_dir_value
+  # Unset this var so that if the parent dir is a git repo, it isn't detected
+  # And all git operations are performed on the respective repos
+  env \
+    -u GIT_DIR \
+    mix deps.get --only $MIX_ENV || exit 1
+
   cd - > /dev/null
 }
 
@@ -148,33 +139,62 @@ function pre_compile_hook() {
   cd - > /dev/null
 }
 
+function export_var() {
+  local VAR_NAME=$1
+  local VAR_VALUE=$2
+
+  echo "export ${VAR_NAME}=${VAR_VALUE}"
+}
+
+function export_default_var() {
+  local VAR_NAME=$1
+  local DEFAULT_VALUE=$2
+
+  if [ ! -f "${env_path}/${VAR_NAME}" ]; then
+    export_var "${VAR_NAME}" "${DEFAULT_VALUE}"
+  fi
+}
+
+function echo_profile_env_vars() {
+  local buildpack_bin="$(runtime_platform_tools_path)"
+  buildpack_bin="$(runtime_erlang_path)/bin:${buildpack_bin}"
+  buildpack_bin="$(runtime_elixir_path)/bin:${buildpack_bin}"
+
+
+  export_var "PATH" "${buildpack_bin}:\$PATH"
+  export_default_var "LC_CTYPE" "en_US.utf8"
+
+  # Only write MIX_* to profile if the application did not set MIX_*
+  export_default_var "MIX_ENV" "${MIX_ENV}"
+  export_default_var "MIX_HOME" "$(runtime_mix_home_path)"
+  export_default_var "HEX_HOME" "$(runtime_hex_home_path)"
+}
+
+function echo_export_env_vars() {
+  local buildpack_bin="$(build_platform_tools_path)"
+  buildpack_bin="$(build_erlang_path)/bin:${buildpack_bin}"
+  buildpack_bin="$(build_elixir_path)/bin:${buildpack_bin}"
+
+
+  export_var "PATH" "${buildpack_bin}:\$PATH"
+  export_default_var "LC_CTYPE" "en_US.utf8"
+
+  # Only write MIX_* to profile if the application did not set MIX_*
+  export_default_var "MIX_ENV" "${MIX_ENV}"
+  export_default_var "MIX_HOME" "$(build_mix_home_path)"
+  export_default_var "HEX_HOME" "$(build_hex_home_path)"
+}
+
 function write_profile_d_script() {
   output_section "Creating .profile.d with env vars"
   mkdir -p $build_path/.profile.d
+  local profile_path="${build_path}/.profile.d/elixir_buildpack_paths.sh"
 
-  local export_line="export PATH=\$HOME/.platform_tools:\$HOME/.platform_tools/erlang/bin:\$HOME/.platform_tools/elixir/bin:\$PATH
-                     export LC_CTYPE=en_US.utf8"
-
-  # Only write MIX_ENV to profile if the application did not set MIX_ENV
-  if [ ! -f $env_path/MIX_ENV ]; then
-    export_line="${export_line}
-                 export MIX_ENV=${MIX_ENV}"
-  fi
-
-  echo $export_line >> $build_path/.profile.d/elixir_buildpack_paths.sh
+  echo_profile_env_vars >> $profile_path
 }
 
 function write_export() {
   output_section "Writing export for multi-buildpack support"
 
-  local export_line="export PATH=$(platform_tools_path):$(erlang_path)/bin:$(elixir_path)/bin:$PATH
-                     export LC_CTYPE=en_US.utf8"
-
-  # Only write MIX_ENV to export if the application did not set MIX_ENV
-  if [ ! -f $env_path/MIX_ENV ]; then
-    export_line="${export_line}
-                 export MIX_ENV=${MIX_ENV}"
-  fi
-
-  echo $export_line > $build_pack_path/export
+  echo_export_env_vars >> "${build_pack_path}/export"
 }
