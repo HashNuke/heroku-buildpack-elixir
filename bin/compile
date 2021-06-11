@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e -o pipefail
+
 # If this var is set to true later on,
 # then elixir and rebar will be rebuilt
 erlang_changed=false

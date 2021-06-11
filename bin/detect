@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e -o pipefail
+
 mix_file_url="$1/mix.exs"
 
 if [ -f $mix_file_url ];
