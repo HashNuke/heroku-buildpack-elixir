@@ -54,25 +54,35 @@ function clean_elixir_downloads() {
 }
 
 function restore_mix() {
+  # TODO app path fix: Use .mix dir at /app if build_path is same as runtime path
+  # TODO maybe move this to global
+  mix_path=${HOME}/.mix
+  hex_path=${HOME}/.hex
+
   if [ -d $(mix_backup_path) ]; then
-    mkdir -p ${HOME}/.mix
-    cp -pR $(mix_backup_path)/* ${HOME}/.mix
+    mkdir -p $mix_path
+    cp -pR $(mix_backup_path)/* $mix_path
   fi
 
   if [ -d $(hex_backup_path) ]; then
-    mkdir -p ${HOME}/.hex
-    cp -pR $(hex_backup_path)/* ${HOME}/.hex
+    mkdir -p $hex_path
+    cp -pR $(hex_backup_path)/* $hex_path
   fi
 }
 
 function backup_mix() {
+  # TODO app path fix: Use .mix dir at /app if build_path is same as runtime path
+  # TODO maybe move this to global
+  mix_path=${HOME}/.mix
+  hex_path=${HOME}/.hex
+
   # Delete the previous backups
   rm -rf $(mix_backup_path) $(hex_backup_path)
 
   mkdir -p $(mix_backup_path) $(hex_backup_path)
 
-  cp -pR ${HOME}/.mix/* $(mix_backup_path)
-  cp -pR ${HOME}/.hex/* $(hex_backup_path)
+  cp -pR $mix_path/* $(mix_backup_path)
+  cp -pR $hex_path/* $(hex_backup_path)
 }
 
 function install_hex() {
