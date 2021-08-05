@@ -76,14 +76,6 @@ function load_config() {
 }
 
 
-function apply_app_relative_path() {
-  if [[ -n ${app_relative_path:+x} ]]; then
-    build_path="$build_path/$app_relative_path"
-    output_section "Changing working directory:"
-    output_line "$app_relative_path"
-  fi
-}
-
 function export_env_vars() {
   whitelist_regex=${2:-''}
   blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
