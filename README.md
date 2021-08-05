@@ -103,9 +103,6 @@ erlang_version=18.2.1
 # Elixir version
 elixir_version=1.2.0
 
-# If your app lives in some sub-directory, give the relatve path of it
-app_relative_path="path/to/app"
-
 # Always rebuild from scratch on every deploy?
 always_rebuild=false
 
