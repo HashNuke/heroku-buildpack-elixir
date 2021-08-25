@@ -38,7 +38,11 @@ function assert_elixir_version_set() {
   # 0 when found
   # 1 when not found
   # 2 when file does not exist
+
+  set +e
+  # this command is allowed to return a non-zero exit code since that is how we check if the elixir version is set.
   grep -q -e "^elixir_version=" $custom_config_file 2>/dev/null
+  set -e
 
   if [ $? -ne 0 ]; then
     # For now, just print a warning. In the future, we will fail and require an explicit
@@ -61,8 +65,8 @@ function load_config() {
   then
     source $custom_config_file
   else
-    output_line "WARNING: elixir_buildpack.config wasn't found in the app"
-    output_line "Using default config from Elixir buildpack"
+    output_line "Sorry, an elixir_buildpack.config is required. Please see https://github.com/HashNuke/heroku-buildpack-elixir#configuration"
+    exit 1
   fi
 
   assert_elixir_version_set $custom_config_file
