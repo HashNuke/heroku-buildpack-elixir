@@ -33,6 +33,7 @@ export_mix_home
 export_hex_home
 load_config
 check_erlang_version "$erlang_version"
+check_elixir_version "$elixir_version"
 
 check_stack
 clean_cache
