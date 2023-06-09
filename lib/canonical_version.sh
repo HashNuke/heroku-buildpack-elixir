@@ -17,18 +17,18 @@ erlang_builds_url() {
 
 fetch_elixir_versions() {
   url="https://repo.hex.pm/builds/elixir/builds.txt"
-  curl -s "$url" | awk '/^v[0-9.]+[- ]/ { print $1 }'
+  curl -sL "$url" | awk '/^v[0-9.]+[- ]/ { print $1 }'
 }
 
 fetch_erlang_versions() {
   case "${STACK}" in
     "heroku-20")
       url="https://repo.hex.pm/builds/otp/ubuntu-20.04/builds.txt"
-      curl -s "$url" | awk '/^OTP-([0-9.]+ )/ {print substr($1,5)}'
+      curl -sL "$url" | awk '/^OTP-([0-9.]+ )/ {print substr($1,5)}'
       ;;
     "heroku-22")
       url="https://repo.hex.pm/builds/otp/ubuntu-22.04/builds.txt"
-      curl -s "$url" | awk '/^OTP-([0-9.]+ )/ {print substr($1,5)}'
+      curl -sL "$url" | awk '/^OTP-([0-9.]+ )/ {print substr($1,5)}'
       ;;
     *)
       url="https://raw.githubusercontent.com/HashNuke/heroku-buildpack-elixir-otp-builds/master/otp-versions"
