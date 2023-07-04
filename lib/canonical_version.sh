@@ -33,7 +33,11 @@ fetch_erlang_versions() {
       curl -s "$url" | awk '/^OTP-([0-9.]+ )/ {print substr($1,5)}'
       ;;
     "scalingo-20")
-      url="https://repo.hex.pm/builds/otp/ubuntu-20.04/builds.txt"
+      url="https://builds.hex.pm/builds/otp/ubuntu-20.04/builds.txt"
+      curl -s "$url" | awk '/^OTP-([0-9.]+ )/ {print substr($1,5)}'
+      ;;
+    "scalingo-22")
+      url="https://builds.hex.pm/builds/otp/ubuntu-22.04/builds.txt"
       curl -s "$url" | awk '/^OTP-([0-9.]+ )/ {print substr($1,5)}'
       ;;
     "heroku-22")
