@@ -15,7 +15,7 @@
 
 * Erlang - Prebuilt packages (17.5, 17.4, etc)
   * The full list of prebuilt packages can be found here: 
-    * gigalixir-20 or heroku-20 stacks: https://builds.hex.pm/builds/otp/ubuntu-20.04/builds.txt
+    * gigalixir-20, heroku-20 or scalingo-20 stacks: https://builds.hex.pm/builds/otp/ubuntu-20.04/builds.txt
     * heroku-22 stacks: https://builds.hex.pm/builds/otp/ubuntu-22.04/builds.txt
     * All other stacks: https://github.com/HashNuke/heroku-buildpack-elixir-otp-builds/blob/master/otp-versions
 * Elixir - Prebuilt releases (1.0.4, 1.0.3, etc) or prebuilt branches (master, v1.7, etc)
