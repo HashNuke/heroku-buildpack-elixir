@@ -3,6 +3,7 @@
 ## Features
 
 * **Easy configuration** with `elixir_buildpack.config` file
+* Automatic elixir and erlang version detection if you are using asdf
 * Use **prebuilt Elixir binaries**
 * Allows configuring Erlang
 * If your app doesn't have a Procfile, default web task `mix run --no-halt` will be run.
@@ -14,7 +15,7 @@
 #### Version support
 
 * Erlang - Prebuilt packages (17.5, 17.4, etc)
-  * The full list of prebuilt packages can be found here: 
+  * The full list of prebuilt packages can be found here:
     * gigalixir-20 or heroku-20 stacks: https://builds.hex.pm/builds/otp/ubuntu-20.04/builds.txt
     * heroku-22 stacks: https://builds.hex.pm/builds/otp/ubuntu-22.04/builds.txt
     * All other stacks: https://github.com/HashNuke/heroku-buildpack-elixir-otp-builds/blob/master/otp-versions
@@ -28,7 +29,7 @@ Note: you should choose an Elixir and Erlang version that are [compatible with o
 
 * Cloud Native users should use [this buildpack](https://github.com/elixir-buildpack/cloud-native-buildpack)
 
-**This buildpack is not guaranteed to be Cloud Native compatible.** 
+**This buildpack is not guaranteed to be Cloud Native compatible.**
 The [elixir-buildpack/cloud-native-buildpack](https://github.com/elixir-buildpack/cloud-native-buildpack) is a buildpack that is actively under development
 and is designed specifically to follow the Cloud Native Buildpack conventions.
 
@@ -70,7 +71,7 @@ https://github.com/HashNuke/heroku-buildpack-elixir.git#883f33e10879b4b8b030753c
 
 #### Using Heroku CI
 
-This buildpack supports Heroku CI. 
+This buildpack supports Heroku CI.
 
 * To enable viewing test runs on Heroku, add [tapex](https://github.com/joshwlewis/tapex) to your project.
 * To detect compilation warnings use the `hook_compile` configuration option set to `mix compile --force --warnings-as-errors`.
@@ -130,8 +131,9 @@ test_args="--cover"
 
 
 #### Migrating from previous build pack
-the following has been deprecated and should be removed from `elixir_buildpack.config`:
-```
+The following has been deprecated and should be removed from `elixir_buildpack.config`:
+
+```shell
 # Export heroku config vars
 config_vars_to_export=(DATABASE_URL)
 ```
@@ -140,13 +142,13 @@ config_vars_to_export=(DATABASE_URL)
 
 * Use prebuilt Elixir release
 
-```
+```shell
 elixir_version=1.2.0
 ```
 
 * Use prebuilt Elixir branch, the *branch* specifier ensures that it will be downloaded every time
 
-```
+```shell
 elixir_version=(branch master)
 ```
 
@@ -154,7 +156,7 @@ elixir_version=(branch master)
 
 * You can specify an Erlang release version like below
 
-```
+```shell
 erlang_version=18.2.1
 ```
 
@@ -196,12 +198,14 @@ heroku config:set MY_VAR=the_value
 ## Testing
 
 To run tests
-```
+
+```shell
 git clone https://github.com/HashNuke/heroku-buildpack-elixir
 export BUILDPACK="$(pwd)/heroku-buildpack-elixir"
 git clone https://github.com/jesseshieh/heroku-buildpack-testrunner
 git clone https://github.com/jesseshieh/shunit2
 export SHUNIT_HOME="$(pwd)/shunit2"
+
 cd heroku-buildpack-testrunner
 bin/run $BUILDPACK
 ```

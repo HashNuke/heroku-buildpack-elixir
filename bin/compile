@@ -25,6 +25,7 @@ source ${build_pack_path}/lib/elixir_funcs.sh
 source ${build_pack_path}/lib/app_funcs.sh
 source ${build_pack_path}/lib/canonical_version.sh
 
+rm -rf $(build_platform_tools_path)
 mkdir $(build_platform_tools_path)
 
 export_env_vars

@@ -53,10 +53,28 @@ function assert_elixir_version_set() {
   fi
 }
 
+function asdf_extract_versions() {
+    local file=$1
+    local line
+
+    # Initialize as empty
+    local elixir_version_raw=""
+
+    while IFS= read -r line; do
+        if [[ $line == erlang* ]]; then
+            erlang_version="${line#erlang }"
+        elif [[ $line == elixir* ]]; then
+            elixir_version_raw="${line#elixir }"
+            elixir_version="${elixir_version_raw%-otp*}"
+        fi
+    done < "$file"
+}
+
 function load_config() {
   output_section "Checking Erlang and Elixir versions"
 
   local custom_config_file="${build_path}/elixir_buildpack.config"
+  local custom_asdf_file="${build_path}/.tool-versions"
 
   # Source for default versions file from buildpack first
   source "${build_pack_path}/elixir_buildpack.config"
@@ -64,12 +82,15 @@ function load_config() {
   if [ -f $custom_config_file ];
   then
     source $custom_config_file
+    assert_elixir_version_set $custom_config_file
+  elif [ -f $custom_asdf_file ]; then
+    echo "asdf file found, extracting versions from source"
+    asdf_extract_versions $custom_asdf_file
   else
     output_line "Sorry, an elixir_buildpack.config is required. Please see https://github.com/HashNuke/heroku-buildpack-elixir#configuration"
     exit 1
   fi
 
-  assert_elixir_version_set $custom_config_file
   fix_erlang_version
   fix_elixir_version
 
